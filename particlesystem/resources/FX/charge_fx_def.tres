@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="StationaryParticleDef" format=3 uid="uid://w8mc46ykf5rn"]
+
+[ext_resource type="Script" uid="uid://cck12webt4vfs" path="res://particlesystem/resources/StationaryParticleDef.gd" id="1_dpd7e"]
+[ext_resource type="SpriteFrames" uid="uid://cwwmd441j4va5" path="res://resources/animations/spr_player_charge.tres" id="2_k5swp"]
+
+[resource]
+script = ExtResource("1_dpd7e")
+sprite_frames = ExtResource("2_k5swp")
+level_animations = Array[String](["", "player_charge_1", "player_charge_2", "player_charge_3"])
+loop_begin_sec = 2.71
+metadata/_custom_type_script = "uid://cck12webt4vfs"

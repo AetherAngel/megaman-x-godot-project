@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FXAttachment" format=3 uid="uid://d2g34614xfava"]
+
+[ext_resource type="Script" uid="uid://scowvixd6kuv" path="res://particlesystem/resources/FXAttachment.gd" id="1_6jqps"]
+[ext_resource type="Resource" uid="uid://bvqo56gcdupsa" path="res://particlesystem/resources/FX/hover_fx_def.tres" id="1_so20h"]
+
+[resource]
+script = ExtResource("1_6jqps")
+fx_name = "hover_effect"
+effect = ExtResource("1_so20h")
+marker_path = NodePath("HoverIdlePoint")
+metadata/_custom_type_script = "uid://scowvixd6kuv"

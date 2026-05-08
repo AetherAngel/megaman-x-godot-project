@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="StateVisualData" format=3 uid="uid://033ntyekhkuv"]
+
+[ext_resource type="Resource" uid="uid://bxvafe2mikvu2" path="res://player/states/data/jump_armor_vsdata.tres" id="1_st7rk"]
+[ext_resource type="Script" uid="uid://bvkmba36hvcet" path="res://player/states/data/StateVisualData.gd" id="1_wxiy5"]
+[ext_resource type="Resource" uid="uid://b5fnff7frky7o" path="res://player/states/data/jump_base_vsdata.tres" id="2_tty3i"]
+[ext_resource type="Resource" uid="uid://b8grbmsl5k8gh" path="res://player/states/data/jump_base_arm_vsdata.tres" id="3_gaw2a"]
+[ext_resource type="Resource" uid="uid://dbvgh3l2fmjeb" path="res://player/states/data/jump_buster_vsdata.tres" id="4_kncx5"]
+
+[resource]
+script = ExtResource("1_wxiy5")
+state_name = "Jump"
+base = ExtResource("2_tty3i")
+base_arm = ExtResource("3_gaw2a")
+armor = ExtResource("1_st7rk")
+buster = ExtResource("4_kncx5")
+metadata/_custom_type_script = "uid://bvkmba36hvcet"

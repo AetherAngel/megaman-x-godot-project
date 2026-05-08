@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DialogueLine" format=3 uid="uid://b1pnib18u6rgb"]
+
+[ext_resource type="Script" uid="uid://8bmfodtxaosy" path="res://talksystem/DialogueLine.gd" id="1_mt0hd"]
+
+[resource]
+script = ExtResource("1_mt0hd")
+speaker = "Dr. Light"
+text = "This arm module is also changeable. Enter this capsule to change parts."
+mugshot = "drlight_placeholder"
+metadata/_custom_type_script = "uid://8bmfodtxaosy"

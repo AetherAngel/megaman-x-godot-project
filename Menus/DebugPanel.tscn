@@ -1,0 +1,131 @@
+[gd_scene format=3 uid="uid://dbebdytn3ceue"]
+
+[ext_resource type="Script" uid="uid://de3nqbbrebma5" path="res://ui/debug/DebugPanel.gd" id="1_debug"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_84gw1"]
+bg_color = Color(0.13333334, 0.13333334, 0.13333334, 1)
+
+[node name="DebugPanel" type="Control" unique_id=994210464]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+grow_vertical = 2
+script = ExtResource("1_debug")
+
+[node name="Sidebar" type="PanelContainer" parent="." unique_id=900665923]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.25
+anchor_bottom = 1.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_84gw1")
+
+[node name="Margin" type="MarginContainer" parent="Sidebar" unique_id=1219738241]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBox" type="VBoxContainer" parent="Sidebar/Margin" unique_id=597388185]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 4
+
+[node name="Scroll" type="ScrollContainer" parent="Sidebar/Margin/VBox" unique_id=1577176589]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Grid" type="GridContainer" parent="Sidebar/Margin/VBox/Scroll" unique_id=1577176590]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_constants/v_separation = 4
+
+[node name="FeedbackLabel" type="Label" parent="Sidebar/Margin/VBox" unique_id=1027355771]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 8
+autowrap_mode = 2
+
+[node name="SpawnPopup" type="Control" parent="." unique_id=1167717547]
+visible = false
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Overlay" type="ColorRect" parent="SpawnPopup" unique_id=808675767]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.6)
+
+[node name="Panel" type="PanelContainer" parent="SpawnPopup" unique_id=1784640636]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -70.0
+offset_right = 100.0
+offset_bottom = 70.0
+
+[node name="VBox" type="VBoxContainer" parent="SpawnPopup/Panel" unique_id=1450762279]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Title" type="Label" parent="SpawnPopup/Panel/VBox" unique_id=641306158]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Spawnar"
+horizontal_alignment = 1
+
+[node name="CategoryBar" type="HBoxContainer" parent="SpawnPopup/Panel/VBox" unique_id=898792832]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="BtnEnemies" type="Button" parent="SpawnPopup/Panel/VBox/CategoryBar" unique_id=345093266]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 9
+toggle_mode = true
+button_pressed = true
+text = "Inimigos"
+
+[node name="BtnItems" type="Button" parent="SpawnPopup/Panel/VBox/CategoryBar" unique_id=1056313725]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 9
+toggle_mode = true
+text = "Itens"
+
+[node name="Scroll" type="ScrollContainer" parent="SpawnPopup/Panel/VBox" unique_id=193225919]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="EntryList" type="VBoxContainer" parent="SpawnPopup/Panel/VBox/Scroll" unique_id=1165612459]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="BtnCancelar" type="Button" parent="SpawnPopup/Panel/VBox" unique_id=717920458]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "Cancelar"
+
+[node name="PlacingHint" type="Label" parent="." unique_id=399016530]
+visible = false
+layout_mode = 0
+anchor_right = 1.0
+offset_top = 2.0
+offset_bottom = 14.0
+theme_override_font_sizes/font_size = 8
+text = "Clique para spawnar  |  RMB cancela"
+horizontal_alignment = 1

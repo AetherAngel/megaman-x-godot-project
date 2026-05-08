@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DialogueLine" format=3 uid="uid://doqhfbo4t157m"]
+
+[ext_resource type="Script" uid="uid://8bmfodtxaosy" path="res://talksystem/DialogueLine.gd" id="1_1htwj"]
+
+[resource]
+script = ExtResource("1_1htwj")
+speaker = "Dr. Light"
+text = "Thank you for supporting X... Please continue to take care of him..."
+mugshot = "drlight_placeholder"
+metadata/_custom_type_script = "uid://8bmfodtxaosy"

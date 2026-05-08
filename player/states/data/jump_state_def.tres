@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="StateDefinition" format=3 uid="uid://dflqhe6nxkclv"]
+
+[ext_resource type="Script" uid="uid://di1m127ww1cjj" path="res://player/states/data/StateDefinition.gd" id="1_0v7ej"]
+[ext_resource type="Script" uid="uid://b67dgouq1fo1p" path="res://player/states/Jump.gd" id="2_oaglj"]
+[ext_resource type="Resource" uid="uid://033ntyekhkuv" path="res://player/states/data/jump_vsdata.tres" id="3_g724b"]
+
+[resource]
+script = ExtResource("1_0v7ej")
+state_name = "Jump"
+state_script = ExtResource("2_oaglj")
+visual_data = ExtResource("3_g724b")
+metadata/_custom_type_script = "uid://di1m127ww1cjj"

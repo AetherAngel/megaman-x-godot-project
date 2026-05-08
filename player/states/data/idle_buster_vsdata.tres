@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="StateBusterVisualData" format=3 uid="uid://bhudfn8vssj2t"]
+
+[ext_resource type="Script" uid="uid://cko0c8nu77gnw" path="res://player/states/data/StateBusterVisualData.gd" id="1_lbncc"]
+
+[resource]
+script = ExtResource("1_lbncc")
+main_file = "_buster_idle"
+main_anim = "idleshoot"
+metadata/_custom_type_script = "uid://cko0c8nu77gnw"

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="VisualSequenceStepData" format=3 uid="uid://bjmlbarbleap0"]
+
+[ext_resource type="Resource" uid="uid://csygdieyosn4l" path="res://player/states/data/beam_in_base_vsdata.tres" id="1_ta726"]
+[ext_resource type="Script" uid="uid://c2cfexudcd52x" path="res://player/states/data/VisualSequenceStepData.gd" id="2_nlgx7"]
+
+[resource]
+script = ExtResource("2_nlgx7")
+base_visual = ExtResource("1_ta726")
+wait_for_completion = false
+wait_until_on_floor = true
+metadata/_custom_type_script = "uid://c2cfexudcd52x"

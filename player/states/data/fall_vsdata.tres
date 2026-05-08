@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="StateVisualData" format=3 uid="uid://cf0lv4qqpv2ad"]
+
+[ext_resource type="Script" uid="uid://bvkmba36hvcet" path="res://player/states/data/StateVisualData.gd" id="1_fvhka"]
+[ext_resource type="Resource" uid="uid://coptpkcj4wbdv" path="res://player/states/data/fall_armor_vsdata.tres" id="1_hhe1r"]
+[ext_resource type="Resource" uid="uid://d34vt85c3ht8s" path="res://player/states/data/fall_base_vsdata.tres" id="2_ipcu6"]
+[ext_resource type="Resource" uid="uid://dnonj13hml748" path="res://player/states/data/fall_base_arm_vsdata.tres" id="3_563ff"]
+
+[resource]
+script = ExtResource("1_fvhka")
+state_name = "fall"
+base = ExtResource("2_ipcu6")
+base_arm = ExtResource("3_563ff")
+armor = ExtResource("1_hhe1r")
+metadata/_custom_type_script = "uid://bvkmba36hvcet"

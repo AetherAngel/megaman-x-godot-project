@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="StateVisualData" format=3 uid="uid://dmotfedlxb74o"]
+
+[ext_resource type="Resource" uid="uid://cx0f1iq5dlagj" path="res://player/states/data/dash_armor_vsdata.tres" id="1_lphnh"]
+[ext_resource type="Script" uid="uid://bvkmba36hvcet" path="res://player/states/data/StateVisualData.gd" id="1_sjw2f"]
+[ext_resource type="Resource" uid="uid://c2d5lt0c5uscl" path="res://player/states/data/dash_base_vsdata.tres" id="2_253e7"]
+[ext_resource type="Resource" uid="uid://bnvvrrbstbn6r" path="res://player/states/data/dash_base_arm_vsdata.tres" id="3_6b645"]
+[ext_resource type="Resource" uid="uid://cs4q2ifc63qdg" path="res://player/states/data/dash_buster_vsdada.tres" id="4_253e7"]
+
+[resource]
+script = ExtResource("1_sjw2f")
+state_name = "dash"
+base = ExtResource("2_253e7")
+base_arm = ExtResource("3_6b645")
+armor = ExtResource("1_lphnh")
+buster = ExtResource("4_253e7")
+metadata/_custom_type_script = "uid://bvkmba36hvcet"

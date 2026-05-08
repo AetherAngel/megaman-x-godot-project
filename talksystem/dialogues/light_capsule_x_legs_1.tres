@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DialogueLine" format=3 uid="uid://eto2hdde18c6"]
+
+[ext_resource type="Script" uid="uid://8bmfodtxaosy" path="res://talksystem/DialogueLine.gd" id="1_sidst"]
+
+[resource]
+script = ExtResource("1_sidst")
+speaker = "Dr. Light"
+text = "This battle should never have happened, X..."
+mugshot = "drlight_placeholder"
+metadata/_custom_type_script = "uid://8bmfodtxaosy"

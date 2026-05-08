@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="VisualSequenceStepData" format=3 uid="uid://b1qpndlm7x2ep"]
+
+[ext_resource type="Resource" uid="uid://s1qtj1v0752w" path="res://player/states/data/equip_armor2_vsdata.tres" id="1_rsfqe"]
+[ext_resource type="Resource" uid="uid://bvma1svrljnc7" path="res://player/states/data/equip_base_equip_vsdata.tres" id="1_uat6v"]
+[ext_resource type="Script" uid="uid://c2cfexudcd52x" path="res://player/states/data/VisualSequenceStepData.gd" id="2_rsfqe"]
+
+[resource]
+script = ExtResource("2_rsfqe")
+base_visual = ExtResource("1_uat6v")
+armor_visual = ExtResource("1_rsfqe")
+metadata/_custom_type_script = "uid://c2cfexudcd52x"

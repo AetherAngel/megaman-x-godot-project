@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SkillTree" format=3 uid="uid://ci2g65h4golt6"]
+
+[ext_resource type="Script" uid="uid://bf2bwl3lq8jh7" path="res://player/data/skilltree/attackdata.gd" id="1_3wnkb"]
+[ext_resource type="Script" uid="uid://bqupsiv4iemyv" path="res://player/data/skilltree/skilltree.gd" id="2_w68qh"]
+
+[resource]
+script = ExtResource("2_w68qh")
+character_name = "X"
+can_charge_shot = true
+metadata/_custom_type_script = "uid://bqupsiv4iemyv"

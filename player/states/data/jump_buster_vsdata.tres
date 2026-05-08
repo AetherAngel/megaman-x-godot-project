@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="StateBusterVisualData" format=3 uid="uid://dbvgh3l2fmjeb"]
+
+[ext_resource type="Script" uid="uid://cko0c8nu77gnw" path="res://player/states/data/StateBusterVisualData.gd" id="1_b1pni"]
+
+[resource]
+script = ExtResource("1_b1pni")
+metadata/_custom_type_script = "uid://cko0c8nu77gnw"

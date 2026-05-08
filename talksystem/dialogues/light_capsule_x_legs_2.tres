@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DialogueLine" format=3 uid="uid://cy5n0pf7jebmp"]
+
+[ext_resource type="Script" uid="uid://8bmfodtxaosy" path="res://talksystem/DialogueLine.gd" id="1_ptduo"]
+
+[resource]
+script = ExtResource("1_ptduo")
+speaker = "Dr. Light"
+text = "Why must Reploids fight each other? This must be some sort of mistake..."
+mugshot = "drlight_placeholder"
+metadata/_custom_type_script = "uid://8bmfodtxaosy"

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="StateDefinition" format=3 uid="uid://bnwa32ttyq76m"]
+
+[ext_resource type="Script" uid="uid://di1m127ww1cjj" path="res://player/states/data/StateDefinition.gd" id="1_vsaoq"]
+[ext_resource type="Script" uid="uid://c5l8p3tprl1os" path="res://player/states/Dash.gd" id="2_rsgug"]
+[ext_resource type="Resource" uid="uid://dmotfedlxb74o" path="res://player/states/data/dash_vsdata.tres" id="3_4pkj6"]
+
+[resource]
+script = ExtResource("1_vsaoq")
+state_name = "dash"
+state_script = ExtResource("2_rsgug")
+visual_data = ExtResource("3_4pkj6")
+metadata/_custom_type_script = "uid://di1m127ww1cjj"

@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="SpawnedParticleDef" format=3 uid="uid://bhai0yd2u7j6"]
+
+[ext_resource type="Script" uid="uid://sev6biwlyfqi" path="res://particlesystem/resources/SpawnedParticleDef.gd" id="1_nvux2"]
+[ext_resource type="SpriteFrames" uid="uid://bkutxc37hl4v6" path="res://resources/animations/spr_player_dash_dust.tres" id="2_uujda"]
+
+[resource]
+script = ExtResource("1_nvux2")
+sprite_frames = ExtResource("2_uujda")
+animations = Array[String](["dash_dust"])
+burst_count = 15
+spawn_delay = 0.2
+repeat_interval = 0.08
+marker_path = "DashSpark"
+follow_marker = true
+lifetime = 0.3
+lifetime_variance = 0.6
+velocity_min = 5.0
+velocity_max = 10.0
+gravity = Vector2(0, -10)
+metadata/_custom_type_script = "uid://sev6biwlyfqi"

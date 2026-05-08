@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="StationaryParticleDef" format=3 uid="uid://bvqo56gcdupsa"]
+
+[ext_resource type="Script" uid="uid://cck12webt4vfs" path="res://particlesystem/resources/StationaryParticleDef.gd" id="1_8gyyo"]
+[ext_resource type="SpriteFrames" uid="uid://bclwipv8qsp5w" path="res://resources/animations/spr_x_hover_effect.tres" id="2_j4e00"]
+
+[resource]
+script = ExtResource("1_8gyyo")
+sprite_frames = ExtResource("2_j4e00")
+level_animations = Array[String](["idle", "hoveringback", "hoveringfront"])
+metadata/_custom_type_script = "uid://cck12webt4vfs"

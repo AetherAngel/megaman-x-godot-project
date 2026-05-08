@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://s5x2yq373qkf"]
+
+[ext_resource type="Script" uid="uid://clumjuhfresdj" path="res://resources/camera/MainCamera.gd" id="1_4srgl"]
+
+[node name="Camera2D" type="Camera2D" unique_id=242530964]
+zoom = Vector2(2, 2)
+script = ExtResource("1_4srgl")
+
+[node name="CameraNodes" type="Node" parent="." unique_id=1911371115]

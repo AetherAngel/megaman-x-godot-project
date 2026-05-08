@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="StateVisualData" format=3 uid="uid://ccdws2x80dp2j"]
+
+[ext_resource type="Resource" uid="uid://qh3gjrmbihkr" path="res://player/states/data/idle_armor_vsdata.tres" id="1_4jid7"]
+[ext_resource type="Resource" uid="uid://f6hnn8lw2e3t" path="res://player/states/data/idle_base_vsdata.tres" id="1_6dr5q"]
+[ext_resource type="Script" uid="uid://bvkmba36hvcet" path="res://player/states/data/StateVisualData.gd" id="1_dwdfx"]
+[ext_resource type="Resource" uid="uid://creg4wxu1aby6" path="res://player/states/data/idle_base_arm_vsdata.tres" id="2_dwsnf"]
+[ext_resource type="Resource" uid="uid://bhudfn8vssj2t" path="res://player/states/data/idle_buster_vsdata.tres" id="4_y4lkn"]
+
+[resource]
+script = ExtResource("1_dwdfx")
+state_name = "Idle"
+base = ExtResource("1_6dr5q")
+base_arm = ExtResource("2_dwsnf")
+armor = ExtResource("1_4jid7")
+buster = ExtResource("4_y4lkn")
+metadata/_custom_type_script = "uid://bvkmba36hvcet"

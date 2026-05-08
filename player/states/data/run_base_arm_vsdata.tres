@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="StateBaseArmVisualData" format=3 uid="uid://co500uh23nlgf"]
+
+[ext_resource type="Script" uid="uid://cenvwn3nqdr5c" path="res://player/states/data/StateBaseArmVisualData.gd" id="1_kmj25"]
+
+[resource]
+script = ExtResource("1_kmj25")
+has_transition = true
+transition_file = "_arm_walk"
+transition_anim = "towalk"
+main_file = "_arm_walk"
+main_anim = "walkloop"
+metadata/_custom_type_script = "uid://cenvwn3nqdr5c"

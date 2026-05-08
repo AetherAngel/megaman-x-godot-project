@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://bhsg78sq65jgm"]
+
+[ext_resource type="Script" uid="uid://btp1kmf4idq47" path="res://Menus/player_select.gd" id="1_mcxlu"]
+[ext_resource type="Texture2D" uid="uid://bihr3usjwqdep" path="res://sprites/spr_player_select_backgrounds/player_selectbgt.png" id="2_mcxlu"]
+
+[node name="PlayerSelect" type="Control" unique_id=1412498741]
+show_behind_parent = true
+layout_mode = 3
+anchor_right = 0.79600006
+anchor_bottom = 1.0710001
+offset_right = 83.191986
+offset_bottom = 0.09597778
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mcxlu")
+
+[node name="Background" type="TextureRect" parent="." unique_id=1821674509]
+z_index = 1
+layout_mode = 0
+offset_right = 401.0
+offset_bottom = 240.0
+texture = ExtResource("2_mcxlu")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1065043665]
+z_index = -1
+layout_mode = 0
+offset_left = 175.0
+offset_top = 9.0
+offset_right = 215.0
+offset_bottom = 49.0
+
+[node name="X_Box" type="HBoxContainer" parent="HBoxContainer" unique_id=1052093682]
+layout_mode = 2
+
+[node name="Zero_Box" type="HBoxContainer" parent="HBoxContainer" unique_id=1887091971]
+layout_mode = 2
+
+[node name="Axl_Box" type="HBoxContainer" parent="HBoxContainer" unique_id=898000395]
+layout_mode = 2
+
+[node name="CharacterDisplay" type="TextureRect" parent="." unique_id=941605920]
+show_behind_parent = true
+z_index = 2
+layout_mode = 0
+offset_left = 1.0
+offset_right = 399.0
+offset_bottom = 241.0
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="." unique_id=273044645]
+z_index = 3
+layout_mode = 0
+offset_left = 310.0
+offset_top = 12.0
+offset_right = 374.0
+offset_bottom = 28.0
+theme_override_font_sizes/font_size = 10
+text = "Player Select"

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ShootEffectDef" format=3 uid="uid://0xjq4227ygvp"]
+
+[ext_resource type="Script" uid="uid://1cenjpf6wcc4" path="res://particlesystem/resources/ShootEffectDef.gd" id="1_hcnnq"]
+[ext_resource type="SpriteFrames" uid="uid://dvspjqbvts8is" path="res://resources/animations/spr_x_shot_lv3.tres" id="2_h10vr"]
+
+[resource]
+script = ExtResource("1_hcnnq")
+sprite_frames = ExtResource("2_h10vr")
+animation = "spawn_shot"
+metadata/_custom_type_script = "uid://1cenjpf6wcc4"

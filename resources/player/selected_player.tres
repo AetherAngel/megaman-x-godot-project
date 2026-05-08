@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="SelectedPlayerData" format=3 uid="uid://bspsc7hagvyxn"]
+
+[ext_resource type="Script" uid="uid://bnekhubyfixb2" path="res://resources/player/SelectedPlayerData.gd" id="1_hwc2r"]
+
+[resource]
+script = ExtResource("1_hwc2r")
+character_id = "Zero"
+metadata/_custom_type_script = "uid://bnekhubyfixb2"

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://tix1lr4uyapx"]
+
+[ext_resource type="Script" uid="uid://cncaxcewukotj" path="res://player/objects/projectiles/FourthProjectile.gd" id="1_ubua4"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4lb82"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_105cg"]
+
+[node name="FourthProjectile" type="Area2D" unique_id=221424159]
+scale = Vector2(2, 2)
+collision_layer = 128
+collision_mask = 11
+script = ExtResource("1_ubua4")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1628959070]
+sprite_frames = SubResource("SpriteFrames_4lb82")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2112962059]
+shape = SubResource("RectangleShape2D_105cg")

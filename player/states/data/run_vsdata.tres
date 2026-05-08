@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="StateVisualData" format=3 uid="uid://8oqc2nwj4k57"]
+
+[ext_resource type="Script" uid="uid://bvkmba36hvcet" path="res://player/states/data/StateVisualData.gd" id="1_ddy3e"]
+[ext_resource type="Resource" uid="uid://yjvw8bqngpoo" path="res://player/states/data/run_armor_vsdata.tres" id="1_p65fy"]
+[ext_resource type="Resource" uid="uid://1gyu60yj2rgw" path="res://player/states/data/run_base_vsdata.tres" id="2_u1obc"]
+[ext_resource type="Resource" uid="uid://co500uh23nlgf" path="res://player/states/data/run_base_arm_vsdata.tres" id="3_m5lcq"]
+[ext_resource type="Resource" uid="uid://b1lvt87p43ih2" path="res://player/states/data/run_buster_vsdata.tres" id="4_qa7av"]
+
+[resource]
+script = ExtResource("1_ddy3e")
+state_name = "Run"
+base = ExtResource("2_u1obc")
+base_arm = ExtResource("3_m5lcq")
+armor = ExtResource("1_p65fy")
+buster = ExtResource("4_qa7av")
+metadata/_custom_type_script = "uid://bvkmba36hvcet"

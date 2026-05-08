@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="VisualSequenceStepData" format=3 uid="uid://cc2h28jvpkkel"]
+
+[ext_resource type="Resource" uid="uid://mhkxgufyh8et" path="res://player/states/data/intro_armor_equip_vsdata.tres" id="1_bu81y"]
+[ext_resource type="Script" uid="uid://c2cfexudcd52x" path="res://player/states/data/VisualSequenceStepData.gd" id="2_y5nfy"]
+
+[resource]
+script = ExtResource("2_y5nfy")
+base_visual = ExtResource("1_bu81y")
+metadata/_custom_type_script = "uid://c2cfexudcd52x"

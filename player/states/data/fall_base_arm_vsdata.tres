@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="StateBaseArmVisualData" format=3 uid="uid://dnonj13hml748"]
+
+[ext_resource type="Script" uid="uid://cenvwn3nqdr5c" path="res://player/states/data/StateBaseArmVisualData.gd" id="1_pawk4"]
+
+[resource]
+script = ExtResource("1_pawk4")
+main_file = "_fall_arms"
+main_anim = "fall"
+metadata/_custom_type_script = "uid://cenvwn3nqdr5c"

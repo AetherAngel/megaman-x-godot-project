@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="StateBusterVisualData" format=3 uid="uid://b1lvt87p43ih2"]
+
+[ext_resource type="Script" uid="uid://cko0c8nu77gnw" path="res://player/states/data/StateBusterVisualData.gd" id="1_2uxla"]
+
+[resource]
+script = ExtResource("1_2uxla")
+has_transition = true
+transition_file = "_buster_walk"
+transition_anim = "towalk"
+main_file = "_buster_walk"
+main_anim = "walkshoot"
+is_loop = true
+metadata/_custom_type_script = "uid://cko0c8nu77gnw"

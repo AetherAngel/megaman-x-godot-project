@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="PlayerCharacterData" format=3 uid="uid://co6p3hhxcy3va"]
+
+[ext_resource type="Script" uid="uid://h6o2bdlxa27a" path="res://player/data/PlayerCharacterData.gd" id="1_3n2s6"]
+[ext_resource type="Resource" uid="uid://dwgjvpfk0l6v6" path="res://player/data/skilltree/zero_skilltree.tres" id="2_1x1ay"]
+
+[resource]
+script = ExtResource("1_3n2s6")
+character_id = "Zero"
+display_name = "Mega Man Zero"
+base_folder = "spr_zero"
+armor_name = "normal_zero"
+default_weapon = "saber"
+can_air_dash = true
+can_double_jump = true
+skill_tree = ExtResource("2_1x1ay")
+charge_input = "special_weapon"
+charge_lv1_time = 0.25
+charge_lv2_time = 0.0
+charge_max_level = 1
+buster_folder = "spr_zero"
+metadata/_custom_type_script = "uid://h6o2bdlxa27a"

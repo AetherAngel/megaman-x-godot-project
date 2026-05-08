@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CutsceneData" format=3 uid="uid://3678x7jncrej"]
+
+[ext_resource type="Script" uid="uid://bm6eb134mii7m" path="res://talksystem/CutsceneData.gd" id="1_r2on5"]
+[ext_resource type="Script" uid="uid://cbnu10kg40vow" path="res://talksystem/CutsceneStep.gd" id="2_aujsg"]
+[ext_resource type="Resource" uid="uid://bn38rqg2qu8kg" path="res://talksystem/dialogues/drlight_x_talk_head.tres" id="3_aujsg"]
+
+[resource]
+script = ExtResource("1_r2on5")
+steps = Array[ExtResource("2_aujsg")]([ExtResource("3_aujsg")])
+can_skip = false
+metadata/_custom_type_script = "uid://bm6eb134mii7m"

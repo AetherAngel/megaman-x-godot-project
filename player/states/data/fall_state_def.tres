@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="StateDefinition" format=3 uid="uid://ocakw765cpx2"]
+
+[ext_resource type="Script" uid="uid://di1m127ww1cjj" path="res://player/states/data/StateDefinition.gd" id="1_83xe3"]
+[ext_resource type="Script" uid="uid://cjk02m4yfedld" path="res://player/states/Fall.gd" id="2_drnw8"]
+[ext_resource type="Resource" uid="uid://cf0lv4qqpv2ad" path="res://player/states/data/fall_vsdata.tres" id="3_xyn4d"]
+
+[resource]
+script = ExtResource("1_83xe3")
+state_name = "fall"
+state_script = ExtResource("2_drnw8")
+visual_data = ExtResource("3_xyn4d")
+metadata/_custom_type_script = "uid://di1m127ww1cjj"

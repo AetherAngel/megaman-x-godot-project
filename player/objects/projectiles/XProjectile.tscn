@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://c3hjnw7ve2xsc"]
+
+[ext_resource type="Script" uid="uid://b8e6t8vfomt13" path="res://player/objects/projectiles/XProjectile.gd" id="1_ewnxb"]
+[ext_resource type="Texture2D" uid="uid://22n4de6ec4bl" path="res://sprites/spr_x_shot_1/megaman_x_normalshot.png" id="2_ggry5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ngqy"]
+atlas = ExtResource("2_ggry5")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ggry5"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ngqy")
+}],
+"loop": false,
+"name": &"main_shot",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w68nl"]
+size = Vector2(16.5, 14)
+
+[node name="XProjectile" type="Area2D" unique_id=2025365552]
+collision_layer = 128
+collision_mask = 11
+script = ExtResource("1_ewnxb")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1235276609]
+sprite_frames = SubResource("SpriteFrames_ggry5")
+animation = &"main_shot"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1643935100]
+shape = SubResource("RectangleShape2D_w68nl")

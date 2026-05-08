@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DialogueLine" format=3 uid="uid://bhrvfyd01xbm8"]
+
+[ext_resource type="Script" uid="uid://8bmfodtxaosy" path="res://talksystem/DialogueLine.gd" id="1_ptduo"]
+
+[resource]
+script = ExtResource("1_ptduo")
+speaker = "Dr. Light"
+text = "Equip with this boot module and jump twice in the air to hover. You can move left or right and remain airborne for a few moments."
+mugshot = "drlight_placeholder"
+metadata/_custom_type_script = "uid://8bmfodtxaosy"

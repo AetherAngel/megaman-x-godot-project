@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="SpawnedParticleDef" format=3 uid="uid://brdqgyb2djf03"]
+
+[ext_resource type="Script" uid="uid://sev6biwlyfqi" path="res://particlesystem/resources/SpawnedParticleDef.gd" id="1_uad8u"]
+[ext_resource type="SpriteFrames" uid="uid://by8eun21ce8lj" path="res://resources/animations/spr_player_dash_spark.tres" id="2_q55m4"]
+
+[resource]
+script = ExtResource("1_uad8u")
+sprite_frames = ExtResource("2_q55m4")
+animations = Array[String](["dash_spark"])
+marker_path = "DashSpark"
+lifetime_variance = 0.0
+base_direction = Vector2(0, 0)
+inherit_facing = true
+spread_angle = 0.0
+velocity_min = 0.0
+velocity_max = 0.0
+fade_out = false
+metadata/_custom_type_script = "uid://sev6biwlyfqi"

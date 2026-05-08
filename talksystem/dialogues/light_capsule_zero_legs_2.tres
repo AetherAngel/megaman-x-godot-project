@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DialogueLine" format=3 uid="uid://bhgoa5euwo6yp"]
+
+[ext_resource type="Script" uid="uid://8bmfodtxaosy" path="res://talksystem/DialogueLine.gd" id="1_i3463"]
+
+[resource]
+script = ExtResource("1_i3463")
+speaker = "Dr. Light"
+text = "I'll give you a program for X's armor. Analyze and upload the data to X's main memory in a secure area. Then complete the Armor."
+mugshot = "drlight_placeholder"
+metadata/_custom_type_script = "uid://8bmfodtxaosy"

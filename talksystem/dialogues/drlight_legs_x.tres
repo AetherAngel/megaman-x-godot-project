@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DialogueData" format=3 uid="uid://4tv0dtqf5g2i"]
+
+[ext_resource type="Script" uid="uid://8bmfodtxaosy" path="res://talksystem/DialogueLine.gd" id="1_4qx6u"]
+[ext_resource type="Script" uid="uid://c634kjm0dutmx" path="res://talksystem/DialogueData.gd" id="2_5tn5a"]
+[ext_resource type="Resource" uid="uid://eto2hdde18c6" path="res://talksystem/dialogues/light_capsule_x_legs_1.tres" id="2_kcjki"]
+[ext_resource type="Resource" uid="uid://cy5n0pf7jebmp" path="res://talksystem/dialogues/light_capsule_x_legs_2.tres" id="3_xgeb0"]
+[ext_resource type="Resource" uid="uid://bhrvfyd01xbm8" path="res://talksystem/dialogues/light_capsule_x_legs_3.tres" id="4_fb1n5"]
+[ext_resource type="Resource" uid="uid://vc6y85qnx0ug" path="res://talksystem/dialogues/light_capsule_x_legs_4.tres" id="5_xgeb0"]
+
+[resource]
+script = ExtResource("2_5tn5a")
+lines = Array[ExtResource("1_4qx6u")]([ExtResource("2_kcjki"), ExtResource("3_xgeb0"), ExtResource("4_fb1n5"), ExtResource("5_xgeb0")])
+metadata/_custom_type_script = "uid://c634kjm0dutmx"

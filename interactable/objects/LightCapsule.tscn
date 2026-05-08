@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://bdhpqr0knqe26"]
+
+[ext_resource type="Script" uid="uid://bguudmb22tbiy" path="res://interactable/objects/LightCapsule.gd" id="1_eoo4a"]
+[ext_resource type="Texture2D" uid="uid://imhiuwe7n0sn" path="res://sprites/spr_drlight_capsule/DrLightCapsule.png" id="2_xo4c4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p3gr1"]
+atlas = ExtResource("2_xo4c4")
+region = Rect2(0, 0, 54, 99)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xo4c4"]
+atlas = ExtResource("2_xo4c4")
+region = Rect2(378, 396, 54, 99)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eoo4a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p3gr1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xo4c4")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xo4c4"]
+size = Vector2(86, 92)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qup31"]
+size = Vector2(10, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xa3tq"]
+size = Vector2(39, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nxj4j"]
+size = Vector2(49, 29)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p3gr1"]
+size = Vector2(48, 52)
+
+[node name="LightCapsule" type="Node2D" unique_id=850767736 groups=["light_capsule"]]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_eoo4a")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=719763144]
+sprite_frames = SubResource("SpriteFrames_eoo4a")
+
+[node name="DetectArea" type="Area2D" parent="." unique_id=1756754488]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="DetectAreaCollision" type="CollisionShape2D" parent="DetectArea" unique_id=1133566051]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_xo4c4")
+
+[node name="EquipArea" type="Area2D" parent="." unique_id=1621187151]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="EquipAreaCollision" type="CollisionShape2D" parent="EquipArea" unique_id=796436058]
+position = Vector2(0, 14)
+shape = SubResource("RectangleShape2D_qup31")
+
+[node name="FootCollision" type="StaticBody2D" parent="." unique_id=2082906061]
+collision_layer = 3
+collision_mask = 0
+
+[node name="FootAreaCollision" type="CollisionShape2D" parent="FootCollision" unique_id=925070553]
+position = Vector2(-0.5, 42)
+shape = SubResource("RectangleShape2D_xa3tq")
+
+[node name="CeilingCollision" type="StaticBody2D" parent="." unique_id=186745665]
+collision_layer = 3
+collision_mask = 0
+
+[node name="CeilingAreaCollision" type="CollisionShape2D" parent="CeilingCollision" unique_id=1607714525]
+position = Vector2(-0.5, -27.5)
+shape = SubResource("RectangleShape2D_nxj4j")
+
+[node name="ClosedCollision" type="StaticBody2D" parent="." unique_id=1678025099]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClosedCollision" unique_id=1710527359]
+position = Vector2(0, 24)
+shape = SubResource("RectangleShape2D_p3gr1")

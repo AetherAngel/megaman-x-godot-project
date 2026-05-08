@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="StateVisualData" format=3 uid="uid://bloyv1sr8kiqp"]
+
+[ext_resource type="Resource" uid="uid://grd7oh7swbtt" path="res://player/states/data/equip_armor_vsdata.tres" id="1_dpx4f"]
+[ext_resource type="Script" uid="uid://bvkmba36hvcet" path="res://player/states/data/StateVisualData.gd" id="1_mch82"]
+[ext_resource type="Resource" uid="uid://q6kpqua335sb" path="res://player/states/data/equip_base_vsdata.tres" id="1_ybn3k"]
+
+[resource]
+script = ExtResource("1_mch82")
+state_name = "Equip"
+base = ExtResource("1_ybn3k")
+armor = ExtResource("1_dpx4f")
+metadata/_custom_type_script = "uid://bvkmba36hvcet"

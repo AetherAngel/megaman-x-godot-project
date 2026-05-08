@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="StateDefinition" format=3 uid="uid://kmxpx3cyhwu8"]
+
+[ext_resource type="Script" uid="uid://di1m127ww1cjj" path="res://player/states/data/StateDefinition.gd" id="1_mn1ge"]
+[ext_resource type="Script" uid="uid://bgb4srjfa5yh6" path="res://player/states/WallSlide.gd" id="2_jbksr"]
+[ext_resource type="Resource" uid="uid://3lm2b3722bm" path="res://player/states/data/wallslide_vsdata.tres" id="3_300uw"]
+
+[resource]
+script = ExtResource("1_mn1ge")
+state_name = "wallslide"
+state_script = ExtResource("2_jbksr")
+visual_data = ExtResource("3_300uw")
+metadata/_custom_type_script = "uid://di1m127ww1cjj"

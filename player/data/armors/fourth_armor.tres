@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ArmorData" format=3 uid="uid://dt07hvfs3hbkx"]
+
+[ext_resource type="Script" uid="uid://yucvqpka04di" path="res://player/data/skilltree/InputTechnique.gd" id="1_w7nkc"]
+[ext_resource type="Script" uid="uid://clbbtl2pobe8j" path="res://player/data/armors/ArmorLayer.gd" id="2_325lq"]
+[ext_resource type="Resource" uid="uid://0reposcylfy0" path="res://player/data/armors/fourth_armor_head.tres" id="3_aahkx"]
+[ext_resource type="Script" uid="uid://ci333wojl8627" path="res://player/data/armors/ArmorData.gd" id="3_joks4"]
+[ext_resource type="Resource" uid="uid://clixphajioyk4" path="res://player/data/armors/fourth_armor_body.tres" id="4_8frql"]
+[ext_resource type="Resource" uid="uid://bdt4cwii08bnj" path="res://player/data/armors/fourth_armor_arms.tres" id="5_5hiti"]
+[ext_resource type="Resource" uid="uid://cpnl754lpn1ke" path="res://player/data/armors/fourth_armor_legs.tres" id="6_v4p1c"]
+
+[resource]
+script = ExtResource("3_joks4")
+armor_id = "1"
+armor_name = "Fourth"
+armor_system = 1
+armor_layers = Array[ExtResource("2_325lq")]([ExtResource("3_aahkx"), ExtResource("4_8frql"), ExtResource("5_5hiti"), ExtResource("6_v4p1c")])
+has_air_dash = true
+has_double_jump = true
+can_wall_kick = true
+has_nova_strike = true
+has_infinite_nova_strike = true
+has_charge_weapons = true
+has_endless_special = true
+metadata/_custom_type_script = "uid://ci333wojl8627"

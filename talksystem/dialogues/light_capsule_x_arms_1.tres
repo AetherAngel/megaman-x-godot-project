@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DialogueLine" format=3 uid="uid://c4f1jkf3oc6ga"]
+
+[ext_resource type="Script" uid="uid://8bmfodtxaosy" path="res://talksystem/DialogueLine.gd" id="1_pqp3x"]
+
+[resource]
+script = ExtResource("1_pqp3x")
+speaker = "Dr. Light"
+text = "You can charge up to four blasts at a time with this arm module."
+mugshot = "drlight_placeholder"
+metadata/_custom_type_script = "uid://8bmfodtxaosy"

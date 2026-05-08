@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="StateVisualData" format=3 uid="uid://qal2sl23yit6"]
+
+[ext_resource type="Resource" uid="uid://252fcbp4gnw2" path="res://player/states/data/hover_armor_vsdata.tres" id="1_67ni0"]
+[ext_resource type="Script" uid="uid://bvkmba36hvcet" path="res://player/states/data/StateVisualData.gd" id="1_bnyb6"]
+[ext_resource type="Resource" uid="uid://dxbv7drvu7qtx" path="res://player/states/data/hover_base_vsdata.tres" id="2_71de3"]
+[ext_resource type="Resource" uid="uid://c7tw2whr0styi" path="res://player/states/data/hover_base_arm_vsdata.tres" id="3_71de3"]
+[ext_resource type="Resource" uid="uid://dyw1ynk82byo3" path="res://player/states/data/hover_buster_vsdata.tres" id="4_8w6w1"]
+
+[resource]
+script = ExtResource("1_bnyb6")
+state_name = "hover"
+base = ExtResource("2_71de3")
+base_arm = ExtResource("3_71de3")
+armor = ExtResource("1_67ni0")
+buster = ExtResource("4_8w6w1")
+metadata/_custom_type_script = "uid://bvkmba36hvcet"

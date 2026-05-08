@@ -1,0 +1,274 @@
+[gd_scene format=3 uid="uid://4fatycykc3qg"]
+
+[ext_resource type="Script" uid="uid://dqk0fyqe4iv81" path="res://player/player.gd" id="1_boad6"]
+[ext_resource type="Resource" uid="uid://btavk4skm2yiq" path="res://player/states/data/equip_sequence_vsdata.tres" id="5_7pqkx"]
+[ext_resource type="Script" uid="uid://c7vxmd1g07tow" path="res://player/states/Run.gd" id="7_boad6"]
+[ext_resource type="Script" uid="uid://c5l8p3tprl1os" path="res://player/states/Dash.gd" id="8_hg6s5"]
+[ext_resource type="Script" uid="uid://biyhuwhr53ywv" path="res://player/states/StateMachine.gd" id="8_rgyib"]
+[ext_resource type="Script" uid="uid://cjk02m4yfedld" path="res://player/states/Fall.gd" id="9_8t03j"]
+[ext_resource type="Script" uid="uid://b8rjrsskrnd3b" path="res://player/states/Idle.gd" id="9_hg6s5"]
+[ext_resource type="Script" uid="uid://d13c3pd5q1muy" path="res://player/states/Land.gd" id="10_2ieo8"]
+[ext_resource type="Script" uid="uid://b67dgouq1fo1p" path="res://player/states/Jump.gd" id="10_8t03j"]
+[ext_resource type="Script" uid="uid://bahcrmtk3r7oa" path="res://player/states/AirDash.gd" id="11_2ieo8"]
+[ext_resource type="Script" uid="uid://c1y6lu47epu4o" path="res://player/states/SaberUnequip.gd" id="11_yllr7"]
+[ext_resource type="Resource" uid="uid://brdqgyb2djf03" path="res://particlesystem/resources/FX/dash_spark_def.tres" id="12_jd2rm"]
+[ext_resource type="Script" uid="uid://coadk8wbrjmsj" path="res://player/states/SaberAttack.gd" id="12_yllr7"]
+[ext_resource type="Script" uid="uid://bgb4srjfa5yh6" path="res://player/states/WallSlide.gd" id="13_kb6p2"]
+[ext_resource type="Resource" uid="uid://bhai0yd2u7j6" path="res://particlesystem/resources/FX/dash_smoke_def.tres" id="13_q28gw"]
+[ext_resource type="Script" uid="uid://b2ytywsmkt2fi" path="res://player/intro.gd" id="13_yllr7"]
+[ext_resource type="Script" uid="uid://3jthrltmhja5" path="res://player/states/WallKick.gd" id="14_wodsf"]
+[ext_resource type="Texture2D" uid="uid://b38xl21mfy8fd" path="res://sprites/spr_x_idle/6dc0bbd6-4b11-42da-b6e1-a7cf691d809b.png" id="15_32hag"]
+[ext_resource type="Script" uid="uid://c2grravgpb614" path="res://player/states/Hover.gd" id="15_tqiix"]
+[ext_resource type="Texture2D" uid="uid://dp3a54vyus7fw" path="res://sprites/spr_zero_outro/20d724df-2bca-4e90-bb2e-627858bf4909.png" id="16_32hag"]
+[ext_resource type="Script" uid="uid://c3ilny3rbm3r1" path="res://player/states/Equip.gd" id="17_c35mf"]
+[ext_resource type="Script" uid="uid://dbew8t0f1mgbg" path="res://player/BusterLayer.gd" id="20_x7c3f"]
+[ext_resource type="Script" uid="uid://ckoteo7tchya5" path="res://player/ChargeSystem.gd" id="21_bjvpn"]
+[ext_resource type="Script" uid="uid://cc8paiko7j07r" path="res://player/ArmBaseLayer.gd" id="21_x7c3f"]
+[ext_resource type="Script" uid="uid://cm151mco2ol7r" path="res://autoload/VisualLibrary.gd" id="22_bjvpn"]
+[ext_resource type="Script" uid="uid://34nqbiejbvwq" path="res://autoload/VisualSequencePlayer.gd" id="23_knn7v"]
+[ext_resource type="Texture2D" uid="uid://bulgh1uk0jl7c" path="res://sprites/spr_x_shoot/08188e43-f3bd-4363-8a37-21c60850b438.png" id="23_uw77l"]
+[ext_resource type="Script" uid="uid://b1djsw3q6bify" path="res://player/states/data/VisualSequenceData.gd" id="24_7pqkx"]
+[ext_resource type="Resource" uid="uid://byku7bqf6svq1" path="res://player/states/data/intro_sequence_vsdata.tres" id="25_uw77l"]
+[ext_resource type="Resource" uid="uid://w8mc46ykf5rn" path="res://particlesystem/resources/FX/charge_fx_def.tres" id="27_rptt4"]
+[ext_resource type="Resource" uid="uid://0xjq4227ygvp" path="res://particlesystem/resources/FX/X_shot.tres" id="28_r7pn3"]
+[ext_resource type="Script" uid="uid://bde0hu0lhud8r" path="res://particlesystem/basis/FXComponent.gd" id="35_q28gw"]
+[ext_resource type="Script" uid="uid://scowvixd6kuv" path="res://particlesystem/resources/FXAttachment.gd" id="36_pnw6m"]
+[ext_resource type="Resource" uid="uid://d2g34614xfava" path="res://particlesystem/resources/FX/hover_effect.tres" id="37_1so5t"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sh265"]
+size = Vector2(20, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4flbx"]
+
+[sub_resource type="Animation" id="Animation_kqu6x"]
+resource_name = "beam_in"
+length = 0.5
+
+[sub_resource type="Animation" id="Animation_oul6g"]
+resource_name = "equip"
+length = 0.8
+
+[sub_resource type="Animation" id="Animation_rkbax"]
+resource_name = "intro"
+length = 1.2
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_g1dw6"]
+_data = {
+&"beam_in": SubResource("Animation_kqu6x"),
+&"equip": SubResource("Animation_oul6g"),
+&"intro": SubResource("Animation_rkbax")
+}
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_onrkg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_32hag")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_32hag")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_uw77l")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_x7c3f"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_65viv"]
+animations = []
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_32hag"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tqiix"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e7oew"]
+animations = [{
+"frames": [],
+"loop": false,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c35mf"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[node name="Player" type="CharacterBody2D" unique_id=1868599241 groups=["player"]]
+collision_layer = 36
+collision_mask = 35
+slide_on_ceiling = false
+script = ExtResource("1_boad6")
+
+[node name="CollisionNormal" type="CollisionShape2D" parent="." unique_id=471860809]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_sh265")
+
+[node name="CollisionDash" type="CollisionShape2D" parent="." unique_id=308051907]
+shape = SubResource("RectangleShape2D_4flbx")
+disabled = true
+
+[node name="VisualSequencePlayer" type="Node" parent="." unique_id=2144864865]
+script = ExtResource("23_knn7v")
+sequence_library = Array[ExtResource("24_7pqkx")]([ExtResource("25_uw77l"), ExtResource("5_7pqkx")])
+
+[node name="StateMachine" type="Node" parent="." unique_id=972487075]
+script = ExtResource("8_rgyib")
+metadata/_custom_type_script = "uid://biyhuwhr53ywv"
+
+[node name="Idle" type="Node" parent="StateMachine" unique_id=1029136870]
+script = ExtResource("9_hg6s5")
+metadata/_custom_type_script = "uid://di1kk7rbaqxvl"
+
+[node name="Jump" type="Node" parent="StateMachine" unique_id=1742359500]
+script = ExtResource("10_8t03j")
+metadata/_custom_type_script = "uid://di1kk7rbaqxvl"
+
+[node name="Intro" type="Node" parent="StateMachine" unique_id=1108063575]
+script = ExtResource("13_yllr7")
+metadata/_custom_type_script = "uid://di1kk7rbaqxvl"
+
+[node name="Run" type="Node" parent="StateMachine" unique_id=123859128]
+script = ExtResource("7_boad6")
+metadata/_custom_type_script = "uid://di1kk7rbaqxvl"
+
+[node name="Dash" type="Node" parent="StateMachine" unique_id=631581125]
+script = ExtResource("8_hg6s5")
+dash_spark_def = ExtResource("12_jd2rm")
+dash_smoke_def = ExtResource("13_q28gw")
+smoke_offset = Vector2(-10, 10)
+metadata/_custom_type_script = "uid://di1kk7rbaqxvl"
+
+[node name="Fall" type="Node" parent="StateMachine" unique_id=1031334965]
+script = ExtResource("9_8t03j")
+metadata/_custom_type_script = "uid://di1kk7rbaqxvl"
+
+[node name="Land" type="Node" parent="StateMachine" unique_id=1709800]
+script = ExtResource("10_2ieo8")
+metadata/_custom_type_script = "uid://di1kk7rbaqxvl"
+
+[node name="AirDash" type="Node" parent="StateMachine" unique_id=2141480847]
+script = ExtResource("11_2ieo8")
+metadata/_custom_type_script = "uid://di1kk7rbaqxvl"
+
+[node name="SaberUnequip" type="Node" parent="StateMachine" unique_id=842928347]
+script = ExtResource("11_yllr7")
+metadata/_custom_type_script = "uid://di1kk7rbaqxvl"
+
+[node name="SaberAttack" type="Node" parent="StateMachine" unique_id=1777627339]
+script = ExtResource("12_yllr7")
+metadata/_custom_type_script = "uid://di1kk7rbaqxvl"
+
+[node name="WallSlide" type="Node" parent="StateMachine" unique_id=737366266]
+script = ExtResource("13_kb6p2")
+metadata/_custom_type_script = "uid://di1kk7rbaqxvl"
+
+[node name="WallKick" type="Node" parent="StateMachine" unique_id=1989035118]
+script = ExtResource("14_wodsf")
+metadata/_custom_type_script = "uid://di1kk7rbaqxvl"
+
+[node name="Hover" type="Node" parent="StateMachine" unique_id=962830495]
+script = ExtResource("15_tqiix")
+fx_offset_idle = Vector2(1, -1)
+fx_offset_front = Vector2(1, -1)
+fx_offset_back = Vector2(1, 0)
+metadata/_custom_type_script = "uid://di1kk7rbaqxvl"
+
+[node name="Equip" type="Node" parent="StateMachine" unique_id=1242497140]
+script = ExtResource("17_c35mf")
+metadata/_custom_type_script = "uid://di1kk7rbaqxvl"
+
+[node name="AnimPlayer" type="AnimationPlayer" parent="." unique_id=226637733]
+root_node = NodePath("../Sprite")
+libraries/ = SubResource("AnimationLibrary_g1dw6")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=61787756]
+
+[node name="CanvasLayer (HUD)" type="CanvasLayer" parent="." unique_id=1650312114]
+
+[node name="WallRay" type="RayCast2D" parent="." unique_id=2020777182]
+target_position = Vector2(12, 0)
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1602751850]
+sprite_frames = SubResource("SpriteFrames_onrkg")
+animation = &"idle"
+
+[node name="ArmBaseSprite" type="AnimatedSprite2D" parent="." unique_id=2115533982]
+z_index = 1
+sprite_frames = SubResource("SpriteFrames_x7c3f")
+
+[node name="BusterSprite" type="AnimatedSprite2D" parent="." unique_id=1580741538]
+z_index = 2
+sprite_frames = SubResource("SpriteFrames_65viv")
+animation = &""
+
+[node name="ArmorLayerHead" type="AnimatedSprite2D" parent="." unique_id=373319008]
+z_index = 3
+sprite_frames = SubResource("SpriteFrames_32hag")
+
+[node name="ArmorLayerBody" type="AnimatedSprite2D" parent="." unique_id=60713210]
+z_index = 3
+sprite_frames = SubResource("SpriteFrames_tqiix")
+
+[node name="ArmorLayerArms" type="AnimatedSprite2D" parent="." unique_id=1500399515]
+z_index = 3
+sprite_frames = SubResource("SpriteFrames_e7oew")
+animation = &"new_animation"
+
+[node name="ArmorLayerLegs" type="AnimatedSprite2D" parent="." unique_id=1416566349]
+z_index = 3
+sprite_frames = SubResource("SpriteFrames_c35mf")
+animation = &"new_animation"
+
+[node name="ArmBaseLayer" type="Node" parent="." unique_id=1588764210]
+script = ExtResource("21_x7c3f")
+
+[node name="BusterLayer" type="Node" parent="." unique_id=908282655]
+script = ExtResource("20_x7c3f")
+
+[node name="ChargeSystem" type="Node" parent="." unique_id=2073519523]
+script = ExtResource("21_bjvpn")
+charge_fx_def = ExtResource("27_rptt4")
+shoot_effect_lv3 = ExtResource("28_r7pn3")
+
+[node name="VisualLibrary" type="Node" parent="." unique_id=232548480]
+script = ExtResource("22_bjvpn")
+
+[node name="FXComponent" type="Node" parent="." unique_id=800867587]
+script = ExtResource("35_q28gw")
+attachments = Array[ExtResource("36_pnw6m")]([ExtResource("37_1so5t")])
+metadata/_custom_type_script = "uid://bde0hu0lhud8r"
+
+[node name="SpawnRight_idle" type="Marker2D" parent="." unique_id=185020685]
+position = Vector2(18, 3)
+
+[node name="SpawnLeft_idle" type="Marker2D" parent="." unique_id=44280261]
+position = Vector2(-18, 3)
+
+[node name="SpawnRight_walk" type="Marker2D" parent="." unique_id=214696288]
+position = Vector2(28, 1)
+
+[node name="SpawnLeft_walk" type="Marker2D" parent="." unique_id=1876345804]
+position = Vector2(-28, 1)
+
+[node name="ChargePoint" type="Marker2D" parent="." unique_id=298012957]
+position = Vector2(-2, 5)
+
+[node name="HoverIdlePoint" type="Marker2D" parent="." unique_id=1252447321]
+position = Vector2(-1, 0)
+
+[node name="HoverFrontPoint" type="Marker2D" parent="." unique_id=401797370]
+position = Vector2(0, -1)
+
+[node name="HoverBackPoint" type="Marker2D" parent="." unique_id=868796277]
+position = Vector2(-2, 0)
+
+[node name="DashSpark" type="Marker2D" parent="." unique_id=579369140]
+position = Vector2(0, 7)

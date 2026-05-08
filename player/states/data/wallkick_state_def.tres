@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="StateDefinition" format=3 uid="uid://b12tm6quk47q5"]
+
+[ext_resource type="Script" uid="uid://di1m127ww1cjj" path="res://player/states/data/StateDefinition.gd" id="1_5mi7o"]
+[ext_resource type="Script" uid="uid://3jthrltmhja5" path="res://player/states/WallKick.gd" id="2_8o731"]
+[ext_resource type="Resource" uid="uid://dk11kjjbikhnr" path="res://player/states/data/wallkick_vsdata.tres" id="3_ak3ke"]
+
+[resource]
+script = ExtResource("1_5mi7o")
+state_name = "wallkick"
+state_script = ExtResource("2_8o731")
+visual_data = ExtResource("3_ak3ke")
+metadata/_custom_type_script = "uid://di1m127ww1cjj"

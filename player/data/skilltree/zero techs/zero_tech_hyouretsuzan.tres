@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="InputTechnique" format=3 uid="uid://c5shgjtxwgrw5"]
+
+[ext_resource type="Script" uid="uid://yucvqpka04di" path="res://player/data/skilltree/InputTechnique.gd" id="1_bx8br"]
+
+[resource]
+script = ExtResource("1_bx8br")
+modifiers = Array[String](["move_down"])
+target_state = "ZeroHyouretsuzan"
+metadata/_custom_type_script = "uid://yucvqpka04di"

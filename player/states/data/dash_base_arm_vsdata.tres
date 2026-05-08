@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="StateBaseArmVisualData" format=3 uid="uid://bnvvrrbstbn6r"]
+
+[ext_resource type="Script" uid="uid://cenvwn3nqdr5c" path="res://player/states/data/StateBaseArmVisualData.gd" id="1_v571e"]
+
+[resource]
+script = ExtResource("1_v571e")
+main_file = "_arm_dash"
+main_anim = "dash"
+is_loop = false
+metadata/_custom_type_script = "uid://cenvwn3nqdr5c"

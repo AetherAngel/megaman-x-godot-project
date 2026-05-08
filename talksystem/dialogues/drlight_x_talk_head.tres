@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="StepDialogue" format=3 uid="uid://bn38rqg2qu8kg"]
+
+[ext_resource type="Resource" uid="uid://ivbkhwwfow31" path="res://talksystem/dialogues/drlight_head_x.tres" id="1_8uuc3"]
+[ext_resource type="Script" uid="uid://bh4t0tasg40hp" path="res://talksystem/steps/StepDialogue.gd" id="1_ijw67"]
+
+[resource]
+script = ExtResource("1_ijw67")
+dialogue = ExtResource("1_8uuc3")
+metadata/_custom_type_script = "uid://bh4t0tasg40hp"

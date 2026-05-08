@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="StateArmorVisualData" format=3 uid="uid://bxswwhofohvue"]
+
+[ext_resource type="Script" uid="uid://b1711obvqqdr8" path="res://player/states/data/StateArmorVisualData.gd" id="1_mhjls"]
+
+[resource]
+script = ExtResource("1_mhjls")
+main_action = "wallkick"
+main_file = "fourth"
+main_anim = "wallkick"
+is_loop = false
+metadata/_custom_type_script = "uid://b1711obvqqdr8"

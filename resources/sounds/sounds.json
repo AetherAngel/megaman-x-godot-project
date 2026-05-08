@@ -1,0 +1,28 @@
+{
+  "music": {
+	"mmx4-select3": { "file": "mmx4_stageselect_snes.wav", "volume_db": -8.0 },
+	"stage_test":   { "file": "stage_test.wav",   "volume_db": -20.0  },
+	"stage_sigma":  { "file": "stage_sigma.wav",  "volume_db": -8.0  },
+	"dr_light":  	{ "file": "dr_light_theme.wav",  "volume_db": -20.0  },
+	"stage_skylagoon":  	{ "file": "mmx4_skylagoon.wav",  "volume_db": -8.0  },
+	"stage_magmadragon":  	{ "file": "mmx4_magmadragon.wav",  "volume_db": -8.0  } 
+  },
+  "sfx": {
+	"jump":               { "file": "jump.wav",               "volume_db": 0.0, "pitch": 1.0 },
+	"shoot":              { "file": "shoot.wav",              "volume_db": 0.0, "pitch": 1.0  },
+	"dash":               { "file": "dash.wav",               "volume_db": 0.0, "pitch": 1.0 },
+	"land":               { "file": "land.wav",               "volume_db": 0.0, "pitch": 1.0 },
+	"hurt":               { "file": "hurt.wav",               "volume_db": 0.0, "pitch": 1.0 },
+	"snd_player_success": { "file": "snd_player_success.wav", "volume_db": 0.0, "pitch": 1.0 },
+	"snd_ready":          { "file": "snd_ready.wav",          "volume_db": 0.0, "pitch": 1.0 },
+	"snd_saber":          { "file": "snd_saber.wav",          "volume_db": 0.0, "pitch": 1.0 },
+	"snd_pause":		  { "file": "snd_pause.wav",		  "volume_db": 0.0, "pitch": 1.0},
+	"charging_shot":        { "file": "charging_shot.wav",		  "volume_db": -15.0, "pitch": 1.0},
+	"charged_shot1":        { "file": "charged_shot.wav",		  "volume_db": -15.0, "pitch": 1.0},
+	"charged_shot2":        { "file": "charged_shot.wav",		  "volume_db": -25.0, "pitch": 0.7}
+  },
+  "stage_music": {
+	"test":   "stage_test",
+	"sigma1": "stage_sigma"
+  }
+}

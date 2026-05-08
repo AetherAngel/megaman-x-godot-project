@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="StateDefinition" format=3 uid="uid://brviiywtcmkqi"]
+
+[ext_resource type="Script" uid="uid://di1m127ww1cjj" path="res://player/states/data/StateDefinition.gd" id="1_n1ptk"]
+[ext_resource type="Script" uid="uid://c3ilny3rbm3r1" path="res://player/states/Equip.gd" id="2_sl6cs"]
+[ext_resource type="Resource" uid="uid://bloyv1sr8kiqp" path="res://player/states/data/equip_vsdata.tres" id="3_hhblv"]
+
+[resource]
+script = ExtResource("1_n1ptk")
+state_name = "Equip"
+state_script = ExtResource("2_sl6cs")
+has_transition = true
+visual_data = ExtResource("3_hhblv")
+metadata/_custom_type_script = "uid://di1m127ww1cjj"

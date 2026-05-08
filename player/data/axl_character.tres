@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PlayerCharacterData" format=3 uid="uid://dflc5jr81ov4c"]
+
+[ext_resource type="Script" uid="uid://h6o2bdlxa27a" path="res://player/data/PlayerCharacterData.gd" id="1_esb4y"]
+
+[resource]
+script = ExtResource("1_esb4y")
+character_id = "Axl"
+display_name = "Mega Man Axl"
+base_folder = "spr_axl"
+default_weapon = "gun"
+special_weapon = "gun"
+metadata/_custom_type_script = "uid://h6o2bdlxa27a"

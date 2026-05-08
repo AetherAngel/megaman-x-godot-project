@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="StateBusterVisualData" format=3 uid="uid://cs4q2ifc63qdg"]
+
+[ext_resource type="Script" uid="uid://cko0c8nu77gnw" path="res://player/states/data/StateBusterVisualData.gd" id="1_0b6c8"]
+
+[resource]
+script = ExtResource("1_0b6c8")
+main_file = "_buster_dash"
+main_anim = "dashshoot"
+metadata/_custom_type_script = "uid://cko0c8nu77gnw"

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="InputTechnique" format=3 uid="uid://cb41p5lmfkohn"]
+
+[ext_resource type="Script" uid="uid://yucvqpka04di" path="res://player/data/skilltree/InputTechnique.gd" id="1_3djdx"]
+
+[resource]
+script = ExtResource("1_3djdx")
+action = "special_weapon"
+modifiers = Array[String](["move_left", "move_right"])
+any_modifier = true
+target_state = "ZeroRaikousen"
+metadata/_custom_type_script = "uid://yucvqpka04di"

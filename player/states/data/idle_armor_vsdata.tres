@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="StateArmorVisualData" format=3 uid="uid://qh3gjrmbihkr"]
+
+[ext_resource type="Script" uid="uid://b1711obvqqdr8" path="res://player/states/data/StateArmorVisualData.gd" id="1_mxpo0"]
+
+[resource]
+script = ExtResource("1_mxpo0")
+main_action = "idle"
+main_file = "fourth"
+main_anim = "idle"
+armor_shoot_file = "fourth_shoot"
+armor_shoot_main_anim = "idleshoot"
+buster_file = "fourth_buster"
+buster_anim = "idleshoot"
+metadata/_custom_type_script = "uid://b1711obvqqdr8"

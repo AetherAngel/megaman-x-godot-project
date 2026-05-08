@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="InputTechnique" format=3 uid="uid://bmskiixim37tx"]
+
+[ext_resource type="Script" uid="uid://yucvqpka04di" path="res://player/data/skilltree/InputTechnique.gd" id="1_boeee"]
+
+[resource]
+script = ExtResource("1_boeee")
+requires_flag = "can_double_jump"
+flag_value = false
+target_state = "ZeroMikazukizan"
+metadata/_custom_type_script = "uid://yucvqpka04di"

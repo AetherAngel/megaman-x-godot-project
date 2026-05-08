@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ArmorData" format=3 uid="uid://43v0xjiqr68w"]
+
+[ext_resource type="Script" uid="uid://yucvqpka04di" path="res://player/data/skilltree/InputTechnique.gd" id="1_0pwq6"]
+[ext_resource type="Script" uid="uid://ci333wojl8627" path="res://player/data/armors/ArmorData.gd" id="1_osjue"]
+[ext_resource type="Script" uid="uid://clbbtl2pobe8j" path="res://player/data/armors/ArmorLayer.gd" id="2_o4f1r"]
+
+[resource]
+script = ExtResource("1_osjue")
+armor_id = "normal"
+armor_name = "Normal Armor"
+can_wall_kick = true
+metadata/_custom_type_script = "uid://ci333wojl8627"

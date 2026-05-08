@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DialogueLine" format=3 uid="uid://u0j4nrvndk1e"]
+
+[ext_resource type="Script" uid="uid://8bmfodtxaosy" path="res://talksystem/DialogueLine.gd" id="1_64g4i"]
+
+[resource]
+script = ExtResource("1_64g4i")
+speaker = "Dr. Light"
+text = "This capsule contains the head part of Fourth Armor, step inside X and equip this part."
+mugshot = "drlight_placeholder"
+metadata/_custom_type_script = "uid://8bmfodtxaosy"

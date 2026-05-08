@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="ArmorData" format=3 uid="uid://76riyuj34c7o"]
+
+[ext_resource type="Script" uid="uid://ci333wojl8627" path="res://player/data/armors/ArmorData.gd" id="1_4qhym"]
+[ext_resource type="Script" uid="uid://yucvqpka04di" path="res://player/data/skilltree/InputTechnique.gd" id="1_ljas0"]
+[ext_resource type="Resource" uid="uid://c5shgjtxwgrw5" path="res://player/data/skilltree/zero techs/zero_tech_hyouretsuzan.tres" id="2_50iu8"]
+[ext_resource type="Resource" uid="uid://bmskiixim37tx" path="res://player/data/skilltree/zero techs/zero_tech_mikazukizan.tres" id="3_i2m5t"]
+[ext_resource type="Resource" uid="uid://b50x1jp5axr62" path="res://player/data/skilltree/zero techs/zero_tech_raikousen_air.tres" id="4_krq56"]
+[ext_resource type="Resource" uid="uid://bkab6gqu34xlr" path="res://player/data/skilltree/zero techs/zero_tech_shippuuga.tres" id="5_pmgw8"]
+[ext_resource type="Resource" uid="uid://budux3g0ysnc3" path="res://player/data/skilltree/zero techs/zero_tech_ryuenjin.tres" id="6_p746y"]
+[ext_resource type="Resource" uid="uid://bt6w0u0edd6ok" path="res://player/data/skilltree/zero techs/zero_tech_denjin.tres" id="7_r8aec"]
+[ext_resource type="Resource" uid="uid://cb41p5lmfkohn" path="res://player/data/skilltree/zero techs/zero_tech_raikousen.tres" id="8_5a3iu"]
+[ext_resource type="Resource" uid="uid://co4jsh5cgsytk" path="res://player/data/skilltree/zero techs/zero_tech_wallattack.tres" id="10_i2m5t"]
+
+[resource]
+script = ExtResource("1_4qhym")
+armor_id = "BaseZ"
+armor_name = "Normal Zero"
+has_air_dash = true
+has_double_jump = true
+can_wall_kick = true
+ground_techniques = Array[ExtResource("1_ljas0")]([ExtResource("6_p746y"), ExtResource("7_r8aec"), ExtResource("8_5a3iu")])
+air_techniques = Array[ExtResource("1_ljas0")]([ExtResource("2_50iu8"), ExtResource("3_i2m5t"), ExtResource("4_krq56")])
+dash_techniques = Array[ExtResource("1_ljas0")]([ExtResource("5_pmgw8")])
+wall_techniques = Array[ExtResource("1_ljas0")]([ExtResource("10_i2m5t")])
+metadata/_custom_type_script = "uid://ci333wojl8627"

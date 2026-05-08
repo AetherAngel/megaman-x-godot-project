@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="VisualSequenceData" format=3 uid="uid://byku7bqf6svq1"]
+
+[ext_resource type="Script" uid="uid://b1djsw3q6bify" path="res://player/states/data/VisualSequenceData.gd" id="1_7j7ms"]
+[ext_resource type="Script" uid="uid://c2cfexudcd52x" path="res://player/states/data/VisualSequenceStepData.gd" id="2_41o7e"]
+[ext_resource type="Resource" uid="uid://bjmlbarbleap0" path="res://player/states/data/intropart1_vstd.tres" id="3_41o7e"]
+[ext_resource type="Resource" uid="uid://cg4wnsurywoie" path="res://player/states/data/intropart2_vstd.tres" id="4_n7tuk"]
+[ext_resource type="Resource" uid="uid://byge1smmbx1ya" path="res://player/states/data/intropart3_vstd.tres" id="5_hwms0"]
+[ext_resource type="Resource" uid="uid://cc2h28jvpkkel" path="res://player/states/data/intropart4_vstd.tres" id="6_6mpbs"]
+
+[resource]
+script = ExtResource("1_7j7ms")
+sequence_name = "Intro"
+steps = Array[ExtResource("2_41o7e")]([ExtResource("3_41o7e"), ExtResource("4_n7tuk"), ExtResource("5_hwms0"), ExtResource("6_6mpbs")])
+metadata/_custom_type_script = "uid://b1djsw3q6bify"

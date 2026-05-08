@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="StateBaseVisualData" format=3 uid="uid://dayc21esqey5x"]
+
+[ext_resource type="Script" uid="uid://0v8irxqn21kk" path="res://player/states/data/StateBaseVisualData.gd" id="1_fpkap"]
+
+[resource]
+script = ExtResource("1_fpkap")
+main_file = "_intro"
+main_anim = "intro_begin"
+is_loop = false
+metadata/_custom_type_script = "uid://0v8irxqn21kk"

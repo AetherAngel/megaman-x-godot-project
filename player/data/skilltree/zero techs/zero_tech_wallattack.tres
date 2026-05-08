@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="InputTechnique" format=3 uid="uid://co4jsh5cgsytk"]
+
+[ext_resource type="Script" uid="uid://yucvqpka04di" path="res://player/data/skilltree/InputTechnique.gd" id="1_tdi6o"]
+
+[resource]
+script = ExtResource("1_tdi6o")
+target_state = "ZeroWallAttack"
+metadata/_custom_type_script = "uid://yucvqpka04di"

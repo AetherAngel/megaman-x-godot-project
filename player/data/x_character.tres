@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PlayerCharacterData" format=3 uid="uid://cokhtes6hmk68"]
+
+[ext_resource type="Script" uid="uid://h6o2bdlxa27a" path="res://player/data/PlayerCharacterData.gd" id="1_c00ho"]
+
+[resource]
+script = ExtResource("1_c00ho")
+armor_name = "normal_armor"
+charge_max_level = 3
+has_stock = true
+has_plasma = true
+buster_folder = "spr_x_buster"
+metadata/_custom_type_script = "uid://h6o2bdlxa27a"

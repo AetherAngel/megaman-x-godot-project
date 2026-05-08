@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://l0oejm6farnn"]
+
+[ext_resource type="Script" uid="uid://b251id0blwjj6" path="res://player/objects/projectiles/ZeroProjectile.gd" id="1_144h5"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pv88m"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_144h5"]
+
+[node name="ZeroProjectile" type="Area2D" unique_id=1495181357]
+script = ExtResource("1_144h5")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=379442869]
+sprite_frames = SubResource("SpriteFrames_pv88m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=587023567]
+shape = SubResource("RectangleShape2D_144h5")

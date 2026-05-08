@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="VisualSequenceStepData" format=3 uid="uid://cg4wnsurywoie"]
+
+[ext_resource type="Resource" uid="uid://dayc21esqey5x" path="res://player/states/data/intro_begin_base_vsdata.tres" id="1_fq873"]
+[ext_resource type="Script" uid="uid://c2cfexudcd52x" path="res://player/states/data/VisualSequenceStepData.gd" id="2_mb05c"]
+
+[resource]
+script = ExtResource("2_mb05c")
+base_visual = ExtResource("1_fq873")
+metadata/_custom_type_script = "uid://c2cfexudcd52x"

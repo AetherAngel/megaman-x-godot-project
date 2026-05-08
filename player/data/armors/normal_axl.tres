@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ArmorData" format=3 uid="uid://b4t41hweu5ow"]
+
+[ext_resource type="Script" uid="uid://ci333wojl8627" path="res://player/data/armors/ArmorData.gd" id="1_posmo"]
+
+[resource]
+script = ExtResource("1_posmo")
+armor_id = "BaseAxl"
+armor_name = "Normal Axl"
+has_air_dash = true
+can_wall_kick = true
+metadata/_custom_type_script = "uid://ci333wojl8627"

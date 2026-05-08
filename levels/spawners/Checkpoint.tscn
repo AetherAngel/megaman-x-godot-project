@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://bs6td5g1f4tgs"]
+
+[ext_resource type="Texture2D" uid="uid://dcatlgacabbem" path="res://sprites/spr_checkpoint_stand/8bf94c87-534b-45f9-843e-34135434bbd4.png" id="1_3i7y5"]
+[ext_resource type="Script" uid="uid://4m2ua7ru6347" path="res://levels/spawners/checkpoint.gd" id="1_uafux"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kdbss"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_3i7y5")
+}],
+"loop": true,
+"name": &"active",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uafux"]
+size = Vector2(29, 5.375)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jhdhe"]
+size = Vector2(43, 6)
+
+[node name="Checkpoint" type="Node2D" unique_id=1985951108]
+script = ExtResource("1_uafux")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=191777341]
+position = Vector2(0, 37)
+sprite_frames = SubResource("SpriteFrames_kdbss")
+animation = &"active"
+
+[node name="CenterPoint" type="Marker2D" parent="." unique_id=1625475195]
+position = Vector2(0, 30)
+
+[node name="PlayerSpawner" type="Marker2D" parent="." unique_id=976073397]
+position = Vector2(0, -5)
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=724636631]
+position = Vector2(-40, 0)
+collision_mask = 36
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=570126873]
+position = Vector2(40, 31.6875)
+shape = SubResource("RectangleShape2D_uafux")
+
+[node name="WalkableArea" type="StaticBody2D" parent="." unique_id=1852817018]
+
+[node name="WalkCollision" type="CollisionShape2D" parent="WalkableArea" unique_id=587775231]
+position = Vector2(-0.5, 38)
+shape = SubResource("RectangleShape2D_jhdhe")

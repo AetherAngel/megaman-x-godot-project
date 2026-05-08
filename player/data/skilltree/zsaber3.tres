@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="AttackData" format=3 uid="uid://dhyfhqo5fklga"]
+
+[ext_resource type="Script" uid="uid://bf2bwl3lq8jh7" path="res://player/data/skilltree/attackdata.gd" id="1_tsx7u"]
+
+[resource]
+script = ExtResource("1_tsx7u")
+set_name = "atk_3"
+animation_name = "zero_atk_3"
+unequip_animation = "zero_unequip"
+hold_duration = 1.0
+cancel_start = 0.5
+next_combo_state = "atk_1"
+is_final_combo = true
+sfx_name = "snd_saber"
+sfx_pitch = 0.65
+unlocked = true
+metadata/_custom_type_script = "uid://bf2bwl3lq8jh7"

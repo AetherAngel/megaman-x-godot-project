@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="InputTechnique" format=3 uid="uid://bkab6gqu34xlr"]
+
+[ext_resource type="Script" uid="uid://yucvqpka04di" path="res://player/data/skilltree/InputTechnique.gd" id="1_4y8s2"]
+
+[resource]
+script = ExtResource("1_4y8s2")
+target_state = "ZeroShippuuga"
+metadata/_custom_type_script = "uid://yucvqpka04di"

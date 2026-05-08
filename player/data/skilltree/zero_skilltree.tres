@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="SkillTree" format=3 uid="uid://dwgjvpfk0l6v6"]
+
+[ext_resource type="Script" uid="uid://bf2bwl3lq8jh7" path="res://player/data/skilltree/attackdata.gd" id="1_a4ovi"]
+[ext_resource type="Resource" uid="uid://ccj2ni0wdx0tq" path="res://player/data/skilltree/zsaber1.tres" id="2_k5ege"]
+[ext_resource type="Script" uid="uid://bqupsiv4iemyv" path="res://player/data/skilltree/skilltree.gd" id="2_kry38"]
+[ext_resource type="Resource" uid="uid://yrvwrjp8jvs1" path="res://player/data/skilltree/zsaber2.tres" id="3_mchbu"]
+[ext_resource type="Resource" uid="uid://dhyfhqo5fklga" path="res://player/data/skilltree/zsaber3.tres" id="4_tprc6"]
+
+[resource]
+script = ExtResource("2_kry38")
+basic_combo = Array[ExtResource("1_a4ovi")]([ExtResource("2_k5ege"), ExtResource("3_mchbu"), ExtResource("4_tprc6")])
+metadata/_custom_type_script = "uid://bqupsiv4iemyv"

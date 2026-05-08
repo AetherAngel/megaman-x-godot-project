@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="StateArmorVisualData" format=3 uid="uid://yjvw8bqngpoo"]
+
+[ext_resource type="Script" uid="uid://b1711obvqqdr8" path="res://player/states/data/StateArmorVisualData.gd" id="1_ufby1"]
+
+[resource]
+script = ExtResource("1_ufby1")
+main_action = "walk"
+has_transition = true
+transition_file = "fourth"
+transition_anim = "towalk"
+main_file = "fourth"
+main_anim = "walkloop"
+armor_shoot_file = "fourth"
+armor_shoot_transition_anim = "towalk"
+armor_shoot_main_anim = "walkloop"
+buster_has_transition = true
+buster_transition_file = "fourth_buster"
+buster_transition_anim = "towalk"
+buster_file = "fourth_buster"
+buster_anim = "walkloop"
+metadata/_custom_type_script = "uid://b1711obvqqdr8"

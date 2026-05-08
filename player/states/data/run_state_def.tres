@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="StateDefinition" format=3 uid="uid://dcrrs7sope5uy"]
+
+[ext_resource type="Script" uid="uid://di1m127ww1cjj" path="res://player/states/data/StateDefinition.gd" id="1_uklom"]
+[ext_resource type="Script" uid="uid://c7vxmd1g07tow" path="res://player/states/Run.gd" id="2_c1l1b"]
+[ext_resource type="Resource" uid="uid://8oqc2nwj4k57" path="res://player/states/data/run_vsdata.tres" id="3_c1l1b"]
+
+[resource]
+script = ExtResource("1_uklom")
+state_name = "Run"
+state_script = ExtResource("2_c1l1b")
+has_transition = true
+visual_data = ExtResource("3_c1l1b")
+metadata/_custom_type_script = "uid://di1m127ww1cjj"

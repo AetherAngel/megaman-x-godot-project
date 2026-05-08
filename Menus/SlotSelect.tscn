@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://7cjvngsi4lci"]
+
+[node name="TextureButton" type="TextureButton" unique_id=820995791]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1469257841]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="." unique_id=546358343]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0

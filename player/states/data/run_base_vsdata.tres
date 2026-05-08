@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="StateBaseVisualData" format=3 uid="uid://1gyu60yj2rgw"]
+
+[ext_resource type="Script" uid="uid://0v8irxqn21kk" path="res://player/states/data/StateBaseVisualData.gd" id="1_sc56p"]
+
+[resource]
+script = ExtResource("1_sc56p")
+has_transition = true
+transition_file = "_walk"
+transition_anim = "towalk"
+main_file = "_walk"
+main_anim = "walkloop"
+shoot_file = "_walk_shoot"
+shoot_transition_anim = "towalk"
+shoot_main_anim = "walkloop"
+metadata/_custom_type_script = "uid://cenvwn3nqdr5c"

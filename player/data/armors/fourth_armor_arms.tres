@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ArmorLayer" format=3 uid="uid://bdt4cwii08bnj"]
+
+[ext_resource type="Script" uid="uid://clbbtl2pobe8j" path="res://player/data/armors/ArmorLayer.gd" id="1_kcd0j"]
+
+[resource]
+script = ExtResource("1_kcd0j")
+slot = "arms"
+can_wall_kick = true
+has_charge_weapons = true
+metadata/_custom_type_script = "uid://clbbtl2pobe8j"

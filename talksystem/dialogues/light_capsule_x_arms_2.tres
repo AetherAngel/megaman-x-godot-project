@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DialogueLine" format=3 uid="uid://dyfbg250sjqtw"]
+
+[ext_resource type="Script" uid="uid://8bmfodtxaosy" path="res://talksystem/DialogueLine.gd" id="1_evxm6"]
+
+[resource]
+script = ExtResource("1_evxm6")
+speaker = "Dr. Light"
+text = "It takes a while to charge, but you can fire a charged shot at any time you so wish with it."
+mugshot = "drlight_placeholder"
+metadata/_custom_type_script = "uid://8bmfodtxaosy"

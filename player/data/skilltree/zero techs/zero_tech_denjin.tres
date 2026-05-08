@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="InputTechnique" format=3 uid="uid://bt6w0u0edd6ok"]
+
+[ext_resource type="Script" uid="uid://yucvqpka04di" path="res://player/data/skilltree/InputTechnique.gd" id="1_qifk1"]
+
+[resource]
+script = ExtResource("1_qifk1")
+action = "special_weapon"
+modifiers = Array[String](["move_up"])
+target_state = "ZeroDenjin"
+metadata/_custom_type_script = "uid://yucvqpka04di"

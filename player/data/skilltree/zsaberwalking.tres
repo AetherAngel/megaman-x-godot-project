@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="AttackData" format=3 uid="uid://ch0ovjb121x84"]
+
+[ext_resource type="Script" uid="uid://bf2bwl3lq8jh7" path="res://player/data/skilltree/attackdata.gd" id="1_n8i0p"]
+
+[resource]
+script = ExtResource("1_n8i0p")
+metadata/_custom_type_script = "uid://bf2bwl3lq8jh7"

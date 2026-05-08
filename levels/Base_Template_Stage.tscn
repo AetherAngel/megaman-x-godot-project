@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://daqaj34f1vuvd"]
+
+[ext_resource type="Script" uid="uid://ceard18cowa2m" path="res://levels/test_stage/ReadySystem.gd" id="2_ox1ej"]
+[ext_resource type="PackedScene" uid="uid://dbebdytn3ceue" path="res://Menus/DebugPanel.tscn" id="3_s1wpk"]
+[ext_resource type="Texture2D" uid="uid://cydufwq2xgp6q" path="res://resources/pause.png" id="4_s3ume"]
+[ext_resource type="PackedScene" uid="uid://b36kb0vb7nxx3" path="res://talksystem/DialogueBox.tscn" id="5_81nr4"]
+[ext_resource type="Script" uid="uid://dqacfnqy0h7go" path="res://talksystem/DialogueBox.gd" id="6_f0oam"]
+[ext_resource type="Script" uid="uid://dlw8i7rsuuj8j" path="res://levels/ReadyText.gd" id="8_7dehk"]
+[ext_resource type="PackedScene" uid="uid://dei4yhbcq83sw" path="res://player/GMCamera.tscn" id="8_ox1ej"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7dehk"]
+
+[node name="BaseTemplateStage" type="Node2D" unique_id=2084639981]
+script = ExtResource("8_7dehk")
+
+[node name="HUDLayer" type="CanvasLayer" parent="." unique_id=1701649666]
+process_mode = 3
+script = ExtResource("2_ox1ej")
+
+[node name="DebugPanel" parent="HUDLayer" unique_id=994210464 groups=["debug_panel"] instance=ExtResource("3_s1wpk")]
+offset_left = 12.85
+offset_top = 11.0
+offset_right = 12.85
+offset_bottom = 11.0
+metadata/_edit_use_anchors_ = true
+
+[node name="PausePNG" type="TextureRect" parent="HUDLayer" unique_id=1710848247 groups=["pause_png"]]
+visible = false
+anchors_preset = -1
+anchor_right = 1.0
+offset_right = -358.0
+offset_bottom = 16.0
+grow_horizontal = 2
+texture = ExtResource("4_s3ume")
+stretch_mode = 3
+
+[node name="DialogueBox" parent="HUDLayer" unique_id=1610590490 instance=ExtResource("5_81nr4")]
+script = ExtResource("6_f0oam")
+metadata/_edit_use_anchors_ = true
+
+[node name="ReadySprite" type="AnimatedSprite2D" parent="HUDLayer" unique_id=2023180250 groups=["ready_png"]]
+position = Vector2(211.85, 56)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_7dehk")
+
+[node name="Entities" type="Node" parent="." unique_id=1601566329]
+
+[node name="GmCamera" parent="." unique_id=65254969 instance=ExtResource("8_ox1ej")]

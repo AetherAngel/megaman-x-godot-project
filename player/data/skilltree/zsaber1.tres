@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="AttackData" format=3 uid="uid://ccj2ni0wdx0tq"]
+
+[ext_resource type="Script" uid="uid://bf2bwl3lq8jh7" path="res://player/data/skilltree/attackdata.gd" id="1_m226w"]
+
+[resource]
+script = ExtResource("1_m226w")
+set_name = "atk_1"
+animation_name = "zero_atk_1"
+unequip_animation = "zero_unequip"
+hold_duration = 0.55
+cancel_start = 0.25
+next_combo_state = "atk_2"
+sfx_name = "snd_saber"
+unlocked = true
+metadata/_custom_type_script = "uid://bf2bwl3lq8jh7"
