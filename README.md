@@ -64,6 +64,7 @@ All architecture decisions, integration, implementation, and system orchestratio
 - MegaMan-X-Engine
 - Fourth Armor sprite by Samuel Higino and Darksamu993
 
+## This is a non-profit fan game. All rights to the original franchise, characters, music, and related assets belong to CAPCOM.
 ---
 
 # Project Goal
