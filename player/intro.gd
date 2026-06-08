@@ -17,7 +17,7 @@ func _finish_intro() -> void:
 	player.can_control = true
 	GameManager.set_input_mode(GameManager.InputMode.PLAYER)
 	InputManager.can_process_player_input = true
-	player.state_machine.change_state("Idle")
-
+	player.state_machine.change_state("Equip")
+	
 func exit() -> void:
 	player.can_control = true

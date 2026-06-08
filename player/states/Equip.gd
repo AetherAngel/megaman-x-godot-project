@@ -38,6 +38,7 @@ func enter() -> void:
 func exit() -> void:
 	ArmorManager.unblock_visual_sync()
 	ArmorManager.resume_sync()
+	print (player.armor_path)
 
 
 func update(_delta: float) -> void:

@@ -6,7 +6,6 @@
 script = ExtResource("1_f0hlt")
 main_action = "hover"
 main_file = "fourth"
-main_anim = "idle"
+main_anim = "hoveridle"
 is_loop = false
-armor_shoot_main_anim = "idle"
 metadata/_custom_type_script = "uid://b1711obvqqdr8"

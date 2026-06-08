@@ -2,12 +2,12 @@
 extends State
 
 var dash_timer: float = 0.0
-const DASH_DURATION := 0.33
+const DASH_DURATION := 0.45
 
 @export var dash_spark_def: SpawnedParticleDef
 @export var dash_smoke_def: SpawnedParticleDef
 @export var smoke_offset: Vector2 = Vector2.ZERO
-var _smoke_anchor: Node2D
+var _smoke_spawner: FXSpawner = null
 
 func enter() -> void:
 
@@ -22,8 +22,12 @@ func enter() -> void:
 	
 		# Spawnar particulas
 	ParticleFX.spawn_at(dash_spark_def, Vector2.ZERO, Vector2.ZERO, player)
-	_smoke_anchor = ParticleFX.spawn_continuous(dash_smoke_def, Vector2.ZERO, player)
-
+	var marker: Node2D = player.get_node(dash_smoke_def.marker_path)
+	_smoke_spawner = ParticleFX.create_spawner(dash_smoke_def, marker, dash_smoke_def.offset)
+	_smoke_spawner.owner_node = player
+	_smoke_spawner.interval = dash_smoke_def.repeat_interval
+	_smoke_spawner.start()
+	
 	
 
 func update(delta: float) -> void:
@@ -39,8 +43,10 @@ func update(delta: float) -> void:
 		return
 
 	if InputManager.is_action_just_pressed("dash") and player.current_armor.has_air_dash and player.can_air_dash:
-		player.state_machine.change_state("AirDash")
-		return
+		if not player.is_on_floor():
+			player.state_machine.change_state("AirDash")
+		else:
+			return
 
 	if _check_techniques(player.current_armor.dash_techniques):
 		return
@@ -65,6 +71,6 @@ func update(delta: float) -> void:
 			player.state_machine.change_state("Idle")
 		
 func exit() -> void:
-	if is_instance_valid(_smoke_anchor):
-		_smoke_anchor.queue_free()
-	_smoke_anchor = null
+	if is_instance_valid(_smoke_spawner):
+		_smoke_spawner.queue_free()
+	_smoke_spawner = null

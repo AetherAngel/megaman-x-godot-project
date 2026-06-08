@@ -10,4 +10,5 @@ state_name = "Run"
 state_script = ExtResource("2_c1l1b")
 has_transition = true
 visual_data = ExtResource("3_c1l1b")
+self_managed_anim = true
 metadata/_custom_type_script = "uid://di1m127ww1cjj"

@@ -12,6 +12,7 @@ extends Node2D
 
 var _active: bool = false
 var _timer:  float = 0.0
+var owner_node: Node2D = null
 
 
 func _ready() -> void:
@@ -49,4 +50,4 @@ func set_direction(dir: Vector2) -> void:
 
 func _do_spawn() -> void:
 	if ParticleFX and definition:
-		ParticleFX.spawn_at(definition, global_position, spawn_direction)
+		ParticleFX.spawn_at_resolved(definition, global_position, spawn_direction, owner_node)

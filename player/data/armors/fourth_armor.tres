@@ -11,7 +11,7 @@
 [resource]
 script = ExtResource("3_joks4")
 armor_id = "1"
-armor_name = "Fourth"
+armor_name = "fourth_armor"
 armor_system = 1
 armor_layers = Array[ExtResource("2_325lq")]([ExtResource("3_aahkx"), ExtResource("4_8frql"), ExtResource("5_5hiti"), ExtResource("6_v4p1c")])
 has_air_dash = true

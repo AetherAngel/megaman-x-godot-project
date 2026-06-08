@@ -262,6 +262,26 @@ func resume_sync() -> void:
 # SISTEMA DATA-DRIVEN
 # =========================
 
+func on_anim_level_changed(armor_data: StateArmorVisualData, level_anim: String, is_shoot: bool) -> void:
+	if not _can_sync_armor() or not armor_data:
+		return
+	# Não recarrega arquivo — o arquivo já está carregado em cada node
+	# pelo on_visual_state_changed ao entrar no estado.
+	# Aqui só trocamos a animação dentro do SpriteFrames já presente,
+	# exatamente como Base e ArmBase fazem em set_anim_level.
+	for slot in _equipped_pieces:
+		if _in_transition_slots.get(slot, false):
+			continue
+		var node: AnimatedSprite2D = _player._get_layer_nodes().get(slot)
+		if not node or not node.visible or not node.sprite_frames:
+			continue
+		if node.sprite_frames.has_animation(level_anim):
+			node.play(level_anim)
+			var count := node.sprite_frames.get_frame_count(level_anim)
+			if count > 0:
+				node.frame = _player.sprite.frame % count
+
+
 func on_visual_state_changed(armor_data: StateArmorVisualData) -> void:
 	_current_armor_data = armor_data
 	_is_buster_active   = false
@@ -281,7 +301,12 @@ func on_buster_started(armor_data: StateArmorVisualData) -> void:
 	for slot in _equipped_pieces:
 		# Arms → variante buster, demais slots → variante shoot (se existir)
 		_apply_slot_from_data(slot, armor_data, slot == "arms")
-
+	# Notifica o nível atual para armor renderizar shoot no nível correto
+	if _player.visual_library._current_state_is_self_managed:
+		var level_anim := _player.visual_library._current_level_anim
+		if not level_anim.is_empty():
+			ArmorManager.on_anim_level_changed(armor_data, level_anim, true)
+			
 
 func on_buster_ended(armor_data: StateArmorVisualData) -> void:
 	_is_buster_active = false
@@ -292,65 +317,31 @@ func on_buster_ended(armor_data: StateArmorVisualData) -> void:
 		_apply_slot_from_data(slot, armor_data, false)
 
 
-func _apply_slot_from_data(slot: String, armor_data: StateArmorVisualData, is_buster_arms: bool) -> void:
+# =========================
+# APPLY SLOT — via ArmorPathMount
+# =========================
+
+func _apply_slot_from_data(slot: String, armor_data: StateArmorVisualData, is_buster_arms: bool, action_override: String = "") -> void:
 	var node: AnimatedSprite2D = _player._get_layer_nodes().get(slot)
 	if not node:
 		return
 
-	# ── Monta paths ─────────────────────────────────────────
-	# Normal:       {main_file}_{slot}_{main_action}.tres
-	#   ex: "spr_x_fourth" + "_legs_" + "walk" → spr_x_fourth_legs_walk.tres
-	#
-	# Buster arms:  {buster_file}_{main_action}.tres
-	#   ex: "spr_x_fourth_buster" + "_walk"   → spr_x_fourth_buster_walk.tres
-	
-		# Se o base já passou da transição, armor pula a transição também
-	var already_past_transition := not _player.is_transitioning_walk
-	var base_path  := "spr_x_"
-	var has_trans  := false
-	var trans_path := ""
-	var main_path  := ""
-	var trans_anim := ""
-	var main_anim  := ""
+	# action_override permite self-managed states substituírem main_action.
+	# Ex: Hover passando "hoveringfront" em vez de "idle".
+	var action := action_override if not action_override.is_empty() else armor_data.main_action
 
-	if is_buster_arms and slot == "arms":
-		has_trans  = not armor_data.armor_shoot_transition_anim.is_empty() \
-			and _player.is_transitioning_walk
-		trans_anim = armor_data.armor_shoot_transition_anim
-		main_anim  = armor_data.armor_shoot_main_anim
-		if has_trans:
-			trans_path = "res://resources/animations/" \
-				+ base_path + armor_data.buster_transition_file + "_" + armor_data.main_action + ".tres"
-		main_path = "res://resources/animations/" \
-			+ base_path + armor_data.buster_file + "_" + armor_data.main_action + ".tres"
-	elif _is_buster_active and not armor_data.armor_shoot_file.is_empty() and slot != "arms":
-		# Slots normais durante shoot — variante shoot (head, body, legs)
-		has_trans  = not armor_data.armor_shoot_transition_anim.is_empty() \
-			and _player.is_transitioning_walk
-		trans_anim = armor_data.armor_shoot_transition_anim
-		main_anim  = armor_data.armor_shoot_main_anim
-		if has_trans:
-			trans_path = "res://resources/animations/" \
-				+ base_path + armor_data.armor_shoot_file + "_" + slot + "_" + armor_data.main_action + ".tres"
-		main_path = "res://resources/animations/" \
-			+ base_path + armor_data.armor_shoot_file + "_" + slot + "_" + armor_data.main_action + ".tres"
-	else:
-		var raw_has_trans := armor_data.has_transition \
-			and not armor_data.transition_file.is_empty() \
-			and not armor_data.transition_anim.is_empty()
-		# Só usa transição se o base também está em transição
-		has_trans  = raw_has_trans and not already_past_transition
-		trans_anim = armor_data.transition_anim
-		main_anim  = armor_data.main_anim
+	# Delega toda a montagem de path ao ArmorPathMount.
+	var r := ArmorPathMount.build(
+		armor_data,
+		slot,
+		action,
+		is_buster_arms,
+		_is_buster_active,
+		_player.is_transitioning_walk
+	)
 
-		if has_trans:
-			trans_path = "res://resources/animations/" \
-				+ base_path + armor_data.transition_file + "_" + slot + "_" + armor_data.main_action + ".tres"
-		main_path = "res://resources/animations/" \
-			+ base_path + armor_data.main_file + "_" + slot + "_" + armor_data.main_action + ".tres"
-
-	var load_path  := trans_path if has_trans else main_path
-	var first_anim := trans_anim if has_trans else main_anim
+	var load_path  := r.trans_path if r.has_trans else r.main_path
+	var first_anim := r.trans_anim if r.has_trans else r.main_anim
 
 	if load_path.is_empty() or not ResourceLoader.exists(load_path):
 		node.visible = false
@@ -371,7 +362,7 @@ func _apply_slot_from_data(slot: String, armor_data: StateArmorVisualData, is_bu
 		node.visible = false
 		return
 
-	if has_trans:
+	if r.has_trans:
 		_in_transition_slots[slot] = true
 		node.play(first_anim)
 
@@ -379,12 +370,16 @@ func _apply_slot_from_data(slot: String, armor_data: StateArmorVisualData, is_bu
 			node.animation_finished.disconnect(_on_slot_transition_finished)
 
 		node.animation_finished.connect(
-			_on_slot_transition_finished.bind(node, slot, main_path, main_anim),
+			_on_slot_transition_finished.bind(node, slot, r.main_path, r.main_anim),
 			CONNECT_ONE_SHOT
 		)
 	else:
 		_in_transition_slots.erase(slot)
 		node.play(first_anim)
+		if _player:
+			var count := frames.get_frame_count(first_anim)
+			if count > 0:
+				node.frame = _player.sprite.frame % count
 
 
 func _on_slot_transition_finished(node: AnimatedSprite2D, slot: String, main_path: String, main_anim: String) -> void:
@@ -531,6 +526,7 @@ func _apply_armor(path: String) -> void:
 		push_warning("❌ Armadura não encontrada: " + path)
 		return
 	_player.current_armor = load(path)
+	_player.armor_path    = path  # mantém armor_path em sincronia com current_armor
 
 
 func _recalculate_capabilities() -> void:
@@ -566,6 +562,13 @@ func _recalculate_capabilities() -> void:
 		)
 		if not all_four:
 			_player.current_armor.has_infinite_nova_strike = false
+
+	# Sincroniza as flags de runtime do player com as capabilities calculadas.
+	# current_armor.has_double_jump é a capability da armadura.
+	# player.can_double_jump é a flag de runtime que os states checam frame a frame.
+	# Sem essa sincronização, can_double_jump começa false e só vira true ao pousar.
+	_player.can_double_jump = _player.current_armor.has_double_jump
+	_player.can_air_dash    = _player.current_armor.has_air_dash
 
 
 func _can_sync_armor() -> bool:

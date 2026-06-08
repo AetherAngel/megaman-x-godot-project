@@ -5,8 +5,9 @@
 [resource]
 script = ExtResource("1_dv2jt")
 main_file = "_hover"
-main_anim = "idle"
+main_anim = "hoveridle"
 is_loop = false
 shoot_file = "_hover"
 shoot_main_anim = "idle"
+level_animations = Array[String](["hoveridle", "hoveringback", "hoveringfront"])
 metadata/_custom_type_script = "uid://0v8irxqn21kk"

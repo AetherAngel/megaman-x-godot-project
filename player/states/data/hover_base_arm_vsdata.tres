@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource("1_a0hdy")
 main_file = "_arm_hover"
-main_anim = "idle"
+main_anim = "hoveridle"
 is_loop = false
 metadata/_custom_type_script = "uid://cenvwn3nqdr5c"

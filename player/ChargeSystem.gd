@@ -152,6 +152,7 @@ func _process_charge(delta: float) -> void:
 						await get_tree().process_frame
 					_update_charge_fx()
 					SoundManager.stop_sfx("charging_shot")
+					SoundManager.play_sfx("snd_player_success", -25.0)
 					return
 
 		if released and _holding:
@@ -273,7 +274,10 @@ func _fire(level: int, is_plasma: bool) -> void:
 
 
 	if GameManager.current_player == "X":
+		var was_shooting: bool = _player.buster_layer.is_shooting()
 		_player.buster_layer.start_shoot()
+		if not was_shooting:
+			_player.visual_library.apply_shoot_base(_player.state_machine.current_state_name)
 
 
 func _fire_stock() -> void:
@@ -317,7 +321,10 @@ func _fire_stock() -> void:
 
 
 	if GameManager.current_player == "X":
+		var was_shooting: bool = _player.buster_layer.is_shooting()
 		_player.buster_layer.start_shoot()
+		if not was_shooting:
+			_player.visual_library.apply_shoot_base(_player.state_machine.current_state_name)
 
 
 func recharge_stock() -> void:

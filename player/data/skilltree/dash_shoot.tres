@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="InputTechnique" format=3 uid="uid://eqqbv1j7ryui"]
+
+[ext_resource type="Script" uid="uid://yucvqpka04di" path="res://player/data/skilltree/InputTechnique.gd" id="1_ty26n"]
+
+[resource]
+script = ExtResource("1_ty26n")
+action = "dash_shoot"
+metadata/_custom_type_script = "uid://yucvqpka04di"

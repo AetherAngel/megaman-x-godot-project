@@ -6,4 +6,5 @@
 script = ExtResource("1_xkeks")
 main_file = "_arm_idle"
 main_anim = "idle"
+is_loop = false
 metadata/_custom_type_script = "uid://cenvwn3nqdr5c"

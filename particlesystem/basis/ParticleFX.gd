@@ -47,6 +47,14 @@ func spawn_at(
 		return
 
 	_do_spawn(def, pos, normal, owner)
+	
+# Chamado pelo FXSpawner — posição já resolvida, não re-resolve marker_path.
+func spawn_at_resolved(def: SpawnedParticleDef, pos: Vector2, normal: Vector2, owner: Node2D) -> void:
+	if not def or not def.sprite_frames:
+		return
+	var dir := _resolve_direction(def, normal, owner)
+	for _i in def.burst_count:
+		_spawn_single(def, pos, dir, owner)
 
 ## Spawna continuamente numa posição fixa do mundo.
 ## Retorna o anchor — chame anchor.queue_free() para parar.
@@ -122,6 +130,10 @@ func _spawn_single(def: SpawnedParticleDef, pos: Vector2, base_dir: Vector2, own
 	if not container:
 		return
 
+	if def.require_grounded and owner and owner.has_method("is_on_floor"):
+		if not owner.is_on_floor():
+			return
+
 	var angle_rad  := deg_to_rad(randf_range(-def.spread_angle * 0.5, def.spread_angle * 0.5))
 	var spread_dir := base_dir.rotated(angle_rad).normalized()
 	var speed      := randf_range(def.velocity_min, def.velocity_max)
@@ -130,9 +142,9 @@ func _spawn_single(def: SpawnedParticleDef, pos: Vector2, base_dir: Vector2, own
 	container.add_child(instance)
 	instance.global_position = pos
 	instance.setup(def, spread_dir, speed, owner)
-
 	_play_def_sfx(def)
-
+	
+	
 
 # ============================================================
 # DYNAMIC PARTICLES

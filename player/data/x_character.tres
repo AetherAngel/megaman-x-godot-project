@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_c00ho")
-armor_name = "normal_armor"
+armor_name = "armor_normal"
 charge_max_level = 3
 has_stock = true
 has_plasma = true

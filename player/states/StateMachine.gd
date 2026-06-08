@@ -68,6 +68,7 @@ func change_state(new_state_name: String) -> void:
 		push_warning("⚠️ Estado não encontrado: " + new_state_name)
 		return
 
+
 	if current_state and current_state.has_method("exit"):
 		current_state.exit()
 

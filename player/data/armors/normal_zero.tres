@@ -5,6 +5,7 @@
 [ext_resource type="Resource" uid="uid://c5shgjtxwgrw5" path="res://player/data/skilltree/zero techs/zero_tech_hyouretsuzan.tres" id="2_50iu8"]
 [ext_resource type="Resource" uid="uid://bmskiixim37tx" path="res://player/data/skilltree/zero techs/zero_tech_mikazukizan.tres" id="3_i2m5t"]
 [ext_resource type="Resource" uid="uid://b50x1jp5axr62" path="res://player/data/skilltree/zero techs/zero_tech_raikousen_air.tres" id="4_krq56"]
+[ext_resource type="Script" uid="uid://clbbtl2pobe8j" path="res://player/data/armors/ArmorLayer.gd" id="5_krq56"]
 [ext_resource type="Resource" uid="uid://bkab6gqu34xlr" path="res://player/data/skilltree/zero techs/zero_tech_shippuuga.tres" id="5_pmgw8"]
 [ext_resource type="Resource" uid="uid://budux3g0ysnc3" path="res://player/data/skilltree/zero techs/zero_tech_ryuenjin.tres" id="6_p746y"]
 [ext_resource type="Resource" uid="uid://bt6w0u0edd6ok" path="res://player/data/skilltree/zero techs/zero_tech_denjin.tres" id="7_r8aec"]

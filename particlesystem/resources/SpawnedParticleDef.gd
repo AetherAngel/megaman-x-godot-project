@@ -17,6 +17,8 @@ extends Resource
 @export var spawn_delay: float = 0.0
 ## Intervalo em segundos para spawnar continuamente. 0 = apenas uma vez.
 @export var repeat_interval: float = 0.0
+## Se true, só spawna se o owner estiver no chão.
+@export var require_grounded: bool = false
 
 @export_group("Position")
 ## NodePath relativo ao dono para usar como posição de spawn.
@@ -25,6 +27,8 @@ extends Resource
 ## Se true, atualiza a posição do marker a cada frame enquanto a partícula vive.
 ## Útil para efeitos que devem "sair do chão" mesmo enquanto o dono se move.
 @export var follow_marker: bool = false
+## Offset visual do FX
+@export var offset: Vector2 = Vector2.ZERO
 
 @export_group("Lifetime")
 ## Tempo de vida base em segundos.

@@ -7,6 +7,8 @@ var current_combo: int = 1
 var current_attack_data: AttackData
 
 func enter() -> void:
+	if has_method("is_on_floor"):
+		return
 	if GameManager.current_player != "Zero":
 		player.combo_count = 0
 		player.state_machine.change_state("Idle")
@@ -14,7 +16,7 @@ func enter() -> void:
 		
 	if not player.current_character or not player.current_character.skill_tree:
 		push_error("❌ SkillTree está NULL!")
-		player.state_machine.change_state("SaberUnequip")
+		#player.state_machine.change_state("SaberUnequip")
 		return
 
 	decision_locked = false

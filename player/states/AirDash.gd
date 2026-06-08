@@ -5,6 +5,7 @@ var timer := 0.0
 
 
 func enter() -> void:
+	print ("AirDashing")
 	if not player.current_armor.has_air_dash or not player.can_air_dash:
 		player.state_machine.change_state("Fall")
 		return

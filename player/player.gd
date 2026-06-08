@@ -48,10 +48,19 @@ var switched_armor: String
 var _layer_nodes: Dictionary = {}
 var char_path: String = ""
 var armor_path: String = ""
+var bsarmrpath: String = "res://player/data/armors/"
+
 
 
 func _ready() -> void:
 	sprite.position = Vector2.ZERO
+	
+	#sprite.animation_changed.connect(func():
+		#print("🎬 sprite animation → '%s'" % sprite.animation)
+		#for frame in get_stack():
+			#print("   %s:%d @ %s" % [frame["source"], frame["line"], frame["function"]])
+		#print("---")
+#)
 
 	process_priority = 0
 	process_mode = Node.PROCESS_MODE_PAUSABLE
@@ -59,7 +68,7 @@ func _ready() -> void:
 
 	_init_layer_nodes()
 	_load_player_data()
-
+	
 	ArmorManager.on_player_ready(self)
 
 	if GameManager.current_player in ["X", "Zero"]:
@@ -73,10 +82,14 @@ func _ready() -> void:
 	print("✅ Personagem carregado: " + str(GameManager.current_player))
 	if current_armor:
 		print("✅ Armadura: " + current_armor.armor_name)
+		ArmorManager._recalculate_capabilities()
+		print("✅ Armadura: " + current_armor.armor_name)
 	else:
 		print("❌ Armadura não carregada")
+	
+	
 
-	call_deferred("start_with_intro")
+	call_deferred("play_stage_intro")
 
 
 # ============================================================
@@ -104,15 +117,16 @@ func _process_state(delta: float) -> void:
 # SETUP
 # ============================================================
 
-func start_with_intro() -> void:
+func play_stage_intro() -> void:
 	state_machine.change_state("Intro")
 
 
 func _load_player_data() -> void:
 	match GameManager.current_player:
+		
 		"Zero":
 			char_path  = "res://player/data/zero_character.tres"
-			armor_path = "res://player/data/armors/normal_zero.tres"
+			armor_path =  "res://player/data/armors/normal_zero.tres"
 		"Axl":
 			char_path  = "res://player/data/axl_character.tres"
 			armor_path = "res://player/data/armors/normal_axl.tres"
@@ -129,6 +143,21 @@ func _load_player_data() -> void:
 		_:
 			current_character.skill_tree = load("res://player/data/skilltree/x_skilltree.tres")
 
+
+func _load_actual_data_and_armor() -> void:
+	
+	match GameManager.current_player:
+		
+		"Zero":
+			armor_path =  bsarmrpath + current_armor.armor_name + ".tres"
+		"Axl":
+			armor_path = bsarmrpath + current_armor.armor_name + ".tres"
+		_:
+			armor_path = bsarmrpath + current_armor.armor_name + ".tres"
+
+	current_character = load(char_path)
+	current_armor     = load(armor_path)
+	
 
 func _init_layer_nodes() -> void:
 	_layer_nodes = {

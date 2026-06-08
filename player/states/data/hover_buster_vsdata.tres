@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_xdiqh")
 main_file = "_buster_hover"
-main_anim = "idle"
+main_anim = "hoveridle"
 metadata/_custom_type_script = "uid://cko0c8nu77gnw"
