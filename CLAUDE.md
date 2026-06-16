@@ -107,17 +107,41 @@ Apresentar um canvas visual com tudo que foi planejado.
 
 - **Engine:** Godot Engine (GDScript)
 - **Inspiração:** Mega Man X4
+- **Arquitetura:** Modular, desacoplada, orientada a dados (Data-Driven)
 - **Status:** Em desenvolvimento ativo
 - **Repositório:** https://github.com/AetherAngel/megaman-x-godot-project
 
-> Para contexto técnico atual do projeto (estrutura de pastas, cenas, scripts), buscar:
-> `https://raw.githubusercontent.com/AetherAngel/megaman-x-godot-project/main/CLAUDE.md`
+### Estrutura de pastas
+
+```
+megaman-x-godot-project/
+├── Menus/              # Telas de menu (stage select, character select)
+├── autoload/           # Singletons/Autoloads globais (GameManager, SoundManager, etc.)
+├── enemies/
+│   └── boss/           # Lógica e cenas de boss battles
+├── interactable/
+│   └── objects/        # Objetos interagíveis do cenário
+├── levels/             # Cenas de fase/level
+├── particlesystem/     # Sistema de partículas customizado e reutilizável
+├── player/             # Sistemas do jogador (movimento, dash, tiro, combo, armadura)
+├── resources/          # Resources (.tres/.res) — dados do jogo
+├── systems/            # Sistemas gerais desacoplados (combat, health, FX, etc.)
+├── talksystem/         # Sistema de diálogo/falas
+└── ui/
+    └── debug/          # UI de debug em desenvolvimento
+```
+
+### Sistemas implementados
+
+**Gameplay:** movimento de X, dash, tiro, combo, boss battle, armadura, stage select, character select, health/combat.
+
+**Técnicos:** particle system customizado, layered sprite rendering, GameManager, SoundManager global, state-based logic, sistemas reutilizáveis de FX.
 
 ---
 
 ## 5. Como usar este arquivo
 
-No início de cada conversa nova, o usuário vai compartilhar este link:
+No início de cada conversa nova, o usuário compartilha este link:
 
 ```
 https://raw.githubusercontent.com/AetherAngel/megaman-x-godot-project/main/CLAUDE.md
@@ -128,4 +152,3 @@ Claude deve buscar este arquivo, ler, e confirmar com:
 > "Contexto carregado, parceiro. Pode começar."
 
 Nenhuma outra resposta é necessária além dessa confirmação.
-
