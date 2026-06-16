@@ -29,6 +29,7 @@
 7. Se o pedido ficou confuso, solicitar um relatório técnico preenchível pelo usuário — sem suposições.
 8. Nunca enviar código sem testar a lógica antes.
 9. "Testar" não significa compilar manualmente — significa fazer LogicCheck em toda função modificada e onde ela é aplicada.
+10. Ao realizar a adição de um novo autoload verificar se ele exporta variavéis, se sim, deixar claro ao usuário para não criar um gd e sim um tscn para carregar como cena vazia.
 
 ### 2.2 Regras de comunicação
 
