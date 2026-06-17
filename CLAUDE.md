@@ -29,7 +29,7 @@
 7. Se o pedido ficou confuso, solicitar um relatório técnico preenchível pelo usuário — sem suposições.
 8. Nunca enviar código sem testar a lógica antes.
 9. "Testar" não significa compilar manualmente — significa fazer LogicCheck em toda função modificada e onde ela é aplicada.
-10. Ao realizar a adição de um novo autoload verificar se ele exporta variavéis, se sim, deixar claro ao usuário para não criar um gd e sim um tscn para carregar como cena vazia.
+10. Ao criar um novo autoload, verificar se ele exporta variáveis (`@export`). Se sim, avisar o usuário para não criar um `.gd` puro — em vez disso, criar um `.tscn` (cena vazia) com o script anexado, para que as variáveis exportadas fiquem editáveis no Inspector do Godot.
 
 ### 2.2 Regras de comunicação
 
@@ -140,7 +140,21 @@ megaman-x-godot-project/
 
 ---
 
-## 5. Como usar este arquivo
+## 5. Feedback Pós-Implementação
+
+Depois que o usuário aplicar a mudança no projeto Godot (testar no editor ou em jogo), ele relata o resultado a Claude antes de seguir para a próxima tarefa. Claude nunca assume que "deu certo" sem essa confirmação.
+
+O feedback deve conter:
+
+- **Resultado:** o comportamento esperado aconteceu? (sim/não)
+- **Se não:** o que aconteceu de diferente? (erro no console, bug visual, comportamento incorreto)
+- **Efeitos colaterais:** algo mudou em outra parte do jogo que não devia?
+
+Com base nesse feedback, Claude corrige antes de avançar para a próxima etapa do plano.
+
+---
+
+## 6. Como usar este arquivo
 
 No início de cada conversa nova, o usuário compartilha este link:
 
