@@ -1,7 +1,7 @@
 # CLAUDE.md — Contexto de Trabalho com Claude
 
 > Este arquivo é lido por Claude no início de cada conversa.
-> Última atualização: 2026-06-16
+> Última atualização: 2026-06-17
 
 ---
 
