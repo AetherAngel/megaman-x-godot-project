@@ -57,11 +57,12 @@ The project was built as a large-scale gameplay and systems study, focusing on r
 This project was developed with the assistance of generative AI as an engineering support tool for:
 
 * Prototyping
+* Debugging
 * System iteration
 * Debugging assistance
 * Workflow acceleration
 
-All architecture decisions, integration, implementation, and system orchestration were directed and organized manually.
+All software architecture, system design, implementation strategy, integration, and technical decisions were designed and directed by the project author.
 
 ## Media Credits
 
