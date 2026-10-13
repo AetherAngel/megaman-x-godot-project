@@ -75,6 +75,9 @@ func confirm_selection() -> void:
 
 	SoundManager.play_sfx("snd_player_success", -25.0)
 	GameManager.current_player = chosen
+	
+	CharacterManagement.set_initial(StringName(GameManager.current_player))
+	print("Jogador atual: ", GameManager.current_player)
 
 	# ✅ Usa change_state em vez de start_stage diretamente
 	GameManager.change_state(GameManager.GameState.IN_STAGE)

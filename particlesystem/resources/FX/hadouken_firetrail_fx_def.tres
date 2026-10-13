@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="DynamicParticleDef" format=3 uid="uid://bsve83v086i2g"]
+
+[ext_resource type="Script" uid="uid://ds8wibpfs1epi" path="res://particlesystem/resources/DynamicPhase.gd" id="1_pt645"]
+[ext_resource type="SpriteFrames" uid="uid://bokn6gng2iokf" path="res://resources/animations/spr_magma_dragoon_hadouken.tres" id="2_c6s60"]
+[ext_resource type="Script" uid="uid://db2rrbnjuqqn3" path="res://particlesystem/resources/DynamicParticleDef.gd" id="2_n165m"]
+
+[sub_resource type="Resource" id="Resource_gat6w"]
+script = ExtResource("1_pt645")
+sprite_frames = ExtResource("2_c6s60")
+animation = "magma_dragoon_hadouken_trail"
+next_phase_on_anim_end = false
+metadata/_custom_type_script = "uid://ds8wibpfs1epi"
+
+[resource]
+script = ExtResource("2_n165m")
+phases = Array[ExtResource("1_pt645")]([SubResource("Resource_gat6w")])
+metadata/_custom_type_script = "uid://db2rrbnjuqqn3"

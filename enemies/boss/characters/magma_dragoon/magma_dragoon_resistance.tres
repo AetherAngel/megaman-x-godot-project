@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DamageResistanceTable" format=3 uid="uid://vlfpexjywi1x"]
+
+[ext_resource type="Script" uid="uid://b8t7vlj6rpn0h" path="res://systems/damage/DamageResistanceTable.gd" id="1_beyjq"]
+
+[resource]
+script = ExtResource("1_beyjq")
+entries = {
+" contact": 1,
+"buster": 1,
+"fire": 0,
+"ice": 0
+}
+metadata/_custom_type_script = "uid://b8t7vlj6rpn0h"

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PhysicalMoveDef" format=3 uid="uid://dpirm6g3tfd6q"]
+
+[ext_resource type="Script" uid="uid://ivpx7ytxrnkj" path="res://resources/PhysicalMovePhase.gd" id="1_p5dvq"]
+[ext_resource type="Script" uid="uid://dis8iifq507di" path="res://resources/PhysicalMoveDef.gd" id="2_3s7m8"]
+[ext_resource type="Resource" uid="uid://cy3occsoj327k" path="res://enemies/boss/characters/magma_dragoon/cutscene/movedefs/MD_intro_MVPhase.tres" id="2_jilia"]
+
+[resource]
+script = ExtResource("2_3s7m8")
+phases = Array[ExtResource("1_p5dvq")]([ExtResource("2_jilia")])
+continuous = true
+metadata/_custom_type_script = "uid://dis8iifq507di"

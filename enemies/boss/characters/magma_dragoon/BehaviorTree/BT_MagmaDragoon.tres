@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="BTTree" format=3 uid="uid://c81n7wtouww34"]
+
+[ext_resource type="Script" uid="uid://dvoobhd4oipck" path="res://systems/bt/BTTree.gd" id="1_f4qyk"]
+[ext_resource type="Resource" uid="uid://c14dw7fcajiwn" path="res://enemies/boss/characters/magma_dragoon/actions/MagmaDragoonHadouken.tres" id="1_wpmcy"]
+[ext_resource type="Script" uid="uid://du64qth7qn5qt" path="res://systems/bt/nodes/BTAction.gd" id="2_jyvcy"]
+
+[sub_resource type="Resource" id="Resource_ijyfy"]
+script = ExtResource("2_jyvcy")
+kind = 1
+action = ExtResource("1_wpmcy")
+metadata/_custom_type_script = "uid://du64qth7qn5qt"
+
+[resource]
+script = ExtResource("1_f4qyk")
+description = "Arvore de ações do boss Magma Dragoon"
+root = SubResource("Resource_ijyfy")
+metadata/_custom_type_script = "uid://dvoobhd4oipck"

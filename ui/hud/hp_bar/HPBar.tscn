@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://dbbxj4ojwpqjk"]
+
+[ext_resource type="SpriteFrames" uid="uid://cw8x417fl38ng" path="res://resources/animations/spr_bar1_icon.tres" id="1_65yo0"]
+[ext_resource type="Script" uid="uid://d27ln04xb53b1" path="res://ui/hud/hp_bar/HPBar.gd" id="1_jhrrr"]
+[ext_resource type="SpriteFrames" uid="uid://g2l6c75xp6sc" path="res://resources/animations/spr_bar1_limit.tres" id="3_jhrrr"]
+[ext_resource type="Script" uid="uid://kc10o3nttt8s" path="res://ui/hud/hp_bar/behaviors/HPStateHandler.gd" id="4_nndtc"]
+
+[node name="HpBar" type="Node2D" unique_id=1153672200]
+script = ExtResource("1_jhrrr")
+metadata/_custom_type_script = "uid://d27ln04xb53b1"
+
+[node name="Icon" type="AnimatedSprite2D" parent="." unique_id=276456509]
+sprite_frames = ExtResource("1_65yo0")
+animation = &"x_icon"
+
+[node name="Units" type="Node2D" parent="." unique_id=2113713037]
+z_index = 1
+
+[node name="BarArea" type="Node2D" parent="." unique_id=1182752756]
+
+[node name="Limit" type="AnimatedSprite2D" parent="." unique_id=1660705007]
+position = Vector2(0, -12)
+sprite_frames = ExtResource("3_jhrrr")
+
+[node name="HPStateHandler" type="Node" parent="." unique_id=1191758122]
+script = ExtResource("4_nndtc")

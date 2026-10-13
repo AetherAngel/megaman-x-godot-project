@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="HPBarConfig" format=3 uid="uid://ys1t27e12jkp"]
+
+[ext_resource type="Script" uid="uid://dm54e16nnfi41" path="res://ui/hud/hp_bar/HPBarConfig.gd" id="1_ngw2m"]
+
+[resource]
+script = ExtResource("1_ngw2m")
+icon_offset = Vector2(8, 100)
+limit_offset = Vector2(0, -2)
+metadata/_custom_type_script = "uid://dm54e16nnfi41"

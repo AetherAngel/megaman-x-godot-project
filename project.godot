@@ -31,6 +31,9 @@ VisualLibrary="*uid://cm151mco2ol7r"
 GlobalVisualSequencePlayer="*uid://34nqbiejbvwq"
 ParticleFX="*uid://difxav7n8wch"
 SpawnerManager="*uid://bbcryh2jyfes7"
+HPRegistry="*uid://cxohgyhp22ufl"
+CharacterManagement="*uid://c4sg5oti38shg"
+BossFlowManager="*uid://le4tti2t6icn"
 
 [debug]
 
@@ -62,6 +65,7 @@ pause_png=""
 ready_png=""
 debug_panel=""
 light_capsule=""
+sprite_boss=""
 
 [input]
 

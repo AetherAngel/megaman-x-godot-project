@@ -1,10 +1,13 @@
 [gd_resource type="Resource" script_class="PlayerCharacterData" format=3 uid="uid://cokhtes6hmk68"]
 
+[ext_resource type="Resource" uid="uid://43v0xjiqr68w" path="res://player/data/armors/armor_normal.tres" id="1_3mfpk"]
 [ext_resource type="Script" uid="uid://h6o2bdlxa27a" path="res://player/data/PlayerCharacterData.gd" id="1_c00ho"]
+[ext_resource type="Resource" uid="uid://0518au536wnp" path="res://systems/hp/data/x_hp.tres" id="2_xx2xu"]
 
 [resource]
 script = ExtResource("1_c00ho")
-armor_name = "armor_normal"
+hp_data = ExtResource("2_xx2xu")
+default_armor = ExtResource("1_3mfpk")
 charge_max_level = 3
 has_stock = true
 has_plasma = true

@@ -1,17 +1,22 @@
 @tool
-class_name TiledTextureRect
+class_name TiledSpriteFrames
 extends Node2D
 
 enum Direction { UP, DOWN, LEFT, RIGHT }
 
-@export var texture: Texture2D :
+@export var sprite_frames: SpriteFrames :
 	set(v):
-		texture = v
+		sprite_frames = v
+		call_deferred("_build")
+
+@export var animation: StringName = &"" :
+	set(v):
+		animation = v
 		call_deferred("_build")
 
 @export var repeat_count: int = 3 :
 	set(v):
-		repeat_count = v
+		repeat_count = max(1, v)
 		call_deferred("_build")
 
 @export var direction: Direction = Direction.DOWN :
@@ -19,7 +24,12 @@ enum Direction { UP, DOWN, LEFT, RIGHT }
 		direction = v
 		call_deferred("_build")
 
-var _tiles: Array[TextureRect] = []
+@export var autoplay: bool = true :
+	set(v):
+		autoplay = v
+		call_deferred("_build")
+
+var _tiles: Array[AnimatedSprite2D] = []
 
 
 func _ready() -> void:
@@ -30,37 +40,66 @@ func _build() -> void:
 	if not is_inside_tree():
 		return
 
+	# Limpa tiles antigos
 	for tile in _tiles:
 		if is_instance_valid(tile):
 			tile.queue_free()
 	_tiles.clear()
 
-	if not texture:
+	if not sprite_frames:
 		return
 
-	var tex_size := texture.get_size()
+	# Pega a animação (ou a primeira disponível)
+	var anim := animation
+	if anim == &"" or not sprite_frames.has_animation(anim):
+		var anims := sprite_frames.get_animation_names()
+		if anims.is_empty():
+			return
+		anim = anims[0]
+
+	var frame_count := sprite_frames.get_frame_count(anim)
+	if frame_count == 0:
+		return
+
+	var tex := sprite_frames.get_frame_texture(anim, 0)
+	if not tex:
+		return
+
+	var tex_size := tex.get_size()
 
 	for i in range(repeat_count):
-		var rect := TextureRect.new()
-		rect.texture             = texture
-		rect.expand_mode         = TextureRect.EXPAND_KEEP_SIZE
-		rect.stretch_mode        = TextureRect.STRETCH_KEEP
-		rect.custom_minimum_size = tex_size
+		var sprite := AnimatedSprite2D.new()
+		sprite.sprite_frames = sprite_frames
+		sprite.animation = anim
+		sprite.centered = false
+
+		# Forma mais confiável de fazer autoplay
+		if autoplay:
+			sprite.autoplay = anim          # ← essa é a chave
+		else:
+			sprite.autoplay = &""
 
 		var offset := Vector2.ZERO
 		match direction:
-			Direction.DOWN:  offset = Vector2(0,           round(tex_size.y) * i)
-			Direction.UP:    offset = Vector2(0,          -round(tex_size.y) * i)
-			Direction.RIGHT: offset = Vector2( round(tex_size.x) * i, 0)
-			Direction.LEFT:  offset = Vector2(-round(tex_size.x) * i, 0)
+			Direction.DOWN:
+				offset = Vector2(0, round(tex_size.y) * i)
+			Direction.UP:
+				offset = Vector2(0, -round(tex_size.y) * i)
+			Direction.RIGHT:
+				offset = Vector2(round(tex_size.x) * i, 0)
+			Direction.LEFT:
+				offset = Vector2(-round(tex_size.x) * i, 0)
 
-		rect.position = offset
-		add_child(rect)
+		sprite.position = offset
+		add_child(sprite)
 
-		# No editor, mostra só o primeiro para posicionamento
-		# Os demais só aparecem em runtime
+		# Força play depois de adicionar (ajuda bastante no editor e em rebuilds)
+		if autoplay:
+			sprite.play()
+
+		# No editor mostra só o primeiro tile
 		if Engine.is_editor_hint():
-			rect.visible = (i == 0)
-			rect.owner   = get_tree().edited_scene_root
+			sprite.visible = (i == 0)
+			sprite.owner = get_tree().edited_scene_root
 
-		_tiles.append(rect)
+		_tiles.append(sprite)

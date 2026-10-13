@@ -1,0 +1,107 @@
+[gd_resource type="Resource" script_class="FXChainDef" format=3 uid="uid://dylct2jgri6fp"]
+
+[ext_resource type="Script" uid="uid://cuxhkrb0626y" path="res://particlesystem/resources/FXChainDef.gd" id="1_dbln2"]
+[ext_resource type="Resource" uid="uid://c0ye3kbmxml0q" path="res://particlesystem/resources/FX/hadouken_seg_firetrail_chain_FX.tres" id="2_v4bsw"]
+[ext_resource type="Script" uid="uid://cvu2tawmdbxh0" path="res://particlesystem/resources/FXChainSegmentBehavior.gd" id="2_yxwx6"]
+[ext_resource type="Script" uid="uid://c5ury7kcfbi3o" path="res://particlesystem/resources/FXChainSegmentVisual.gd" id="3_ltwu4"]
+
+[sub_resource type="Resource" id="Resource_4b3gy"]
+script = ExtResource("2_yxwx6")
+max_lifetime = 1.0
+metadata/_custom_type_script = "uid://cvu2tawmdbxh0"
+
+[sub_resource type="Resource" id="Resource_rpi3g"]
+script = ExtResource("2_yxwx6")
+spawn_next_at = 1
+start_visible = false
+max_lifetime = 1.0
+metadata/_custom_type_script = "uid://cvu2tawmdbxh0"
+
+[sub_resource type="Resource" id="Resource_gtavt"]
+script = ExtResource("2_yxwx6")
+spawn_next_at = 1
+start_visible = false
+max_lifetime = 1.0
+metadata/_custom_type_script = "uid://cvu2tawmdbxh0"
+
+[sub_resource type="Resource" id="Resource_cdw2u"]
+script = ExtResource("2_yxwx6")
+spawn_next_at = 2
+start_visible = false
+max_lifetime = 1.0
+metadata/_custom_type_script = "uid://cvu2tawmdbxh0"
+
+[sub_resource type="Resource" id="Resource_a27s1"]
+script = ExtResource("2_yxwx6")
+spawn_next_at = 1
+start_visible = false
+max_lifetime = 1.0
+metadata/_custom_type_script = "uid://cvu2tawmdbxh0"
+
+[sub_resource type="Resource" id="Resource_skvyo"]
+script = ExtResource("2_yxwx6")
+spawn_next_at = 2
+start_visible = false
+max_lifetime = 1.0
+metadata/_custom_type_script = "uid://cvu2tawmdbxh0"
+
+[sub_resource type="Resource" id="Resource_ltwu4"]
+script = ExtResource("3_ltwu4")
+frame = 0
+loop_frames = Array[int]([0, 0, 1])
+loop_frame_interval = 0.08
+z_index = 12
+metadata/_custom_type_script = "uid://c5ury7kcfbi3o"
+
+[sub_resource type="Resource" id="Resource_yxwx6"]
+script = ExtResource("3_ltwu4")
+frame = 1
+loop_frames = Array[int]([1, 2, 2])
+loop_frame_interval = 0.15
+z_index = 12
+metadata/_custom_type_script = "uid://c5ury7kcfbi3o"
+
+[sub_resource type="Resource" id="Resource_phvre"]
+script = ExtResource("3_ltwu4")
+frame = 3
+loop_frames = Array[int]([3, 3, 4])
+loop_frame_interval = 0.15
+z_index = 12
+metadata/_custom_type_script = "uid://c5ury7kcfbi3o"
+
+[sub_resource type="Resource" id="Resource_0dgtn"]
+script = ExtResource("3_ltwu4")
+frame = 5
+loop_frames = Array[int]([5, 5, 4])
+loop_frame_interval = 0.15
+z_index = 12
+metadata/_custom_type_script = "uid://c5ury7kcfbi3o"
+
+[sub_resource type="Resource" id="Resource_711ym"]
+script = ExtResource("3_ltwu4")
+frame = 5
+loop_frames = Array[int]([5, 6, 7])
+loop_frame_interval = 0.15
+z_index = 12
+metadata/_custom_type_script = "uid://c5ury7kcfbi3o"
+
+[sub_resource type="Resource" id="Resource_v5xlk"]
+script = ExtResource("3_ltwu4")
+frame = 7
+loop_frames = Array[int]([8, 8, 7])
+loop_frame_interval = 0.15
+z_index = 12
+metadata/_custom_type_script = "uid://c5ury7kcfbi3o"
+
+[resource]
+script = ExtResource("1_dbln2")
+segment_def = ExtResource("2_v4bsw")
+segment_interval = 0.01
+spawn_interval = 0.08
+spawn_delay = 0.1
+flip_mode = 1
+body_offset = Vector2(12, 0)
+segment_visuals = Array[ExtResource("3_ltwu4")]([SubResource("Resource_ltwu4"), SubResource("Resource_yxwx6"), SubResource("Resource_phvre"), SubResource("Resource_0dgtn"), SubResource("Resource_711ym"), SubResource("Resource_v5xlk")])
+segment_behaviors = Array[ExtResource("2_yxwx6")]([SubResource("Resource_4b3gy"), SubResource("Resource_rpi3g"), SubResource("Resource_gtavt"), SubResource("Resource_cdw2u"), SubResource("Resource_a27s1"), SubResource("Resource_skvyo")])
+domino_delay = 0.025
+metadata/_custom_type_script = "uid://cuxhkrb0626y"

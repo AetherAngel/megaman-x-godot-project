@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="DialogueData" format=3 uid="uid://dw6xhwck250g"]
+
+[ext_resource type="Script" uid="uid://8bmfodtxaosy" path="res://talksystem/DialogueLine.gd" id="1_7kvm6"]
+[ext_resource type="Script" uid="uid://c634kjm0dutmx" path="res://talksystem/DialogueData.gd" id="2_onjdr"]
+[ext_resource type="Resource" uid="uid://bbldjorape2" path="res://enemies/boss/characters/magma_dragoon/cutscene/MD_X_PreFight_line1.tres" id="2_xh0w5"]
+[ext_resource type="Resource" uid="uid://cwx5ecitkfwhx" path="res://enemies/boss/characters/magma_dragoon/cutscene/MD_X_PreFight_line2.tres" id="3_346he"]
+[ext_resource type="Resource" uid="uid://df6qowkxv2cr4" path="res://enemies/boss/characters/magma_dragoon/cutscene/MD_X_PreFight_line3.tres" id="4_1yt08"]
+[ext_resource type="Resource" uid="uid://ln4uj2so4m55" path="res://enemies/boss/characters/magma_dragoon/cutscene/MD_X_PreFight_line4.tres" id="5_iwewb"]
+[ext_resource type="Resource" uid="uid://404ij3tonswk" path="res://enemies/boss/characters/magma_dragoon/cutscene/MD_X_PreFight_line5.tres" id="6_lsd3q"]
+[ext_resource type="Resource" uid="uid://dtxuefov4vk8n" path="res://enemies/boss/characters/magma_dragoon/cutscene/MD_X_PreFight_line6.tres" id="7_wpsg2"]
+[ext_resource type="Resource" uid="uid://b45imdxib5lk5" path="res://enemies/boss/characters/magma_dragoon/cutscene/MD_X_PreFight_line7.tres" id="8_3cvce"]
+[ext_resource type="Resource" uid="uid://dqpeo8ec144bs" path="res://enemies/boss/characters/magma_dragoon/cutscene/MD_X_PreFight_line8.tres" id="9_n373o"]
+[ext_resource type="Resource" uid="uid://8lve6r1cs13f" path="res://enemies/boss/characters/magma_dragoon/cutscene/MD_X_PreFight_line9.tres" id="10_ukg1y"]
+[ext_resource type="Resource" uid="uid://bigk7oec4htnb" path="res://enemies/boss/characters/magma_dragoon/cutscene/MD_X_PreFight_line10.tres" id="11_waxjs"]
+[ext_resource type="Resource" uid="uid://d1co8sjkb5s1d" path="res://enemies/boss/characters/magma_dragoon/cutscene/MD_X_PreFight_line11.tres" id="12_qh72i"]
+[ext_resource type="Resource" uid="uid://dqowqlhwjdq2p" path="res://enemies/boss/characters/magma_dragoon/cutscene/MD_X_PreFight_line12.tres" id="13_ut4ed"]
+
+[resource]
+script = ExtResource("2_onjdr")
+lines = Array[ExtResource("1_7kvm6")]([ExtResource("2_xh0w5"), ExtResource("3_346he"), ExtResource("4_1yt08"), ExtResource("5_iwewb"), ExtResource("6_lsd3q"), ExtResource("7_wpsg2"), ExtResource("8_3cvce"), ExtResource("9_n373o"), ExtResource("10_ukg1y"), ExtResource("11_waxjs"), ExtResource("12_qh72i"), ExtResource("13_ut4ed")])
+metadata/_custom_type_script = "uid://c634kjm0dutmx"

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="DialogueLine" format=3 uid="uid://bigk7oec4htnb"]
+
+[ext_resource type="Script" uid="uid://8bmfodtxaosy" path="res://talksystem/DialogueLine.gd" id="1_3dxdg"]
+
+[resource]
+script = ExtResource("1_3dxdg")
+speaker = "X"
+text = "No... I don't believe you... YOU ARE NOT DRAGOON!"
+metadata/_custom_type_script = "uid://8bmfodtxaosy"

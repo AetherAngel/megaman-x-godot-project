@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cp0uegv8h606y"]
+
+[ext_resource type="Script" uid="uid://8k74csspeemv" path="res://ui/hud/hud.gd" id="1_fdx20"]
+[ext_resource type="PackedScene" uid="uid://dbbxj4ojwpqjk" path="res://ui/hud/hp_bar/HPBar.tscn" id="1_wbxbo"]
+[ext_resource type="Resource" uid="uid://ys1t27e12jkp" path="res://ui/hud/hp_bar/behaviors/player_hpbar_config.tres" id="2_ttn8j"]
+[ext_resource type="Resource" uid="uid://3p6xqhm1m5lo" path="res://enemies/boss/characters/magma_dragoon/boss_MD_BarConfig.tres" id="3_ttn8j"]
+
+[node name="Hud" type="CanvasLayer" unique_id=1401567267]
+script = ExtResource("1_fdx20")
+player_bar_config = ExtResource("2_ttn8j")
+boss_bar_config = ExtResource("3_ttn8j")
+
+[node name="PlayerHPBar" parent="." unique_id=1153672200 instance=ExtResource("1_wbxbo")]
+
+[node name="BossHPBar" parent="." unique_id=2081060716 instance=ExtResource("1_wbxbo")]
+position = Vector2(46, 0)

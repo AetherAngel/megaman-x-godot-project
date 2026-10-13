@@ -5,8 +5,11 @@ extends Resource
 @export var pattern_id: String = ""
 
 @export_group("Attacks")
-## Sequência de ataques executados em ordem.
-@export var attacks: Array[BossAttack] = []
+## Sequência de ações executadas em ordem — cada uma é um BossAction
+## (o mesmo tipo que BTAction já sabe rodar: start/update/finish,
+## fases + frame events). Antes era Array[BossAttack] (legado); migrado
+## porque BTAction nunca soube executar BossAttack, só BossAction.
+@export var attacks: Array[BossAction] = []
 ## Se true, repete o pattern ao terminar.
 @export var loop: bool = false
 

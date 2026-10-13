@@ -4,6 +4,7 @@ extends Control
 enum State { IDLE, POPUP_OPEN, PLACING }
 var _state: int = State.IDLE
 
+var flipcalled: bool = false
 var _pending_entry
 var _active_category: String = "enemy"
 var _previous_input_mode: GameManager.InputMode = GameManager.InputMode.PLAYER
@@ -87,7 +88,9 @@ func _build_sidebar_buttons() -> void:
 	for c in grid.get_children():
 		c.free()
 
-	var is_x := GameManager.current_player == "X"
+	# Usa CharacterManagement como fonte de verdade do personagem ativo.
+	var active_data := CharacterManagement.get_active_data()
+	var is_x := active_data != null and active_data.character_id == &"X"
 
 	for slot in ["head", "body", "arms", "legs"]:
 		_add_btn(
@@ -97,10 +100,13 @@ func _build_sidebar_buttons() -> void:
 		)
 
 	_add_btn("SPAWN",        _open_popup)
-	_add_btn("MAGMA DRAGON",_on_next_map)
+	
+	_add_btn("MAGMA DRAGON", _on_next_map)
 	_add_btn("RESET LAYERS", _on_reset_layers)
+	
+	_add_separator()
+	_add_btn("Flip Boss Facing", _flip_boss)
 
-	# ── Save / Reset Save ────────────────────────────────────
 	_add_separator()
 	_add_btn("SAVE",         _on_save)
 	_add_btn("RESET SAVE",   _on_reset_save, false, Color(0.8, 0.2, 0.2))
@@ -244,7 +250,8 @@ func _do_spawn(world_pos: Vector2) -> void:
 
 # ─── Layer equip / reset ─────────────────────────────────────
 func _on_equip_slot(slot: String) -> void:
-	if GameManager.current_player != "X":
+	var active_data := CharacterManagement.get_active_data()
+	if active_data == null or active_data.character_id != &"X":
 		_feedback("Apenas X pode usar armaduras!")
 		return
 
@@ -260,11 +267,12 @@ func _on_next_map() -> void:
 	get_tree().paused = false
 	GameManager.set_input_mode(_previous_input_mode)
 	get_tree().change_scene_to_file("res://levels/magma_dragon/Volcano_Stage.tscn")
-	SoundManager.play_music("stage_magmadragon")
+	
 
 
 func _on_reset_layers() -> void:
-	if GameManager.current_player != "X":
+	var active_data := CharacterManagement.get_active_data()
+	if active_data == null or active_data.character_id != &"X":
 		_feedback("Apenas X pode resetar armaduras!")
 		return
 
@@ -281,23 +289,18 @@ func _on_reset_layers() -> void:
 
 # ─── Save ────────────────────────────────────────────────────
 func _on_save() -> void:
-	# Coleta dados atuais do jogo antes de salvar
 	SaveSystem.collect_game_data()
 	SaveSystem.save()
 	_feedback("✅ Save realizado!")
 
-	# TODO: No futuro, o save será feito a partir de uma tela dedicada,
-	# acessada pelo menu de pause (que exibirá o inventário HUD).
-	# O jogador navegará com teclado entre opções: Continuar, Save, Exit to Menu.
-	# Por enquanto fica aqui no DebugPanel como atalho de desenvolvimento.
+	# TODO: save via tela dedicada no menu de pause (futuro).
 
 
 func _on_reset_save() -> void:
 	SaveSystem.reset_save()
 	_feedback("🗑️ Save resetado! Reinicie para aplicar.")
 
-	# TODO: idealmente recarregaria a cena atual automaticamente após o reset,
-	# mas como o sistema de cenas ainda não está completo, fica manual por ora.
+	# TODO: recarregar cena automaticamente após reset (futuro).
 
 
 # ─── Exit ────────────────────────────────────────────────────
@@ -308,38 +311,36 @@ func _on_exit_debug() -> void:
 
 # ─── Switch Player ───────────────────────────────────────────
 func _switch_current_player() -> void:
-	var players = ["X", "Zero"]
+	# CharacterManagement.cycle_next() cicla pelo roster registrado no editor.
+	# Adicionar novo personagem = arrastar .tres no Autoload inspector.
+	# Zero código novo aqui.
+	CharacterManagement.cycle_next()
 
-	if not players.has(GameManager.current_player):
-		GameManager.current_player = players[0]
-	else:
-		var current_index = players.find(GameManager.current_player)
-		GameManager.current_player = players[(current_index + 1) % players.size()]
-
-	print("🔄 Debug Switch: current_player → ", GameManager.current_player)
+	print("🔄 Debug Switch: personagem ativo → %s" % CharacterManagement.get_active_id())
 
 	get_tree().paused = false
 	GameManager.set_input_mode(_previous_input_mode)
-	print ("Input Mode changed to:", GameManager.current_input_mode)
 	visible = false
 	_state = State.IDLE
 
-	var player_node: Player = get_tree().get_first_node_in_group("player") as Player
-	if player_node:
-			player_node.on_character_changed()
-			player_node.can_control = true
-	else:
-		push_error("Debug Switch: Player node não encontrado!")
+	# Player reage via CharacterManagement.character_switched signal.
+	# Não é necessário chamar player_node.on_character_changed() diretamente.
 
-# Debug do checkpoint
 
+# ─── Checkpoint ──────────────────────────────────────────────
 func _tocheckpoint_() -> void:
 	if GameManager.active_checkpoint == null:
 		print("⚠️ Nenhum checkpoint ativado ainda.")
 		return
+
 	var player_node: Player = get_tree().get_first_node_in_group("player") as Player
+	if not player_node:
+		push_error("[DebugPanel] Player não encontrado para teleporte ao checkpoint.")
+		return
+
+	# reinitialize() re-executa o setup do personagem atual sem trocar de personagem.
 	player_node.visual_library.reinitialize_for_current_player(player_node)
-	player_node.on_character_changed()
+	player_node.reinitialize()
 	GameManager.active_checkpoint.debug_trigger(player_node)
 
 
@@ -347,3 +348,12 @@ func _tocheckpoint_() -> void:
 func _feedback(msg: String) -> void:
 	feedback_lbl.text = msg
 	print("[DEBUG] " + msg)
+
+# ─── Boss specific tests ─────────────────────────────────────
+func _flip_boss() -> void:
+	flipcalled = !flipcalled
+	GameManager.current_boss.debug_force_facing(flipcalled)
+	print("Debug Panel: Forçando Boss a virar de direção via (debug_force_facing) = ", flipcalled)
+	
+	
+	

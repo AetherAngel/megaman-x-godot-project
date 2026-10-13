@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://c2w3xrwnlon12"]
+
+[ext_resource type="Script" uid="uid://bnr60sryg3esd" path="res://enemies/boss/boss.gd" id="1_kily3"]
+[ext_resource type="Resource" uid="uid://cmns3ii46gj8h" path="res://enemies/boss/characters/magma_dragoon/magma_dragoon_data.tres" id="2_goqol"]
+[ext_resource type="Script" uid="uid://6kruqvhdmijy" path="res://systems/hp/HPSystem.gd" id="3_er6cx"]
+[ext_resource type="SpriteFrames" uid="uid://bwjxilmiif8rp" path="res://resources/animations/spr_magma_dragoon.tres" id="3_s0wqp"]
+[ext_resource type="Script" uid="uid://e0fdf85ku13p" path="res://systems/hp/HPSystemData.gd" id="4_hvucu"]
+[ext_resource type="Script" uid="uid://biyhuwhr53ywv" path="res://player/states/StateMachine.gd" id="5_s0wqp"]
+[ext_resource type="Script" uid="uid://cm151mco2ol7r" path="res://autoload/VisualLibrary.gd" id="6_q2uox"]
+[ext_resource type="Script" uid="uid://bde0hu0lhud8r" path="res://particlesystem/basis/FXComponent.gd" id="7_x7lyi"]
+[ext_resource type="Script" uid="uid://db640w6e7h8nu" path="res://systems/hp/DamageHandler.gd" id="8_dor86"]
+[ext_resource type="Resource" uid="uid://vlfpexjywi1x" path="res://enemies/boss/characters/magma_dragoon/magma_dragoon_resistance.tres" id="9_gikx5"]
+[ext_resource type="Script" uid="uid://rg6q1i13pr2e" path="res://systems/hp/HealHandler.gd" id="10_hbm5q"]
+[ext_resource type="Script" uid="uid://bhop81oa8825s" path="res://systems/bt/BTRunner.gd" id="11_5xrn2"]
+[ext_resource type="Resource" uid="uid://c81n7wtouww34" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/BT_MagmaDragoon.tres" id="13_q2uox"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iqyqf"]
+size = Vector2(26, 51)
+
+[sub_resource type="Resource" id="Resource_b3b7r"]
+script = ExtResource("4_hvucu")
+base_max_units = 32
+i_frame_duration = 0.5
+metadata/_custom_type_script = "uid://e0fdf85ku13p"
+
+[node name="MagmaDragoon" type="CharacterBody2D" unique_id=1848140003]
+script = ExtResource("1_kily3")
+data = ExtResource("2_goqol")
+metadata/_custom_type_script = "uid://bnr60sryg3esd"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1440878989]
+position = Vector2(0, 8.5)
+shape = SubResource("RectangleShape2D_iqyqf")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1919485480 groups=["sprite_boss"]]
+sprite_frames = ExtResource("3_s0wqp")
+animation = &"magma_dragoon_hadouken_standing"
+
+[node name="HPSystem" type="Node" parent="." unique_id=1908944265]
+script = ExtResource("3_er6cx")
+data = SubResource("Resource_b3b7r")
+metadata/_custom_type_script = "uid://6kruqvhdmijy"
+
+[node name="StateMachine" type="Node" parent="." unique_id=1217585041]
+script = ExtResource("5_s0wqp")
+metadata/_custom_type_script = "uid://biyhuwhr53ywv"
+
+[node name="VisualLibrary" type="Node" parent="." unique_id=1414774067]
+script = ExtResource("6_q2uox")
+
+[node name="FXComponent" type="Node" parent="." unique_id=1379275052]
+script = ExtResource("7_x7lyi")
+metadata/_custom_type_script = "uid://bde0hu0lhud8r"
+
+[node name="DamageHandler" type="Node" parent="." unique_id=607484616]
+script = ExtResource("8_dor86")
+resistance_table = ExtResource("9_gikx5")
+metadata/_custom_type_script = "uid://db640w6e7h8nu"
+
+[node name="HealHandler" type="Node" parent="." unique_id=2024742002]
+script = ExtResource("10_hbm5q")
+metadata/_custom_type_script = "uid://rg6q1i13pr2e"
+
+[node name="BTRunner" type="Node" parent="." unique_id=359322447]
+script = ExtResource("11_5xrn2")
+tree = ExtResource("13_q2uox")
+metadata/_custom_type_script = "uid://bhop81oa8825s"

@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://e2qbi7ambgws"]
+
+[ext_resource type="SpriteFrames" uid="uid://exo6nohvqxum" path="res://resources/animations/spr_door.tres" id="1_1rsnp"]
+[ext_resource type="Script" uid="uid://c7e0dtkn3qut8" path="res://interactable/objects/common/MMX_DoorBH.gd" id="1_8hjja"]
+[ext_resource type="Shader" uid="uid://bixgfiwhhvnkw" path="res://interactable/objects/common/door_half_mask.gdshader" id="2_otjgj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7tfj3"]
+shader = ExtResource("2_otjgj")
+shader_parameter/show_left_half = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jn0l3"]
+shader = ExtResource("2_otjgj")
+shader_parameter/show_left_half = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_otjgj"]
+size = Vector2(30, 47)
+
+[node name="MMX_Door" type="Area2D" unique_id=624479854]
+collision_mask = 36
+script = ExtResource("1_8hjja")
+forced_speed = 40.0
+
+[node name="DoorLeft" type="AnimatedSprite2D" parent="." unique_id=1839467779]
+material = SubResource("ShaderMaterial_7tfj3")
+sprite_frames = ExtResource("1_1rsnp")
+animation = &"open"
+
+[node name="DoorRight" type="AnimatedSprite2D" parent="." unique_id=1335439033]
+material = SubResource("ShaderMaterial_jn0l3")
+sprite_frames = ExtResource("1_1rsnp")
+animation = &"open"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1967739943]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_otjgj")

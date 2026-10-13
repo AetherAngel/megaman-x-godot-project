@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="HPSystemData" format=3 uid="uid://d2donmmadm7c6"]
+
+[ext_resource type="Script" uid="uid://e0fdf85ku13p" path="res://systems/hp/HPSystemData.gd" id="1_itim2"]
+
+[resource]
+script = ExtResource("1_itim2")
+metadata/_custom_type_script = "uid://e0fdf85ku13p"

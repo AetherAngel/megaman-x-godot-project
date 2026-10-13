@@ -4,8 +4,9 @@
 	"stage_test":   { "file": "stage_test.wav",   "volume_db": -20.0  },
 	"stage_sigma":  { "file": "stage_sigma.wav",  "volume_db": -8.0  },
 	"dr_light":  	{ "file": "dr_light_theme.wav",  "volume_db": -20.0  },
+	"boss_fight": { "file": "boss_mmx4_theme.wav",   "volume_db": -20.0  },
 	"stage_skylagoon":  	{ "file": "mmx4_skylagoon.wav",  "volume_db": -8.0  },
-	"stage_magmadragon":  	{ "file": "mmx4_magmadragon.wav",  "volume_db": -8.0  } 
+	"stage_magmadragon":  	{ "file": "mmx4_magmadragon.wav",  "volume_db": -8.0  }
   },
   "sfx": {
 	"jump":               { "file": "jump.wav",               "volume_db": 0.0, "pitch": 1.0 },
@@ -19,10 +20,14 @@
 	"snd_pause":		  { "file": "snd_pause.wav",		  "volume_db": 0.0, "pitch": 1.0},
 	"charging_shot":        { "file": "charging_shot.wav",		  "volume_db": -15.0, "pitch": 1.0},
 	"charged_shot1":        { "file": "charged_shot.wav",		  "volume_db": -15.0, "pitch": 1.0},
-	"charged_shot2":        { "file": "charged_shot.wav",		  "volume_db": -25.0, "pitch": 0.7}
+	"charged_shot2":        { "file": "charged_shot.wav",		  "volume_db": -25.0, "pitch": 0.7},
+	"snd_dooropen": 		{ "file": "snd_dooropen.wav",		  "volume_db": -10.0, "pitch": 0.7},
+	"snd_bossdoorclose": 		{ "file": "snd_bossdoorclose.wav",		  "volume_db": -10.0, "pitch": 1.0}
   },
   "stage_music": {
 	"test":   "stage_test",
-	"sigma1": "stage_sigma"
+	"sigma1": "stage_sigma",
+	"SL": "stage_skylagoon",
+	"MD": "stage_magmadragon"
   }
 }

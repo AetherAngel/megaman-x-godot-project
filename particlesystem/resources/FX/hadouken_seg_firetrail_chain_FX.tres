@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FXChainSegmentDef" format=3 uid="uid://c0ye3kbmxml0q"]
+
+[ext_resource type="Script" uid="uid://b8dec6vwih6r" path="res://particlesystem/resources/FXChainSegmentDef.gd" id="1_bwe4m"]
+[ext_resource type="SpriteFrames" uid="uid://bokn6gng2iokf" path="res://resources/animations/spr_magma_dragoon_hadouken.tres" id="2_50bih"]
+
+[resource]
+script = ExtResource("1_bwe4m")
+sprite_frames = ExtResource("2_50bih")
+animation = "magma_dragoon_hadouken_trail"
+z_index = 12
+metadata/_custom_type_script = "uid://b8dec6vwih6r"

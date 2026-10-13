@@ -172,6 +172,27 @@ func spawn_dynamic(
 
 
 # ============================================================
+# CHAIN (FXChainDef) — cadeias segmentadas que perseguem uma cabeça
+# ============================================================
+
+## Cria uma cadeia segmentada (cauda de fogo, corpo de dragão, chicote...)
+## cujo Segmento 1 persegue `head` (a cabeça de verdade — o objeto que se
+## move). Retorna o controller: guarde a referência pra chamar on_hit()
+## quando a cabeça colidir com algo.
+func spawn_chain(def: FXChainDef, head: Node2D) -> FXChainController:
+	if not def or not def.segment_def or not is_instance_valid(head):
+		return null
+	var container := _get_container()
+	if not container:
+		return null
+	var controller := FXChainController.new()
+	container.add_child(controller)
+	controller.global_position = head.global_position
+	controller.setup(def, head)
+	return controller
+
+
+# ============================================================
 # SHOOT EFFECT
 # ============================================================
 

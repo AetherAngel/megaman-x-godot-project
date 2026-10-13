@@ -25,6 +25,10 @@ var switched_armor: String
 @export var previous_armor: ArmorData
 @export var current_weapon: WeaponData
 
+var forced_move_direction: Vector2 = Vector2.ZERO
+var forced_move_speed: float = 0.0
+
+
 @onready var state_machine: StateMachine = $StateMachine
 @onready var wall_ray: RayCast2D = $WallRay
 
@@ -52,58 +56,42 @@ var bsarmrpath: String = "res://player/data/armors/"
 
 
 
+# ============================================================
+# READY
+# ============================================================
+
 func _ready() -> void:
 	sprite.position = Vector2.ZERO
-	
-	#sprite.animation_changed.connect(func():
-		#print("🎬 sprite animation → '%s'" % sprite.animation)
-		#for frame in get_stack():
-			#print("   %s:%d @ %s" % [frame["source"], frame["line"], frame["function"]])
-		#print("---")
-#)
-
 	process_priority = 0
 	process_mode = Node.PROCESS_MODE_PAUSABLE
 	add_to_group("player")
 
 	_init_layer_nodes()
-	_load_player_data()
-	
-	ArmorManager.on_player_ready(self)
 
-	if GameManager.current_player in ["X", "Zero"]:
-		arm_base_layer.initialize(self)
-		buster_layer.initialize(self)
-		charge_system.initialize(self)
+	# Bridge de compatibilidade: GameManager.current_player = "X" / "Zero"
+	# é setado pelo PLAYER_SELECT antes de entrar na stage.
+	# CharacterManagement.set_initial() registra quem é o ativo e sincroniza.
+	CharacterManagement.set_initial(StringName(GameManager.current_player))
+	current_character = CharacterManagement.get_active_data()
 
-	visual_library.initialize(self)
-	state_machine.initialize(self)
+	if not current_character:
+		push_error("[Player] CharacterManagement sem personagem ativo.")
+		return
 
-	print("✅ Personagem carregado: " + str(GameManager.current_player))
-	if current_armor:
-		print("✅ Armadura: " + current_armor.armor_name)
-		ArmorManager._recalculate_capabilities()
-		print("✅ Armadura: " + current_armor.armor_name)
-	else:
-		print("❌ Armadura não carregada")
-	
-	
+	current_armor = current_character.get_default_armor()
+
+	# Conecta APÓS set_initial para não reagir desnecessariamente no _ready.
+	CharacterManagement.character_switched.connect(_on_character_switched)
+
+	_setup_character()
 
 	call_deferred("play_stage_intro")
 
 
 # ============================================================
 # HOOK DE ESTADO — chamado pelo Actor._physics_process
-# entre a gravidade e o move_and_slide.
-#
-# Ordem por frame (definida em Actor):
-#   1. _apply_gravity        ← Actor
-#   2. _process_state        ← AQUI (state machine modifica velocity)
-#   3. _process_invulnerability
-#   4. _process_movement     ← Character (move_and_slide + pixel snap)
-#   5. _process_zero_health
-#   6. _update_time_since_floor
 # ============================================================
+
 func _process_state(delta: float) -> void:
 	if state_machine:
 		state_machine.process_state(delta)
@@ -111,6 +99,37 @@ func _process_state(delta: float) -> void:
 	ArmorManager.sync_frame(self)
 	wall_slide_cooldown = max(0.0, wall_slide_cooldown - delta)
 	wall_kick_grace     = max(0.0, wall_kick_grace - delta)
+
+
+# ── HP — override de Actor.take_damage ────────────────────────────────────────
+ 
+## Roteia dano pelo DamageHandler → HPSystem.
+## NÃO chama super — DamageHandler já emite damaged e HPSystem sincroniza Actor.
+##
+## damage_type_id é extraído do inflicter via get_damage_type_id().
+## Se o inflicter não implementar o método: fallback para DamageType.CONTACT.
+## Isso garante que colisões sem tipo definido ainda causem dano normalmente.
+func take_damage(value: float, inflicter = null) -> void:
+	if _is_invulnerable():
+		return
+ 
+	# Extrai o tipo de dano do inflicter.
+	# Qualquer projétil/hazard que implemente get_damage_type_id() → StringName
+	# tem seu tipo reconhecido automaticamente.
+	# Sem esse método: CONTACT (dano físico genérico, sem resistência especial).
+	var type_id: StringName = DamageType.CONTACT
+	if inflicter != null and inflicter.has_method("get_damage_type_id"):
+		type_id = inflicter.get_damage_type_id()
+ 
+	var dh := get_node_or_null("DamageHandler") as DamageHandler
+	if dh:
+		dh.receive(value, type_id, inflicter)
+		if hit_effect:
+			ParticleFX.spawn_at(hit_effect, global_position)
+	else:
+		push_warning("[Player] DamageHandler não encontrado — usando Actor.take_damage().")
+		super.take_damage(value, inflicter)
+
 
 
 # ============================================================
@@ -121,43 +140,77 @@ func play_stage_intro() -> void:
 	state_machine.change_state("Intro")
 
 
-func _load_player_data() -> void:
-	match GameManager.current_player:
-		
-		"Zero":
-			char_path  = "res://player/data/zero_character.tres"
-			armor_path =  "res://player/data/armors/normal_zero.tres"
-		"Axl":
-			char_path  = "res://player/data/axl_character.tres"
-			armor_path = "res://player/data/armors/normal_axl.tres"
-		_:
-			char_path  = "res://player/data/x_character.tres"
-			armor_path = "res://player/data/armors/armor_normal.tres"
+## Inicializa todos os sistemas para o current_character atual.
+## Compartilhado entre _ready() e _on_character_switched().
+func _setup_character() -> void:
+	ArmorManager.on_player_ready(self)
 
-	current_character = load(char_path)
-	current_armor     = load(armor_path)
+	# Capability flags substituem if ["X","Zero"] hardcoded.
+	# Adicionar novo personagem = criar ficha com has_buster = true/false.
+	if current_character.has_buster:
+		arm_base_layer.initialize(self)
+		buster_layer.initialize(self)
+		charge_system.initialize(self)
 
-	match GameManager.current_player:
-		"Zero":
-			current_character.skill_tree = load("res://player/data/skilltree/zero_skilltree.tres")
-		_:
-			current_character.skill_tree = load("res://player/data/skilltree/x_skilltree.tres")
+	visual_library.initialize(self)
+	state_machine.initialize(self)
+
+	print("✅ Personagem carregado: %s" % current_character.display_name)
+	if current_armor:
+		print("✅ Armadura: " + current_armor.armor_name)
+		ArmorManager._recalculate_capabilities()
+	else:
+		print("❌ Armadura não carregada")
 
 
-func _load_actual_data_and_armor() -> void:
-	
-	match GameManager.current_player:
-		
-		"Zero":
-			armor_path =  bsarmrpath + current_armor.armor_name + ".tres"
-		"Axl":
-			armor_path = bsarmrpath + current_armor.armor_name + ".tres"
-		_:
-			armor_path = bsarmrpath + current_armor.armor_name + ".tres"
+# ============================================================
+# CHARACTER SWITCH — via signal de CharacterManagement
+# ============================================================
 
-	current_character = load(char_path)
-	current_armor     = load(armor_path)
-	
+## Chamado por CharacterManagement.character_switched.
+## HPRegistry já carregou o snapshot correto antes deste signal (via character_pre_switch).
+func _on_character_switched(new_id: StringName) -> void:
+	print("[Player] Trocando para → %s" % new_id)
+
+	current_character = CharacterManagement.get_active_data()
+	if not current_character:
+		push_error("[Player] _on_character_switched: data nula para id '%s'" % new_id)
+		return
+
+	current_armor = current_character.get_default_armor()
+
+	arm_base_layer.reset()
+	buster_layer._cancel()
+
+	ArmorManager.reset_for_player_switch()
+
+	for node in _layer_nodes.values():
+		node.visible = false
+
+	_setup_character()
+
+	state_machine.change_state("Intro")
+	can_control = true
+
+
+## Re-inicializa o personagem atual sem trocar de personagem.
+## Usado por checkpoints e debug.
+func reinitialize() -> void:
+	current_character = CharacterManagement.get_active_data()
+	if not current_character:
+		return
+	current_armor = current_character.get_default_armor()
+
+	for node in _layer_nodes.values():
+		node.visible = false
+
+	visual_library._def_cache.clear()
+	_setup_character()
+
+
+# ============================================================
+# LAYERS
+# ============================================================
 
 func _init_layer_nodes() -> void:
 	_layer_nodes = {
@@ -217,28 +270,22 @@ func set_facing(right: bool) -> void:
 
 func reset_momentum() -> void:
 	horizontal_momentum = 0.0
+	
 
+##### ========== HELPERS PÚBLICOS ========== ######
 
-func on_character_changed() -> void:
-	print("Player: trocando para → ", GameManager.current_player)
-
-	_load_player_data()
-
-	arm_base_layer.reset()
-	buster_layer._cancel()
-
-	ArmorManager.reset_for_player_switch()
-	ArmorManager.on_player_ready(self)
-
-	if GameManager.current_player in ["X", "Zero"]:
-		arm_base_layer.initialize(self)
-		buster_layer.initialize(self)
-		charge_system.initialize(self)
-
-	visual_library._def_cache.clear()
-	visual_library.initialize(self)
-
-	for node in _layer_nodes.values():
-		node.visible = false
-
-	state_machine.change_state("Intro")
+## Chamado pela porta (MMX_Door) ao detectar o player entrando.
+## Trava o boneco numa translação forçada até a porta chamar
+## exit_forced_movement() (ao detectar que o player já passou).
+func enter_forced_movement(direction: Vector2, speed: float) -> void:
+	forced_move_direction = direction
+	forced_move_speed = speed
+	state_machine.change_state("ForcedMovement")
+ 
+ 
+## Chamado pela porta ao detectar que o player já atravessou
+## (body_exited). A partir daqui, gravidade natural assume — sem
+## direção forçada, mas ainda sem controle do jogador (ENTERING_ARENA
+## continua ativo até o ArenaFloorTrigger).
+func exit_forced_movement() -> void:
+	state_machine.change_state("Fall")

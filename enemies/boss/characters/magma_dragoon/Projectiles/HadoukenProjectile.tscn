@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://dug2eh5nyb47v"]
+
+[ext_resource type="SpriteFrames" uid="uid://bokn6gng2iokf" path="res://resources/animations/spr_magma_dragoon_hadouken.tres" id="1_d05np"]
+[ext_resource type="Script" uid="uid://ch3cctecpma5q" path="res://enemies/boss/characters/magma_dragoon/actions/HadoukenProjectile.gd" id="1_shmlr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_shmlr"]
+size = Vector2(18, 23)
+
+[node name="HadoukenProjectile" type="Area2D" unique_id=1069394859]
+light_mask = 0
+visibility_layer = 37
+z_index = 10
+script = ExtResource("1_shmlr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1863395787]
+position = Vector2(-1, 1.5)
+shape = SubResource("RectangleShape2D_shmlr")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=660171049]
+sprite_frames = ExtResource("1_d05np")
+animation = &"magma_dragoon_hadouken"
+flip_h = true

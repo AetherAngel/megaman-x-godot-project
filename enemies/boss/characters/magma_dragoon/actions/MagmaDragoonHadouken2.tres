@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="BossAction" format=3 uid="uid://e3p3l33u6pts"]
+
+[ext_resource type="Script" uid="uid://13j7x4cikp7v" path="res://systems/bt/actions/AnimPhase.gd" id="1_b6ocj"]
+[ext_resource type="Script" uid="uid://ouu8ril4nkjk" path="res://systems/bt/actions/FrameEvent.gd" id="2_sgryt"]
+[ext_resource type="Script" uid="uid://0bn0ryx8sb1h" path="res://enemies/boss/data/spawnableobject.gd" id="3_b6ocj"]
+[ext_resource type="Resource" uid="uid://dylct2jgri6fp" path="res://particlesystem/resources/FX/hadouken_chain_def_FX.tres" id="4_e55tp"]
+[ext_resource type="Script" uid="uid://dbtctnct07w57" path="res://systems/bt/actions/BossAction.gd" id="5_s1vea"]
+
+[sub_resource type="Resource" id="Resource_sgryt"]
+script = ExtResource("3_b6ocj")
+scene_path = "uid://dug2eh5nyb47v"
+offset = Vector2(-27, 7)
+metadata/_custom_type_script = "uid://0bn0ryx8sb1h"
+
+[sub_resource type="Resource" id="Resource_dt7t3"]
+script = ExtResource("2_sgryt")
+frame = 3
+type = 4
+spawn_object = SubResource("Resource_sgryt")
+metadata/_custom_type_script = "uid://ouu8ril4nkjk"
+
+[sub_resource type="Resource" id="Resource_prkk4"]
+script = ExtResource("2_sgryt")
+frame = 3
+type = 2
+fx_resource = ExtResource("4_e55tp")
+metadata/_custom_type_script = "uid://ouu8ril4nkjk"
+
+[sub_resource type="Resource" id="Resource_pg4rd"]
+script = ExtResource("1_b6ocj")
+anim_name = &"magma_dragoon_hadouken_crouching"
+exit = 1
+frame_events = Array[ExtResource("2_sgryt")]([SubResource("Resource_dt7t3"), SubResource("Resource_prkk4")])
+metadata/_custom_type_script = "uid://13j7x4cikp7v"
+
+[resource]
+script = ExtResource("5_s1vea")
+phases = Array[ExtResource("1_b6ocj")]([SubResource("Resource_pg4rd")])
+metadata/_custom_type_script = "uid://dbtctnct07w57"

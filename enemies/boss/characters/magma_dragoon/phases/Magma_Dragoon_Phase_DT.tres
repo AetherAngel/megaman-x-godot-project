@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="BossPhaseData" format=3 uid="uid://btjr6m5lib3wl"]
+
+[ext_resource type="Script" uid="uid://j3pj4beqbcci" path="res://enemies/boss/data/attackpattern.gd" id="1_uf7pp"]
+[ext_resource type="Script" uid="uid://dbtctnct07w57" path="res://systems/bt/actions/BossAction.gd" id="2_2infp"]
+[ext_resource type="Script" uid="uid://cytcncmfat5pu" path="res://enemies/boss/data/bossphasedata.gd" id="2_f3syo"]
+[ext_resource type="Resource" uid="uid://c14dw7fcajiwn" path="res://enemies/boss/characters/magma_dragoon/actions/MagmaDragoonHadouken.tres" id="3_cbckm"]
+[ext_resource type="Resource" uid="uid://e3p3l33u6pts" path="res://enemies/boss/characters/magma_dragoon/actions/MagmaDragoonHadouken2.tres" id="4_cbckm"]
+
+[sub_resource type="Resource" id="Resource_n3yjr"]
+script = ExtResource("1_uf7pp")
+pattern_id = "Hadouken"
+attacks = Array[ExtResource("2_2infp")]([ExtResource("3_cbckm"), ExtResource("4_cbckm")])
+metadata/_custom_type_script = "uid://j3pj4beqbcci"
+
+[resource]
+script = ExtResource("2_f3syo")
+patterns = Array[ExtResource("1_uf7pp")]([SubResource("Resource_n3yjr")])
+entry_state = ""
+animation_set = "spr_magma_dragoon"
+phase_music = "boss_fight"
+metadata/_custom_type_script = "uid://cytcncmfat5pu"

@@ -1,7 +1,7 @@
 # autoload/GameManager.gd
 extends Node
 
-var GameVersion: String = "0.0.5"
+var GameVersion: String = "0.0.7"
 
 enum GameState {
 	BOOT,
@@ -13,6 +13,9 @@ enum GameState {
 	IN_STAGE,
 	CUTSCENE,
 	# ── Boss flow — em ordem de execução ──────────────────────
+	ENTERING_ARENA,      # boneco travado (travessia forçada da porta) —
+						  # pause/inventário/troca de arma continuam OK,
+						  # pois não passam pelo InputManager.
 	BOSS_INTRO,          # sem input — cutscene + diálogo de entrada
 	BOSS_PRESENTATION,   # sem input — nome do boss, HP bar enchendo
 	BOSS_FIGHT,          # player tem controle total
@@ -65,8 +68,10 @@ func _get_pause_sprite() -> TextureRect:
 
 
 func _input(event: InputEvent) -> void:
-	# Pause só disponível em stage e durante o combate com boss.
-	if current_state != GameState.IN_STAGE and current_state != GameState.BOSS_FIGHT:
+	# Pause disponível em stage, durante o combate com boss, e durante
+	# a travessia forçada da porta (boneco trava, mas o jogo não).
+	if current_state != GameState.IN_STAGE and current_state != GameState.BOSS_FIGHT \
+	and current_state != GameState.ENTERING_ARENA:
 		return
 	if event.is_action_pressed("pause"):
 		if is_paused: _unpause()
@@ -143,9 +148,13 @@ func change_state(new_state: GameState) -> void:
 	# ── Input mode ────────────────────────────────────────────
 	# BOSS_FIGHT é o único state do boss flow com input do player.
 	# Todos os outros travam o input até a transição correta.
+	# ENTERING_ARENA trava o boneco (move/shoot/jump/dash/special_weapon)
+	# mas pause/inventário/troca de arma continuam, pois não passam
+	# pelo InputManager.
 	match new_state:
 		GameState.MAIN_MENU, GameState.PLAYER_SELECT, GameState.STAGE_SELECT, \
 		GameState.SHOP, GameState.EQUIP, GameState.SAVE_MENU,                 \
+		GameState.ENTERING_ARENA,                                             \
 		GameState.BOSS_INTRO, GameState.BOSS_PRESENTATION,                    \
 		GameState.BOSS_DEATH, GameState.BOSS_FINAL_DIALOGUE,                  \
 		GameState.WEAPON_GET, GameState.WEAPON_GET_SCREEN:
@@ -175,10 +184,6 @@ func change_state(new_state: GameState) -> void:
 			get_tree().change_scene_to_file("res://save_menu.tscn")
 		GameState.IN_STAGE:
 			start_stage()
-		GameState.WEAPON_GET_SCREEN:
-			_open_weapon_get_screen()
-		GameState.STAGE_SELECT:
-			_finish_boss_flow()
 
 
 func set_input_mode(new_mode: InputMode) -> void:
@@ -229,110 +234,37 @@ func go_to_stage_select() -> void:
 ## Chamado pelo boss no seu _ready() para se registrar.
 func register_boss(boss: Boss) -> void:
 	current_boss = boss
-	boss.boss_defeated.connect(_on_boss_defeated)
 	print("✅ Boss registrado: ", boss.name)
+	
+	# BossFlowManager.begin() conecta ao boss_defeated agora.
+	# GameManager não precisa mais conectar nada.
 
 
-## Inicia o fluxo de boss — chamado quando o player entra na arena.
-func start_boss_intro() -> void:
-	if not current_boss or not current_boss.data:
-		push_error("GameManager: start_boss_intro chamado sem boss registrado.")
-		return
 
-	change_state(GameState.BOSS_INTRO)
-	SoundManager.stop_music()
-
-	var cutscene := current_boss.data.intro_cutscene
-	if cutscene:
-		# CutsceneSequencer cuida do diálogo — ao terminar chama on_finish.
-		CutsceneSequencer.play(cutscene, func():
-			# Cutscene terminou → BOSS_PRESENTATION.
-			# Tomamos o input de volta imediatamente pois o CutsceneSequencer
-			# o restaura ao finalizar, mas ainda não é hora do player agir.
-			InputManager.can_process_player_input = false
-			change_state(GameState.BOSS_PRESENTATION)
-		)
-	else:
-		# Sem cutscene — vai direto para a apresentação.
-		change_state(GameState.BOSS_PRESENTATION)
 
 
 ## Chamado quando a HP bar do boss termina de encher (pelo BossHPBar).
 func on_boss_presentation_complete() -> void:
 	change_state(GameState.BOSS_FIGHT)
-	# Inicia a música de batalha da fase 0 do boss.
-	if current_boss and current_boss.data and current_boss.data.phases.size() > 0:
-		var phase0 := current_boss.data.phases[0]
-		if not phase0.phase_music.is_empty():
-			SoundManager.play_music(phase0.phase_music)
+	BossFlowManager.on_presentation_complete()
 
 
-## Sinal emitido pelo Boss quando HP chega a zero.
-func _on_boss_defeated(has_final_dialogue: bool) -> void:
-	change_state(GameState.BOSS_DEATH)
-	SoundManager.stop_music()
-	SoundManager.stop_all_loops()
 
-	# Aguarda a animação de morte do boss (controlada pelo state Death do boss).
-	# O state Death emite o sinal death_animation_finished quando terminar.
-	if current_boss and current_boss.state_machine:
-		current_boss.state_machine.connect(
-			"death_animation_finished",
-			_on_death_animation_finished.bind(has_final_dialogue),
-			CONNECT_ONE_SHOT
-		)
+#func _on_death_animation_finished(has_final_dialogue: bool) -> void:
+	#if has_final_dialogue and current_boss and current_boss.data.final_dialogue:
+		#change_state(GameState.BOSS_FINAL_DIALOGUE)
+		#TalkManager.start(current_boss.data.final_dialogue, func():
+			#InputManager.can_process_player_input = false
+			#change_state(GameState.WEAPON_GET)
+			#_give_weapon_to_player()
+		#)
+	#else:
+		#change_state(GameState.WEAPON_GET)
+		#_give_weapon_to_player()
 
-
-func _on_death_animation_finished(has_final_dialogue: bool) -> void:
-	if has_final_dialogue and current_boss and current_boss.data.final_dialogue:
-		change_state(GameState.BOSS_FINAL_DIALOGUE)
-		TalkManager.start(current_boss.data.final_dialogue, func():
-			InputManager.can_process_player_input = false
-			change_state(GameState.WEAPON_GET)
-			_give_weapon_to_player()
-		)
-	else:
-		change_state(GameState.WEAPON_GET)
-		_give_weapon_to_player()
-
-
-func _give_weapon_to_player() -> void:
-	if not current_boss or not current_boss.data or not current_boss.data.weapon_reward:
-		# Sem recompensa — pula direto para stage select.
-		await get_tree().create_timer(1.0).timeout
-		change_state(GameState.STAGE_SELECT)
-		return
-
-	var weapon := current_boss.data.weapon_reward
-	if not weapon.acquire_sfx.is_empty():
-		SoundManager.play_sfx(weapon.acquire_sfx)
-
-	# Toca animação de complete no player.
-	var player := get_tree().get_first_node_in_group("player")
-	if player and player.has_method("play_stage_clear"):
-		player.play_stage_clear()
-
-	await get_tree().create_timer(2.0).timeout
-	change_state(GameState.WEAPON_GET_SCREEN)
-
-
-func _open_weapon_get_screen() -> void:
-	# O nó WeaponGetScreen escuta state_changed e se mostra quando
-	# o state for WEAPON_GET_SCREEN. Ele recebe os dados via current_boss.
-	# Quando o player confirma, emite weapon_get_screen_closed.
-	var screen := get_tree().get_first_node_in_group("weapon_get_screen")
-	if screen and current_boss and current_boss.data.weapon_reward:
-		screen.show_weapon(current_boss.data.weapon_reward)
-	else:
-		# Sem tela implementada ainda — vai para stage select.
-		_finish_boss_flow()
 
 
 ## Chamado pela WeaponGetScreen quando o player confirma.
 func on_weapon_get_screen_closed() -> void:
-	_finish_boss_flow()
-
-
-func _finish_boss_flow() -> void:
 	current_boss = null
 	get_tree().change_scene_to_file("res://stage_select.tscn")

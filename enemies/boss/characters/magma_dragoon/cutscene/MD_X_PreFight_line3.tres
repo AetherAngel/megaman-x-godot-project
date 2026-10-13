@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="DialogueLine" format=3 uid="uid://df6qowkxv2cr4"]
+
+[ext_resource type="Script" uid="uid://8bmfodtxaosy" path="res://talksystem/DialogueLine.gd" id="1_7ytpw"]
+
+[resource]
+script = ExtResource("1_7ytpw")
+speaker = "X"
+text = "Why did you betray the H.Q.!? "
+metadata/_custom_type_script = "uid://8bmfodtxaosy"

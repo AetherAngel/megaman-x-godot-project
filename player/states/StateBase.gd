@@ -14,8 +14,21 @@ func update(_delta: float) -> void: pass
 # =========================
 # TECHNIQUE CHECKER
 # =========================
-func _check_techniques(techniques: Array[InputTechnique]) -> bool:
-	for tech in techniques:
+
+## Recebe Array[TechniqueData] (ground/air/dash_techniques de ArmorData).
+## Cada TechniqueData une o INPUT (tech.input: InputTechnique, reaproveitado
+## dos .tres existentes) com o OUTCOME (damage_units, damage_type_id) —
+## aqui só nos importa o input para decidir a transição de estado.
+##
+## Técnicas com unlocked = false são ignoradas — o jogador precisa
+## obtê-las (progressão) antes de conseguir executá-las.
+func _check_techniques(techniques: Array[TechniqueData]) -> bool:
+	for data in techniques:
+		if not data.unlocked:
+			continue
+		var tech: InputTechnique = data.input
+		if not tech:
+			continue
 		if not InputManager.is_action_just_pressed(tech.action):
 			continue
 		if not _matches_modifiers(tech):

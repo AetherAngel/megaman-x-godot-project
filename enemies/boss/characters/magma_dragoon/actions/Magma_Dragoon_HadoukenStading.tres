@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="BossAttack" format=3 uid="uid://csq2uvpovdgco"]
+
+[ext_resource type="Script" uid="uid://cyf7vmpavtdwk" path="res://enemies/boss/data/bossattack.gd" id="1_v7lo8"]
+[ext_resource type="Script" uid="uid://0bn0ryx8sb1h" path="res://enemies/boss/data/spawnableobject.gd" id="2_k56k2"]
+
+[sub_resource type="Resource" id="Resource_v7lo8"]
+script = ExtResource("2_k56k2")
+scene_path = "uid://dug2eh5nyb47v"
+offset = Vector2(-27, -7)
+lifetime = 2.0
+damage_tag = "fire"
+metadata/_custom_type_script = "uid://0bn0ryx8sb1h"
+
+[resource]
+script = ExtResource("1_v7lo8")
+attack_id = "HadoukenStanding"
+animation = "magma_dragoon_hadouken_standing"
+wait_for_animation = false
+duration = 0.625
+damage = 6.0
+damage_tag = "fire"
+spawn_objects = Array[ExtResource("2_k56k2")]([SubResource("Resource_v7lo8")])
+metadata/_custom_type_script = "uid://cyf7vmpavtdwk"

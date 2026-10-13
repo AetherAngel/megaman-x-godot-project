@@ -25,39 +25,24 @@
 [ext_resource type="Script" uid="uid://ckoteo7tchya5" path="res://player/ChargeSystem.gd" id="21_bjvpn"]
 [ext_resource type="Script" uid="uid://cc8paiko7j07r" path="res://player/ArmBaseLayer.gd" id="21_x7c3f"]
 [ext_resource type="Script" uid="uid://cm151mco2ol7r" path="res://autoload/VisualLibrary.gd" id="22_bjvpn"]
+[ext_resource type="Script" uid="uid://bq5glphucvigf" path="res://player/states/ForcedMovement.gd" id="23_1so5t"]
 [ext_resource type="Script" uid="uid://34nqbiejbvwq" path="res://autoload/VisualSequencePlayer.gd" id="23_knn7v"]
 [ext_resource type="Texture2D" uid="uid://bulgh1uk0jl7c" path="res://sprites/spr_x_shoot/08188e43-f3bd-4363-8a37-21c60850b438.png" id="23_uw77l"]
 [ext_resource type="Script" uid="uid://b1djsw3q6bify" path="res://player/states/data/VisualSequenceData.gd" id="24_7pqkx"]
 [ext_resource type="Resource" uid="uid://byku7bqf6svq1" path="res://player/states/data/intro_sequence_vsdata.tres" id="25_uw77l"]
 [ext_resource type="Resource" uid="uid://w8mc46ykf5rn" path="res://particlesystem/resources/FX/charge_fx_def.tres" id="27_rptt4"]
 [ext_resource type="Resource" uid="uid://0xjq4227ygvp" path="res://particlesystem/resources/FX/X_shot.tres" id="28_r7pn3"]
+[ext_resource type="PackedScene" uid="uid://cp0uegv8h606y" path="res://ui/hud/HUD.tscn" id="35_ge24q"]
 [ext_resource type="Script" uid="uid://bde0hu0lhud8r" path="res://particlesystem/basis/FXComponent.gd" id="35_q28gw"]
+[ext_resource type="Script" uid="uid://6kruqvhdmijy" path="res://systems/hp/HPSystem.gd" id="36_ge24q"]
 [ext_resource type="Script" uid="uid://scowvixd6kuv" path="res://particlesystem/resources/FXAttachment.gd" id="36_pnw6m"]
 [ext_resource type="Resource" uid="uid://d2g34614xfava" path="res://particlesystem/resources/FX/hover_effect.tres" id="37_1so5t"]
+[ext_resource type="Resource" uid="uid://0518au536wnp" path="res://systems/hp/data/x_hp.tres" id="37_pnw6m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sh265"]
 size = Vector2(20, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4flbx"]
-
-[sub_resource type="Animation" id="Animation_kqu6x"]
-resource_name = "beam_in"
-length = 0.5
-
-[sub_resource type="Animation" id="Animation_oul6g"]
-resource_name = "equip"
-length = 0.8
-
-[sub_resource type="Animation" id="Animation_rkbax"]
-resource_name = "intro"
-length = 1.2
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_g1dw6"]
-_data = {
-&"beam_in": SubResource("Animation_kqu6x"),
-&"equip": SubResource("Animation_oul6g"),
-&"intro": SubResource("Animation_rkbax")
-}
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_onrkg"]
 animations = [{
@@ -184,11 +169,9 @@ metadata/_custom_type_script = "uid://di1kk7rbaqxvl"
 script = ExtResource("17_c35mf")
 metadata/_custom_type_script = "uid://di1kk7rbaqxvl"
 
-[node name="AnimPlayer" type="AnimationPlayer" parent="." unique_id=226637733]
-root_node = NodePath("../Sprite")
-libraries/ = SubResource("AnimationLibrary_g1dw6")
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=61787756]
+[node name="ForcedMovement" type="Node" parent="StateMachine" unique_id=122494674]
+script = ExtResource("23_1so5t")
+metadata/_custom_type_script = "uid://di1kk7rbaqxvl"
 
 [node name="CanvasLayer (HUD)" type="CanvasLayer" parent="." unique_id=1650312114]
 
@@ -271,3 +254,12 @@ position = Vector2(-2, 0)
 
 [node name="DashSpark" type="Marker2D" parent="." unique_id=579369140]
 position = Vector2(0, 7)
+
+[node name="Hud" parent="." unique_id=1401567267 instance=ExtResource("35_ge24q")]
+
+[node name="HPSystem" type="Node" parent="." unique_id=1656324405]
+script = ExtResource("36_ge24q")
+data = ExtResource("37_pnw6m")
+character_id = &"X"
+is_player_bound = true
+metadata/_custom_type_script = "uid://6kruqvhdmijy"

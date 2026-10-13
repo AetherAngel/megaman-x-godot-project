@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://c4sg5oti38shg"]
+
+[ext_resource type="Script" uid="uid://cgpwpowdifdb0" path="res://autoload/CharacterManagement.gd" id="1_iri1o"]
+[ext_resource type="Script" uid="uid://h6o2bdlxa27a" path="res://player/data/PlayerCharacterData.gd" id="2_lvs8f"]
+[ext_resource type="Resource" uid="uid://cokhtes6hmk68" path="res://player/data/x_character.tres" id="3_naqyc"]
+[ext_resource type="Resource" uid="uid://co6p3hhxcy3va" path="res://player/data/zero_character.tres" id="4_wcvf3"]
+
+[node name="CharacterManagement" type="Node2D" unique_id=1520086300]
+script = ExtResource("1_iri1o")
+roster_data = Array[ExtResource("2_lvs8f")]([ExtResource("3_naqyc"), ExtResource("4_wcvf3")])

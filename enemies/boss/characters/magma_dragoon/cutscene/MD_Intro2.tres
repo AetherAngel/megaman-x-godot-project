@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="StepAnimation" format=3 uid="uid://b8b4a4b6a6l2m"]
+
+[ext_resource type="Script" uid="uid://dn13wwlso37we" path="res://talksystem/steps/StepAnimation.gd" id="1_ny4tt"]
+
+[resource]
+script = ExtResource("1_ny4tt")
+target_group = "sprite_boss"
+animation = "magma_dragoon_fireshielding"
+metadata/_custom_type_script = "uid://dn13wwlso37we"

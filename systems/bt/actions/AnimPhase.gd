@@ -1,0 +1,41 @@
+# systems/bt/actions/AnimPhase.gd
+class_name AnimPhase
+extends Resource
+
+## Uma fase de animação dentro de uma BossAction.
+## BossAction tem um Array[AnimPhase] executado em sequência.
+##
+## Exemplo — Hadouken do Magma Dragoon:
+##   Phase 0: anim="hadouken_prep",   exit=ON_FINISH        ← preparação
+##   Phase 1: anim="hadouken_fire",   exit=ON_FINISH        ← disparo
+##   Phase 2: anim="hadouken_idle",   exit=ON_FINISH        ← recuperação
+##
+## Exemplo — Rajada de chamas (com loop):
+##   Phase 0: anim="charge_start",    exit=ON_FINISH        ← entrada
+##   Phase 1: anim="charge_loop",     exit=ON_TIMER  t=2.0  ← loop por 2 segundos
+##   Phase 2: anim="charge_end",      exit=ON_FINISH        ← saída
+
+enum ExitOn {
+	ON_FINISH,  ## avança quando a animação termina (animação sem loop)
+	ON_TIMER,   ## avança após exit_timer segundos (útil para loops cronometrados)
+	ON_SIGNAL,  ## avança quando BossAction.advance_phase() for chamado manualmente
+				## use para: aguardar FX externo, aguardar condição complexa do boss
+}
+
+@export_group("Animation")
+## Nome da animação no SpriteFrames do boss. Deve existir no .tres carregado.
+@export var anim_name: StringName = &"idle"
+
+@export_group("Exit Condition")
+@export var exit: ExitOn = ExitOn.ON_FINISH
+## Duração em segundos. Usado apenas se exit = ON_TIMER.
+@export var exit_timer: float = 1.0
+## Timeout de segurança para ON_SIGNAL.
+## Se o signal não chegar em signal_timeout segundos, avança forçado.
+## Evita que o boss trave para sempre por um bug de sincronização.
+@export var signal_timeout: float = 5.0
+
+@export_group("Frame Events")
+## Eventos disparados em frames específicos desta fase.
+## Configurados no editor como peças de lego.
+@export var frame_events: Array[FrameEvent] = []

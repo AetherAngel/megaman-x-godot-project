@@ -1,0 +1,52 @@
+[gd_resource type="Resource" script_class="CutsceneData" format=3 uid="uid://c2cgpyl2qdc6m"]
+
+[ext_resource type="Script" uid="uid://bm6eb134mii7m" path="res://talksystem/CutsceneData.gd" id="1_c5jfb"]
+[ext_resource type="Script" uid="uid://cbnu10kg40vow" path="res://talksystem/CutsceneStep.gd" id="2_atrh0"]
+[ext_resource type="Resource" uid="uid://5ow5el5xfos0" path="res://enemies/boss/characters/magma_dragoon/cutscene/MD_Intro1.tres" id="3_orbm7"]
+[ext_resource type="Resource" uid="uid://cji7x7sd7byfw" path="res://enemies/boss/characters/magma_dragoon/cutscene/MD_InteractionToPlayer_Battle.tres" id="4_uxom7"]
+[ext_resource type="Script" uid="uid://ivpx7ytxrnkj" path="res://resources/PhysicalMovePhase.gd" id="4_w048k"]
+[ext_resource type="Resource" uid="uid://b8b4a4b6a6l2m" path="res://enemies/boss/characters/magma_dragoon/cutscene/MD_Intro2.tres" id="5_16s3x"]
+[ext_resource type="Script" uid="uid://dis8iifq507di" path="res://resources/PhysicalMoveDef.gd" id="5_kat8h"]
+[ext_resource type="Script" uid="uid://bfv7qiwsjmeyl" path="res://talksystem/steps/StepPhysicalMove.gd" id="6_fifrr"]
+[ext_resource type="Script" uid="uid://dn13wwlso37we" path="res://talksystem/steps/StepAnimation.gd" id="7_inukb"]
+
+[sub_resource type="Resource" id="Resource_jlshy"]
+script = ExtResource("4_w048k")
+set_velocity = true
+velocity = Vector2(0, 15)
+gravity_scale = 1.5
+exit = 2
+duration = 0.2
+metadata/_custom_type_script = "uid://ivpx7ytxrnkj"
+
+[sub_resource type="Resource" id="Resource_8f25m"]
+script = ExtResource("5_kat8h")
+phases = Array[ExtResource("4_w048k")]([SubResource("Resource_jlshy")])
+metadata/_custom_type_script = "uid://dis8iifq507di"
+
+[sub_resource type="Resource" id="Resource_r2l5a"]
+script = ExtResource("6_fifrr")
+target_group = "sprite_boss"
+move_def = SubResource("Resource_8f25m")
+metadata/_custom_type_script = "uid://bfv7qiwsjmeyl"
+
+[sub_resource type="Resource" id="Resource_0yys5"]
+script = ExtResource("7_inukb")
+target_group = "sprite_boss"
+animation = "magma_dragoon_intro_falling"
+wait_to_finish = false
+step_total_duration = 1.0
+physical_move = SubResource("Resource_r2l5a")
+metadata/_custom_type_script = "uid://dn13wwlso37we"
+
+[sub_resource type="Resource" id="Resource_w048k"]
+script = ExtResource("7_inukb")
+target_group = "sprite_boss"
+animation = "magma_dragoon_idle"
+metadata/_custom_type_script = "uid://dn13wwlso37we"
+
+[resource]
+script = ExtResource("1_c5jfb")
+steps = Array[ExtResource("2_atrh0")]([ExtResource("3_orbm7"), SubResource("Resource_0yys5"), SubResource("Resource_w048k"), ExtResource("4_uxom7"), ExtResource("5_16s3x")])
+can_skip = false
+metadata/_custom_type_script = "uid://bm6eb134mii7m"

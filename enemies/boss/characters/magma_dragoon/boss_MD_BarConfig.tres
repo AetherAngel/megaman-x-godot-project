@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="HPBarConfig" format=3 uid="uid://3p6xqhm1m5lo"]
+
+[ext_resource type="Script" uid="uid://dm54e16nnfi41" path="res://ui/hud/hp_bar/HPBarConfig.gd" id="1_hsns6"]
+
+[resource]
+script = ExtResource("1_hsns6")
+icon_offset = Vector2(254, 100)
+icon_override = &"boss"
+limit_offset = Vector2(0, -2)
+metadata/_custom_type_script = "uid://dm54e16nnfi41"

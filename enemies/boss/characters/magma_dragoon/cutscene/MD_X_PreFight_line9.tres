@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="DialogueLine" format=3 uid="uid://8lve6r1cs13f"]
+
+[ext_resource type="Script" uid="uid://8bmfodtxaosy" path="res://talksystem/DialogueLine.gd" id="1_o3ebv"]
+
+[resource]
+script = ExtResource("1_o3ebv")
+speaker = "Magma Dragoon"
+text = "So if you have someone to blame... blame me!"
+metadata/_custom_type_script = "uid://8bmfodtxaosy"

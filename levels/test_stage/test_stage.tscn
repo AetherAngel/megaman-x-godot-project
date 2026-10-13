@@ -200,7 +200,7 @@ cutscene_x = ExtResource("3_f3rfm")
 armor_slot = "arms"
 
 [node name="LightCapsule_legs" parent="Entities" unique_id=827533579 instance=ExtResource("3_ddm4x")]
-position = Vector2(403, 138)
+position = Vector2(403, 120)
 scale = Vector2(1, 1)
 cutscene_x = ExtResource("4_w1iqy")
 
@@ -211,17 +211,7 @@ cutscene_x = ExtResource("5_qsrmv")
 armor_slot = "head"
 
 [node name="Player" parent="Entities" unique_id=1868599241 instance=ExtResource("2_i72sj")]
-position = Vector2(54, 38)
-ground_acceleration = null
-max_fall_speed = null
-speed = null
-dash_speed = null
-jump_velocity = null
-gravity = null
-air_control_multiplier = null
-air_acceleration = null
-jump_gravity_multiplier = null
-fall_gravity_multiplier = null
+position = Vector2(54, 53)
 
 [node name="Background" type="TextureRect" parent="." unique_id=1851673985]
 offset_left = -267.0

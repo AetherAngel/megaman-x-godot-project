@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="BossData" format=3 uid="uid://cmns3ii46gj8h"]
+
+[ext_resource type="Script" uid="uid://cytcncmfat5pu" path="res://enemies/boss/data/bossphasedata.gd" id="1_5dkat"]
+[ext_resource type="Resource" uid="uid://c2cgpyl2qdc6m" path="res://enemies/boss/characters/magma_dragoon/cutscene/MD_Prefight_CT_Data.tres" id="1_f84nt"]
+[ext_resource type="Resource" uid="uid://vlfpexjywi1x" path="res://enemies/boss/characters/magma_dragoon/magma_dragoon_resistance.tres" id="2_f84nt"]
+[ext_resource type="Script" uid="uid://k26hv8uqa26" path="res://enemies/boss/data/bossdata.gd" id="2_so1yn"]
+[ext_resource type="SpriteFrames" uid="uid://bwjxilmiif8rp" path="res://resources/animations/spr_magma_dragoon.tres" id="3_f84nt"]
+[ext_resource type="Resource" uid="uid://btjr6m5lib3wl" path="res://enemies/boss/characters/magma_dragoon/phases/Magma_Dragoon_Phase_DT.tres" id="3_ommwg"]
+
+[resource]
+script = ExtResource("2_so1yn")
+boss_name = "magma_dragoon"
+boss_id = "magma_dragoon"
+sprite_frames = ExtResource("3_f84nt")
+resistance_table = ExtResource("2_f84nt")
+arena_bounds = Rect2(2700, 100, 1080, 1080)
+native_facing_right = false
+starts_facing_right = false
+phases = Array[ExtResource("1_5dkat")]([ExtResource("3_ommwg")])
+intro_cutscene = ExtResource("1_f84nt")
+metadata/_custom_type_script = "uid://k26hv8uqa26"
