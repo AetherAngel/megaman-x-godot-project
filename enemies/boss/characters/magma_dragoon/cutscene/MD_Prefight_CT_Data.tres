@@ -1,14 +1,14 @@
 [gd_resource type="Resource" script_class="CutsceneData" format=3 uid="uid://c2cgpyl2qdc6m"]
 
-[ext_resource type="Script" uid="uid://bm6eb134mii7m" path="res://talksystem/CutsceneData.gd" id="1_c5jfb"]
-[ext_resource type="Script" uid="uid://cbnu10kg40vow" path="res://talksystem/CutsceneStep.gd" id="2_atrh0"]
+[ext_resource type="Script" uid="uid://bm6eb134mii7m" path="res://Cutscene and Talk system/CutsceneData.gd" id="1_c5jfb"]
+[ext_resource type="Script" uid="uid://cbnu10kg40vow" path="res://Cutscene and Talk system/CutsceneStep.gd" id="2_atrh0"]
 [ext_resource type="Resource" uid="uid://5ow5el5xfos0" path="res://enemies/boss/characters/magma_dragoon/cutscene/MD_Intro1.tres" id="3_orbm7"]
 [ext_resource type="Resource" uid="uid://cji7x7sd7byfw" path="res://enemies/boss/characters/magma_dragoon/cutscene/MD_InteractionToPlayer_Battle.tres" id="4_uxom7"]
 [ext_resource type="Script" uid="uid://ivpx7ytxrnkj" path="res://resources/PhysicalMovePhase.gd" id="4_w048k"]
 [ext_resource type="Resource" uid="uid://b8b4a4b6a6l2m" path="res://enemies/boss/characters/magma_dragoon/cutscene/MD_Intro2.tres" id="5_16s3x"]
 [ext_resource type="Script" uid="uid://dis8iifq507di" path="res://resources/PhysicalMoveDef.gd" id="5_kat8h"]
-[ext_resource type="Script" uid="uid://bfv7qiwsjmeyl" path="res://talksystem/steps/StepPhysicalMove.gd" id="6_fifrr"]
-[ext_resource type="Script" uid="uid://dn13wwlso37we" path="res://talksystem/steps/StepAnimation.gd" id="7_inukb"]
+[ext_resource type="Script" uid="uid://bfv7qiwsjmeyl" path="res://Cutscene and Talk system/steps/StepPhysicalMove.gd" id="6_fifrr"]
+[ext_resource type="Script" uid="uid://dn13wwlso37we" path="res://Cutscene and Talk system/steps/StepAnimation.gd" id="7_inukb"]
 
 [sub_resource type="Resource" id="Resource_jlshy"]
 script = ExtResource("4_w048k")

@@ -266,7 +266,8 @@ func _on_equip_slot(slot: String) -> void:
 func _on_next_map() -> void:
 	get_tree().paused = false
 	GameManager.set_input_mode(_previous_input_mode)
-	get_tree().change_scene_to_file("res://levels/magma_dragon/Volcano_Stage.tscn")
+	# Pelo start_stage: define current_stage_id e toca a música da fase (MD).
+	GameManager.start_stage(load("res://levels/stage_data/stage_magma_dragon.tres") as StageData)
 	
 
 
@@ -354,6 +355,3 @@ func _flip_boss() -> void:
 	flipcalled = !flipcalled
 	GameManager.current_boss.debug_force_facing(flipcalled)
 	print("Debug Panel: Forçando Boss a virar de direção via (debug_force_facing) = ", flipcalled)
-	
-	
-	

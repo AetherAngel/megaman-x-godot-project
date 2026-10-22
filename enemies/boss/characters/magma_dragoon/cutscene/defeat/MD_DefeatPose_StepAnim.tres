@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="StepAnimation" format=3 uid="uid://dbkyoif8jl5sl"]
+
+[ext_resource type="Script" uid="uid://dn13wwlso37we" path="res://Cutscene and Talk system/steps/StepAnimation.gd" id="1_di7nb"]
+
+[resource]
+script = ExtResource("1_di7nb")
+target_group = "sprite_boss"
+animation = "magma_dragoon_finished_X"
+wait_to_finish = false
+step_total_duration = 0.2
+metadata/_custom_type_script = "uid://dn13wwlso37we"

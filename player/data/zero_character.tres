@@ -2,13 +2,40 @@
 
 [ext_resource type="Script" uid="uid://h6o2bdlxa27a" path="res://player/data/PlayerCharacterData.gd" id="1_3n2s6"]
 [ext_resource type="Resource" uid="uid://76riyuj34c7o" path="res://player/data/armors/normal_zero.tres" id="1_e320o"]
+[ext_resource type="Resource" uid="uid://c3rb0r38nt2hn" path="res://player/data/cutscenes/player-death-ct-DT.tres" id="1_qq106"]
 [ext_resource type="Resource" uid="uid://dwgjvpfk0l6v6" path="res://player/data/skilltree/zero_skilltree.tres" id="2_1x1ay"]
+[ext_resource type="Script" uid="uid://sev6biwlyfqi" path="res://particlesystem/resources/SpawnedParticleDef.gd" id="2_84618"]
+[ext_resource type="SpriteFrames" uid="uid://c4b18bwt7v6qb" path="res://resources/animations/spr_zero_dolor.tres" id="3_l5i1n"]
+[ext_resource type="Resource" uid="uid://d2donmmadm7c6" path="res://systems/hp/data/zero_hp.tres" id="5_rld0x"]
+[ext_resource type="Resource" uid="uid://d1ewfq7nu4ej8" path="res://player/data/cutscenes/player-victory-ct-DT.tres" id="8_84618"]
+
+[sub_resource type="Resource" id="Resource_2kfl0"]
+script = ExtResource("2_84618")
+sprite_frames = ExtResource("3_l5i1n")
+animations = Array[String](["death_orb"])
+burst_count = 8
+spawn_delay = 0.5
+lifetime = 2.0
+lifetime_variance = 0.0
+base_direction = Vector2(0, 0)
+spread_angle = 360.0
+even_spread = true
+velocity_min = 60.0
+z_index = 25
+play_sfx = true
+sfx_id = "die"
+sfx_volume = -20.0
+metadata/_custom_type_script = "uid://sev6biwlyfqi"
 
 [resource]
 script = ExtResource("1_3n2s6")
 character_id = &"Zero"
 display_name = "Mega Man Zero"
 base_folder = "spr_zero"
+hp_data = ExtResource("5_rld0x")
+death_cutscene = ExtResource("1_qq106")
+death_effect = SubResource("Resource_2kfl0")
+victory_cutscene = ExtResource("8_84618")
 armor_name = "normal_zero"
 default_armor = ExtResource("1_e320o")
 default_weapon = "saber"

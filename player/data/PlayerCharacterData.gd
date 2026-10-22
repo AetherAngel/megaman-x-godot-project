@@ -35,6 +35,24 @@ extends Resource
 @export var hp_data: HPSystemData
 
 
+# ── Death ─────────────────────────────────────────────────────
+## Cutscene tocada quando o HP chega a zero (efeito/animação, fade, respawn).
+## Cada personagem tem a sua: a animação de morte difere entre X, Zero...
+## Sem ela, o Player só reaparece direto (com aviso no Output).
+@export var death_cutscene: CutsceneData
+## Efeito spawnado no ponto da morte (ex: anel de orbes). O Player copia este valor
+## para Actor.death_effect, que já o spawna sozinho no zero_health. Cada personagem
+## tem o seu (arte e cor diferentes). A ficha manda: vazio = sem efeito.
+@export var death_effect: SpawnedParticleDef
+
+
+# ── Victory ───────────────────────────────────────────────────
+## Cutscene do Player depois de derrotar um boss: o state Victory toca a pose
+## (VisualSequence "Victory") e esta cutscene faz a saída (ex: VisualSequence "Outro" via
+## StepAnimation no grupo "player", fade...). Cada personagem tem a sua.
+@export var victory_cutscene: CutsceneData
+
+
 # ── Armor ─────────────────────────────────────────────────────
 ## Nome da armadura padrão — usado para montar o path de fallback.
 @export var armor_name: String = "armor_normal"

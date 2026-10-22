@@ -21,7 +21,7 @@ var states: Dictionary = {}
 @onready var visual_library: VisualLibrary = _get_visual_library()
 @onready var visual_sequence_player: VisualSequenceController = _get_sequence_player()
 
-@export var special_visual_states: Array[String] = ["Intro", "equip"]
+@export var special_visual_states: Array[String] = ["Intro", "equip", "Death"]
 
 # ── Sinal para o Boss flow ───────────────────────────────────
 ## Emitido pelo state Death do boss quando a animação termina.
@@ -82,7 +82,8 @@ func change_state(new_state_name: String) -> void:
 	# Sequência visual especial (Intro, Equip...) — só se o nó existir.
 	if is_special_visual_state(current_state_name) and visual_sequence_player:
 		await visual_sequence_player.play(_host, current_state_name)
-	elif visual_library:
+	# States que cuidam do próprio visual (manages_own_visuals) não recebem o automático.
+	elif visual_library and not current_state.get("manages_own_visuals"):
 		visual_library.play_state(current_state_name)
 
 

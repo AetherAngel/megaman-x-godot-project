@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b8e6t8vfomt13" path="res://player/objects/projectiles/XProjectile.gd" id="1_ewnxb"]
 [ext_resource type="Texture2D" uid="uid://22n4de6ec4bl" path="res://sprites/spr_x_shot_1/megaman_x_normalshot.png" id="2_ggry5"]
+[ext_resource type="Script" uid="uid://b5hlcaqkwh84f" path="res://systems/hit/HitComponent.gd" id="3_w68nl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5ngqy"]
 atlas = ExtResource("2_ggry5")
@@ -37,3 +38,7 @@ animation = &"main_shot"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1643935100]
 shape = SubResource("RectangleShape2D_w68nl")
+
+[node name="HitComponent" type="Node" parent="." unique_id=1788964043]
+script = ExtResource("3_w68nl")
+metadata/_custom_type_script = "uid://b5hlcaqkwh84f"

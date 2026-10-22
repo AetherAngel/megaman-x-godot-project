@@ -5,6 +5,10 @@ extends Resource
 @export var money: int = 0
 @export var lives: int = 3
 @export var defeated_bosses: Dictionary = {}
+## Armas/técnicas liberadas ao derrotar bosses (WeaponRewardData.weapon_id).
+## Vale para os dois personagens ao mesmo tempo: o X ganha a arma especial do boss
+## e o Zero a técnica correspondente.
+@export var unlocked_weapons: Array[String] = []
 @export var collected_heart_tanks: int = 0
 @export var subtanks: int = 0
 

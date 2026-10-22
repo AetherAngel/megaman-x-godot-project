@@ -1,7 +1,7 @@
 # autoload/GameManager.gd
 extends Node
 
-var GameVersion: String = "0.0.7"
+var GameVersion: String = "0.1.4"
 
 enum GameState {
 	BOOT,
@@ -42,6 +42,9 @@ var current_player: String        = "X"
 var is_paused: bool               = false
 
 var active_checkpoint: Checkpoint = null
+
+## Decide o que fazer quando o jogador falha o objetivo (morre).
+var _objective := ObjectiveHelper.new()
 
 # ── Boss flow ─────────────────────────────────────────────────
 ## Referência ao boss atual — setada pelo boss no seu _ready().
@@ -201,13 +204,28 @@ func set_input_mode(new_mode: InputMode) -> void:
 # STAGE
 # ============================================================
 
-func start_stage(stage_id: String = "test") -> void:
-	SoundManager.stop_music()
-	current_stage_id = stage_id
-	print("🎮 Iniciando stage: " + stage_id)
-	SoundManager.play_stage_music(stage_id)
+## Fase usada quando start_stage() é chamado sem argumento
+## (ex: PLAYER_SELECT → IN_STAGE). Hoje é a fase de teste, como intro temporária.
+const DEFAULT_STAGE_PATH := "res://levels/stage_data/stage_test.tres"
 
-	var stage_path = "res://levels/test_stage/test_stage.tscn"
+## Inicia uma fase a partir do seu StageData: carrega a cena, define o
+## current_stage_id e toca a música (stage_id → "stage_music" no sounds.json).
+func start_stage(stage: StageData = null) -> void:
+	if not stage:
+		stage = load(DEFAULT_STAGE_PATH) as StageData
+	if not stage:
+		push_error("❌ StageData padrão não encontrado: " + DEFAULT_STAGE_PATH)
+		return
+
+	# Fase nova = partida nova: as cutscenes voltam a poder ser vistas.
+	CutsceneSequencer.reset_seen()
+
+	SoundManager.stop_music()
+	current_stage_id = stage.stage_id
+	print("🎮 Iniciando stage: " + stage.stage_id)
+	SoundManager.play_stage_music(stage.stage_id)
+
+	var stage_path := stage.level_scene_path
 	var packed = load(stage_path)
 
 	if packed:
@@ -225,6 +243,36 @@ func start_stage(stage_id: String = "test") -> void:
 
 func go_to_stage_select() -> void:
 	change_state(GameState.STAGE_SELECT)
+
+
+# ============================================================
+# FALHA DO OBJETIVO
+# ============================================================
+
+## Chamado pelo Player ao morrer (no preto do fade, antes do respawn).
+## A decisão fica no ObjectiveHelper; aqui só passamos o contexto atual.
+func on_player_failed() -> void:
+	_objective.on_player_failed(current_state, current_stage_id, get_tree())
+
+
+## Volta ao IN_STAGE SEM recarregar a cena.
+## change_state(IN_STAGE) chama start_stage(), que recarrega tudo — não serve para
+## voltar de uma luta de boss. Faz só a parte de estado/input do IN_STAGE.
+func resume_stage() -> void:
+	current_state = GameState.IN_STAGE
+	state_changed.emit(GameState.IN_STAGE)
+	set_input_mode(InputMode.PLAYER)
+	InputManager.can_process_player_input = true
+
+
+# ============================================================
+# VITÓRIA DO OBJETIVO
+# ============================================================
+
+## Chamado pelo BossFlowManager quando o boss é derrotado e a recompensa é entregue.
+## A decisão (marcar, liberar, salvar) fica no ObjectiveHelper.
+func on_boss_defeated(reward: WeaponRewardData) -> void:
+	_objective.on_boss_defeated(current_stage_id, reward)
 
 
 # ============================================================

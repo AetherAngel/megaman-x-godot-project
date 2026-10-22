@@ -178,6 +178,12 @@ func play_sfx(id: String, volume_override: float = INF, pitch_override: float = 
 	player.queue_free()
 
 
+## Quantas instâncias deste SFX estão tocando agora. Permite evitar empilhar sons
+## iguais (que soma o volume), ex: os efeitos das cutscenes (sfx_max_overlap).
+func get_active_sfx_count(id: String) -> int:
+	return _active_sfx[id].size() if _active_sfx.has(id) else 0
+
+
 func stop_sfx(id: String) -> void:
 	if not _active_sfx.has(id):
 		push_error("⚠️ stop_sfx: nenhum SFX ativo com id '%s'" % id)

@@ -15,7 +15,8 @@ shader_parameter/show_left_half = true
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_otjgj"]
 size = Vector2(30, 47)
 
-[node name="MMX_Door" type="Area2D" unique_id=624479854]
+[node name="MMX_Door" type="Area2D" unique_id=624479854 groups=["arena_resettable"]]
+position = Vector2(1, 1)
 collision_mask = 36
 script = ExtResource("1_8hjja")
 forced_speed = 40.0

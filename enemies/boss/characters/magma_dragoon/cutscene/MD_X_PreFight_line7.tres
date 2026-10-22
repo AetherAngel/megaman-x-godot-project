@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="DialogueLine" format=3 uid="uid://b45imdxib5lk5"]
-
-[ext_resource type="Script" uid="uid://8bmfodtxaosy" path="res://talksystem/DialogueLine.gd" id="1_0e6sl"]
-
-[resource]
-script = ExtResource("1_0e6sl")
-speaker = "X"
-text = " But... We're allies! "
-metadata/_custom_type_script = "uid://8bmfodtxaosy"

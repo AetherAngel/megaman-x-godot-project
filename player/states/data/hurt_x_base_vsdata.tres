@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="StateBaseVisualData" format=3 uid="uid://smnyi482o4ex"]
+
+[ext_resource type="Script" uid="uid://0v8irxqn21kk" path="res://player/states/data/StateBaseVisualData.gd" id="1_kc1el"]
+
+[resource]
+script = ExtResource("1_kc1el")
+main_file = "_dolor"
+main_anim = "hurt"
+is_loop = false
+metadata/_custom_type_script = "uid://0v8irxqn21kk"

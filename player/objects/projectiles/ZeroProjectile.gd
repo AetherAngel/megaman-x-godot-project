@@ -17,6 +17,7 @@ var _hit: bool = false
 
 
 func _ready() -> void:
+	add_to_group(&"projectile")  # limpo na vitória do boss (BossFlowManager)
 		# Reduz o sprite pela metade
 	sprite.scale = Vector2(0.5, 0.5)
 	sprite.flip_h = direction.x < 0

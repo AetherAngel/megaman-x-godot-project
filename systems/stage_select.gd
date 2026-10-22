@@ -132,11 +132,11 @@ func _check_all_bosses_defeated() -> bool:
 
 func _select_stage(index: int) -> void:
 	var selected = stages[index]
-	GameManager.start_stage(selected.stage_id)
+	GameManager.start_stage(selected)
 
 func _select_sigma_stage() -> void:
 	# TODO: criar stage sigma fortress (várias fases)
-	GameManager.start_stage("sigma_fortress")
+	push_warning("[StageSelect] Sigma Fortress ainda não tem StageData.")
 
 # Menus laterais via double-press
 func _go_to_shop_menu():  GameManager.change_state(GameManager.GameState.SHOP)

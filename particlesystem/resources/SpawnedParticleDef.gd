@@ -15,8 +15,18 @@ extends Resource
 ## Atraso em segundos antes de qualquer coisa acontecer.
 ## Útil para sincronizar com animações sem hardcodar timers no código.
 @export var spawn_delay: float = 0.0
-## Intervalo em segundos para spawnar continuamente. 0 = apenas uma vez.
+## Intervalo em segundos entre repetições do burst. 0 = apenas uma vez.
+## Usado por spawners (FXSpawner) e, com "Wave" ligado, pelo ParticleFX.spawn_at.
 @export var repeat_interval: float = 0.0
+## WAVE (spawn on original location): se true, ParticleFX.spawn_at repete o burst a cada
+## repeat_interval, sempre da posição ORIGINAL (resolvida no momento do spawn) — e não de
+## onde as partículas anteriores estão. Combine com burst_count + even_spread para anéis
+## radiais repetidos (ex: orbes de morte do MMX). Desligado = comportamento de sempre.
+@export var wave: bool = false
+## Só vale com Wave ligado: por quanto tempo as ondas duram, em segundos. 0 = até serem
+## paradas (ParticleFX.stop_all_continuous, StepCall no grupo "fx_continuous" chamando
+## queue_free, ou o respawn do Player).
+@export var repeat_duration: float = 0.0
 ## Se true, só spawna se o owner estiver no chão.
 @export var require_grounded: bool = false
 
@@ -29,6 +39,11 @@ extends Resource
 @export var follow_marker: bool = false
 ## Offset visual do FX
 @export var offset: Vector2 = Vector2.ZERO
+## Variação aleatória de posição (± por eixo) aplicada a CADA partícula. Serve para
+## efeitos espalhados, ex: explosões por cima do corpo de um boss, todas perto umas das
+## outras. Combine com burst_count + spawn_interval para explodir ao longo do tempo.
+## Zero = todas no mesmo ponto (comportamento anterior).
+@export var position_variance: Vector2 = Vector2.ZERO
 
 @export_group("Lifetime")
 ## Tempo de vida base em segundos.
@@ -46,6 +61,11 @@ extends Resource
 @export var inherit_facing: bool = false
 ## Arco de dispersão em graus. 0 = todas na mesma dir, 360 = radial completo.
 @export_range(0, 360) var spread_angle: float = 30.0
+## Se true, as `burst_count` partículas saem em ângulos IGUAIS (em vez de aleatórios).
+## spread_angle = 360 → anel completo: 8 partículas = 45° entre cada, a partir de
+## base_direction. Abaixo de 360, distribui ao longo do arco (extremos incluídos).
+## Combine com velocity_min = velocity_max para um anel regular. O SFX toca uma vez só.
+@export var even_spread: bool = false
 @export var velocity_min: float = 20.0
 @export var velocity_max: float = 60.0
 ## Gravidade local desta partícula (independente da gravidade do mundo).

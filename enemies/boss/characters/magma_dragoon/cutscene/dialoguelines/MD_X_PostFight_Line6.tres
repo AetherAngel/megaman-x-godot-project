@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="DialogueLine" format=3 uid="uid://cnjrso1m6a1pq"]
+
+[ext_resource type="Script" uid="uid://8bmfodtxaosy" path="res://Cutscene and Talk system/DialogueLine.gd" id="1_67fe0"]
+
+[resource]
+script = ExtResource("1_67fe0")
+speaker = "X"
+text = "You did it just so you could fight me? Why don't you just talk to me about it?"
+metadata/_custom_type_script = "uid://8bmfodtxaosy"

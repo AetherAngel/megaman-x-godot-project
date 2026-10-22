@@ -5,9 +5,14 @@
 [resource]
 script = ExtResource("1_beyjq")
 entries = {
-" contact": 1,
 "buster": 1,
-"fire": 0,
-"ice": 0
+"buster_charge_lv2": 2,
+"buster_charge_lv3": 4,
+"buster_plasma": 6,
+"contact": 3,
+"fire": 2,
+"ice": 8,
+"saber": 3
 }
+default_damage = 2
 metadata/_custom_type_script = "uid://b8t7vlj6rpn0h"

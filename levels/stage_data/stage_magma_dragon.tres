@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="StageData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://resources/StageData.gd" id="1_stage"]
+
+[resource]
+script = ExtResource("1_stage")
+stage_id = "MD"
+stage_name = "Magma Dragoon"
+boss_name = "Magma Dragoon"
+icon_path = ""
+level_scene_path = "res://levels/magma_dragon/volcano_stage.tscn"

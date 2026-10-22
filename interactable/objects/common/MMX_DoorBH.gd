@@ -54,6 +54,16 @@ func _ready() -> void:
 	_show_only(_initial_sprite(), _other_sprite())
 
 
+## Rearma a porta para uma nova tentativa da luta (grupo "arena_resettable").
+## Chamado pelo ObjectiveHelper quando o jogador morre na arena.
+func reset_arena() -> void:
+	_triggered = false
+	_show_only(_initial_sprite(), _other_sprite())
+	_initial_sprite().stop()
+	_initial_sprite().animation = open_animation
+	_initial_sprite().frame = 0
+
+
 func _initial_sprite() -> AnimatedSprite2D:
 	return door_left if initial_side == DoorSide.LEFT else door_right
 

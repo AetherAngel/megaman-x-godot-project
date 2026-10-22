@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="DialogueData" format=3 uid="uid://d01s0h3pvs25m"]
+
+[ext_resource type="Script" uid="uid://8bmfodtxaosy" path="res://Cutscene and Talk system/DialogueLine.gd" id="1_konxj"]
+[ext_resource type="Resource" uid="uid://bts7yfojxi6ga" path="res://enemies/boss/characters/magma_dragoon/cutscene/dialoguelines/MD_X_PostFight_Line1.tres" id="2_64ocx"]
+[ext_resource type="Script" uid="uid://c634kjm0dutmx" path="res://Cutscene and Talk system/DialogueData.gd" id="2_xh4yp"]
+[ext_resource type="Resource" uid="uid://c32wx46uhp4pi" path="res://enemies/boss/characters/magma_dragoon/cutscene/dialoguelines/MD_X_PostFight_Line2.tres" id="3_v16nd"]
+[ext_resource type="Resource" uid="uid://dga0emuifkqvq" path="res://enemies/boss/characters/magma_dragoon/cutscene/dialoguelines/MD_X_PostFight_Line3.tres" id="4_mhebl"]
+[ext_resource type="Resource" uid="uid://bc5rknfb4hdv5" path="res://enemies/boss/characters/magma_dragoon/cutscene/dialoguelines/MD_X_PostFight_Line4.tres" id="5_y5lng"]
+[ext_resource type="Resource" uid="uid://b57oennkxdyb6" path="res://enemies/boss/characters/magma_dragoon/cutscene/dialoguelines/MD_X_PostFight_Line5.tres" id="6_kl5d4"]
+[ext_resource type="Resource" uid="uid://cnjrso1m6a1pq" path="res://enemies/boss/characters/magma_dragoon/cutscene/dialoguelines/MD_X_PostFight_Line6.tres" id="7_d1khk"]
+[ext_resource type="Resource" uid="uid://cpywshho56q5e" path="res://enemies/boss/characters/magma_dragoon/cutscene/dialoguelines/MD_X_PostFight_Line8.tres" id="8_1sm8g"]
+
+[resource]
+script = ExtResource("2_xh4yp")
+lines = Array[ExtResource("1_konxj")]([ExtResource("2_64ocx"), ExtResource("3_v16nd"), ExtResource("4_mhebl"), ExtResource("5_y5lng"), ExtResource("6_kl5d4"), ExtResource("7_d1khk"), ExtResource("8_1sm8g")])
+metadata/_custom_type_script = "uid://c634kjm0dutmx"

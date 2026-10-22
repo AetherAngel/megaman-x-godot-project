@@ -2,7 +2,9 @@
 
 [ext_resource type="Script" uid="uid://dqk0fyqe4iv81" path="res://player/player.gd" id="1_boad6"]
 [ext_resource type="Resource" uid="uid://btavk4skm2yiq" path="res://player/states/data/equip_sequence_vsdata.tres" id="5_7pqkx"]
+[ext_resource type="Resource" uid="uid://dd5v76e01fs2m" path="res://player/states/data/hurt_vssequence_sqdata.tres" id="6_a2xo5"]
 [ext_resource type="Script" uid="uid://c7vxmd1g07tow" path="res://player/states/Run.gd" id="7_boad6"]
+[ext_resource type="Resource" uid="uid://cw8qk5y72wol4" path="res://player/states/data/victory_sequence_DATA.tres" id="7_fjxoa"]
 [ext_resource type="Script" uid="uid://c5l8p3tprl1os" path="res://player/states/Dash.gd" id="8_hg6s5"]
 [ext_resource type="Script" uid="uid://biyhuwhr53ywv" path="res://player/states/StateMachine.gd" id="8_rgyib"]
 [ext_resource type="Script" uid="uid://cjk02m4yfedld" path="res://player/states/Fall.gd" id="9_8t03j"]
@@ -29,6 +31,7 @@
 [ext_resource type="Script" uid="uid://34nqbiejbvwq" path="res://autoload/VisualSequencePlayer.gd" id="23_knn7v"]
 [ext_resource type="Texture2D" uid="uid://bulgh1uk0jl7c" path="res://sprites/spr_x_shoot/08188e43-f3bd-4363-8a37-21c60850b438.png" id="23_uw77l"]
 [ext_resource type="Script" uid="uid://b1djsw3q6bify" path="res://player/states/data/VisualSequenceData.gd" id="24_7pqkx"]
+[ext_resource type="Script" uid="uid://db5hsqhiowkdd" path="res://player/states/Victory.gd" id="25_art4l"]
 [ext_resource type="Resource" uid="uid://byku7bqf6svq1" path="res://player/states/data/intro_sequence_vsdata.tres" id="25_uw77l"]
 [ext_resource type="Resource" uid="uid://w8mc46ykf5rn" path="res://particlesystem/resources/FX/charge_fx_def.tres" id="27_rptt4"]
 [ext_resource type="Resource" uid="uid://0xjq4227ygvp" path="res://particlesystem/resources/FX/X_shot.tres" id="28_r7pn3"]
@@ -38,6 +41,8 @@
 [ext_resource type="Script" uid="uid://scowvixd6kuv" path="res://particlesystem/resources/FXAttachment.gd" id="36_pnw6m"]
 [ext_resource type="Resource" uid="uid://d2g34614xfava" path="res://particlesystem/resources/FX/hover_effect.tres" id="37_1so5t"]
 [ext_resource type="Resource" uid="uid://0518au536wnp" path="res://systems/hp/data/x_hp.tres" id="37_pnw6m"]
+[ext_resource type="Script" uid="uid://b5hlcaqkwh84f" path="res://systems/hit/HitComponent.gd" id="39_55jnj"]
+[ext_resource type="Script" uid="uid://db640w6e7h8nu" path="res://systems/hp/DamageHandler.gd" id="40_dx5ib"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sh265"]
 size = Vector2(20, 32)
@@ -91,6 +96,7 @@ collision_layer = 36
 collision_mask = 35
 slide_on_ceiling = false
 script = ExtResource("1_boad6")
+invuln_on_hit = 2.0
 
 [node name="CollisionNormal" type="CollisionShape2D" parent="." unique_id=471860809]
 position = Vector2(0, 6)
@@ -102,7 +108,7 @@ disabled = true
 
 [node name="VisualSequencePlayer" type="Node" parent="." unique_id=2144864865]
 script = ExtResource("23_knn7v")
-sequence_library = Array[ExtResource("24_7pqkx")]([ExtResource("25_uw77l"), ExtResource("5_7pqkx")])
+sequence_library = Array[ExtResource("24_7pqkx")]([ExtResource("25_uw77l"), ExtResource("5_7pqkx"), ExtResource("6_a2xo5"), ExtResource("7_fjxoa")])
 
 [node name="StateMachine" type="Node" parent="." unique_id=972487075]
 script = ExtResource("8_rgyib")
@@ -172,6 +178,9 @@ metadata/_custom_type_script = "uid://di1kk7rbaqxvl"
 [node name="ForcedMovement" type="Node" parent="StateMachine" unique_id=122494674]
 script = ExtResource("23_1so5t")
 metadata/_custom_type_script = "uid://di1kk7rbaqxvl"
+
+[node name="Victory" type="Node" parent="StateMachine" unique_id=870998138]
+script = ExtResource("25_art4l")
 
 [node name="CanvasLayer (HUD)" type="CanvasLayer" parent="." unique_id=1650312114]
 
@@ -263,3 +272,11 @@ data = ExtResource("37_pnw6m")
 character_id = &"X"
 is_player_bound = true
 metadata/_custom_type_script = "uid://6kruqvhdmijy"
+
+[node name="HitComponent" type="Node" parent="." unique_id=185584730]
+script = ExtResource("39_55jnj")
+metadata/_custom_type_script = "uid://b5hlcaqkwh84f"
+
+[node name="DamageHandler" type="Node" parent="." unique_id=498873052]
+script = ExtResource("40_dx5ib")
+metadata/_custom_type_script = "uid://db640w6e7h8nu"

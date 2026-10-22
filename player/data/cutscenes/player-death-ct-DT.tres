@@ -1,0 +1,48 @@
+[gd_resource type="Resource" script_class="CutsceneData" format=3 uid="uid://c3rb0r38nt2hn"]
+
+[ext_resource type="Script" uid="uid://bm6eb134mii7m" path="res://Cutscene and Talk system/CutsceneData.gd" id="1_81atj"]
+[ext_resource type="Script" uid="uid://cbnu10kg40vow" path="res://Cutscene and Talk system/CutsceneStep.gd" id="2_ncp28"]
+[ext_resource type="Script" uid="uid://dn13wwlso37we" path="res://Cutscene and Talk system/steps/StepAnimation.gd" id="3_c4wmk"]
+[ext_resource type="Script" uid="uid://bdbtui2yb4kst" path="res://Cutscene and Talk system/steps/StepCall.gd" id="4_3c4cy"]
+[ext_resource type="Script" uid="uid://bgqpn08duborv" path="res://Cutscene and Talk system/steps/StepWait.gd" id="5_qdmwm"]
+[ext_resource type="Script" uid="uid://do5uyv5u6wkui" path="res://Cutscene and Talk system/steps/StepFade.gd" id="6_jdugl"]
+
+[sub_resource type="Resource" id="Resource_yiy0f"]
+script = ExtResource("3_c4wmk")
+target_group = "player"
+animation = "Death"
+wait_to_finish = false
+step_total_duration = 0.5
+metadata/_custom_type_script = "uid://dn13wwlso37we"
+
+[sub_resource type="Resource" id="Resource_6f2mb"]
+script = ExtResource("4_3c4cy")
+target_group = "player"
+method = &"hide"
+metadata/_custom_type_script = "uid://bdbtui2yb4kst"
+
+[sub_resource type="Resource" id="Resource_k2cdt"]
+script = ExtResource("5_qdmwm")
+duration = 2.1
+metadata/_custom_type_script = "uid://bgqpn08duborv"
+
+[sub_resource type="Resource" id="Resource_06d48"]
+script = ExtResource("6_jdugl")
+metadata/_custom_type_script = "uid://do5uyv5u6wkui"
+
+[sub_resource type="Resource" id="Resource_hybk8"]
+script = ExtResource("4_3c4cy")
+target_group = "player"
+method = &"respawn"
+metadata/_custom_type_script = "uid://bdbtui2yb4kst"
+
+[sub_resource type="Resource" id="Resource_c82ii"]
+script = ExtResource("6_jdugl")
+mode = 1
+metadata/_custom_type_script = "uid://do5uyv5u6wkui"
+
+[resource]
+script = ExtResource("1_81atj")
+steps = Array[ExtResource("2_ncp28")]([SubResource("Resource_yiy0f"), SubResource("Resource_6f2mb"), SubResource("Resource_k2cdt"), SubResource("Resource_06d48"), SubResource("Resource_hybk8"), SubResource("Resource_c82ii")])
+can_skip = false
+metadata/_custom_type_script = "uid://bm6eb134mii7m"

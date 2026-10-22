@@ -1,0 +1,137 @@
+[gd_scene format=3 uid="uid://b152xnuel48j8"]
+
+[ext_resource type="Texture2D" uid="uid://nenfj1rrxesu" path="res://sprites/spr_tile_lava/01f7a7a0-1032-42f5-9564-d277f4c3677f.png" id="1_tcpo7"]
+[ext_resource type="Texture2D" uid="uid://tw6fdn2vx0f7" path="res://sprites/spr_tile_lava/530da608-2985-4ab0-acda-f0b264a53bb5.png" id="2_ltei0"]
+[ext_resource type="Texture2D" uid="uid://bhjajw71wy3vx" path="res://sprites/spr_tile_lava/e37fe1c3-e3f0-4a6a-a97e-8ab4b9752ed2.png" id="3_n41t6"]
+[ext_resource type="Script" uid="uid://dc8w3a6m0cpfr" path="res://resources/TiledTexturerect.gd" id="4_ks8k4"]
+[ext_resource type="Script" uid="uid://b5hlcaqkwh84f" path="res://systems/hit/HitComponent.gd" id="5_ltei0"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_apir7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_tcpo7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_tcpo7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ltei0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_n41t6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_n41t6")
+}],
+"loop": true,
+"name": &"flowing",
+"speed": 12.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n41t6"]
+size = Vector2(208, 57)
+
+[node name="LavaRiverEntity" type="AnimatedSprite2D" unique_id=2074830131 node_paths=PackedStringArray("collision_shape")]
+z_index = 25
+sprite_frames = SubResource("SpriteFrames_apir7")
+animation = &"flowing"
+speed_scale = 3.0
+centered = false
+script = ExtResource("4_ks8k4")
+sprite_frames = SubResource("SpriteFrames_apir7")
+animation = &"flowing"
+repeat_count = 4
+direction = 3
+collision_shape = NodePath("LavaHitBox/CollisionShape2D")
+
+[node name="LavaHitBox" type="Area2D" parent="." unique_id=68271509]
+collision_layer = 0
+collision_mask = 36
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LavaHitBox" unique_id=1959394474]
+position = Vector2(104, 35.5)
+shape = SubResource("RectangleShape2D_n41t6")
+
+[node name="HitComponent" type="Node" parent="LavaHitBox" unique_id=1786961917]
+script = ExtResource("5_ltei0")
+damage = 3.0
+damage_type_id = &"fire"
+damage_tag = "fire"
+auto_report = true
+metadata/_custom_type_script = "uid://b5hlcaqkwh84f"
+
+[node name="Sprite Animation" type="AnimatedSprite2D" parent="." unique_id=633111683]
+sprite_frames = SubResource("SpriteFrames_apir7")
+animation = &"flowing"
+autoplay = "flowing"
+frame_progress = 0.30627567
+centered = false
+
+[node name="@AnimatedSprite2D@39837" type="AnimatedSprite2D" parent="." unique_id=610690897]
+sprite_frames = SubResource("SpriteFrames_apir7")
+animation = &"flowing"
+autoplay = "flowing"
+frame_progress = 0.94999284
+centered = false
+
+[node name="@AnimatedSprite2D@39838" type="AnimatedSprite2D" parent="." unique_id=2138701959]
+visible = false
+position = Vector2(208, 0)
+sprite_frames = SubResource("SpriteFrames_apir7")
+animation = &"flowing"
+autoplay = "flowing"
+frame_progress = 0.94999284
+centered = false
+
+[node name="@AnimatedSprite2D@39840" type="AnimatedSprite2D" parent="." unique_id=1014064888]
+visible = false
+position = Vector2(416, 0)
+sprite_frames = SubResource("SpriteFrames_apir7")
+animation = &"flowing"
+autoplay = "flowing"
+frame_progress = 0.94999284
+centered = false
+
+[node name="@AnimatedSprite2D@39842" type="AnimatedSprite2D" parent="." unique_id=2064951461]
+visible = false
+position = Vector2(624, 0)
+sprite_frames = SubResource("SpriteFrames_apir7")
+animation = &"flowing"
+autoplay = "flowing"
+frame_progress = 0.94999284
+centered = false
+
+[node name="@AnimatedSprite2D@18968" type="AnimatedSprite2D" parent="." unique_id=981973492]
+sprite_frames = SubResource("SpriteFrames_apir7")
+animation = &"flowing"
+autoplay = "flowing"
+frame_progress = 0.8784389
+centered = false
+
+[node name="@AnimatedSprite2D@18969" type="AnimatedSprite2D" parent="." unique_id=1508031095]
+visible = false
+position = Vector2(208, 0)
+sprite_frames = SubResource("SpriteFrames_apir7")
+animation = &"flowing"
+autoplay = "flowing"
+frame_progress = 0.8784389
+centered = false
+
+[node name="@AnimatedSprite2D@18971" type="AnimatedSprite2D" parent="." unique_id=872879255]
+visible = false
+position = Vector2(416, 0)
+sprite_frames = SubResource("SpriteFrames_apir7")
+animation = &"flowing"
+autoplay = "flowing"
+frame_progress = 0.8784389
+centered = false
+
+[node name="@AnimatedSprite2D@18973" type="AnimatedSprite2D" parent="." unique_id=1073263841]
+visible = false
+position = Vector2(624, 0)
+sprite_frames = SubResource("SpriteFrames_apir7")
+animation = &"flowing"
+autoplay = "flowing"
+frame_progress = 0.8784389
+centered = false

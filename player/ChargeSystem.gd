@@ -261,6 +261,10 @@ func _fire(level: int, is_plasma: bool) -> void:
 	proj.is_alt    = is_plasma
 	proj.z_index   = projectile_z_index
 
+	# Só projéteis que suportam attacker (ex: XProjectile) recebem. Os demais seguem como antes.
+	if "attacker" in proj:
+		proj.attacker = _player
+
 	_get_projectile_container().add_child(proj)
 
 	update_spawn_points()
@@ -300,6 +304,10 @@ func _fire_stock() -> void:
 	proj.level     = 2
 	proj.is_alt    = false
 	proj.z_index   = projectile_z_index
+
+	# Só projéteis que suportam attacker recebem. Os demais seguem como antes.
+	if "attacker" in proj:
+		proj.attacker = _player
 
 	_get_projectile_container().add_child(proj)
 

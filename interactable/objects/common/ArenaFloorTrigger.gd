@@ -23,6 +23,11 @@ func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 
 
+## Rearma o gatilho para uma nova tentativa da luta (grupo "arena_resettable").
+func reset_arena() -> void:
+	_triggered = false
+
+
 func _on_body_entered(body: Node) -> void:
 	if _triggered:
 		return

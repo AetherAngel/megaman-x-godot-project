@@ -27,6 +27,12 @@ var is_defeated:    bool  = false
 ## A BT NÃO usa esta flag para controlar o tick — ela controla internamente via RUNNING.
 var is_acting: bool = false
 
+## Onde o boss nasceu — destino do reset_for_retry(). Guardado uma vez, no _start().
+var _initial_position: Vector2 = Vector2.ZERO
+var _has_initial_position: bool = false
+## Objetos spawnados na luta (projéteis, colunas...). Rastreados para limpar no retry.
+var _spawned_objects: Array[Node2D] = []
+
 signal boss_defeated(has_final_dialogue: bool)
 signal phase_changed(new_phase: int)
 
@@ -79,6 +85,9 @@ func _ready() -> void:
 
 
 func _start() -> void:
+	if not _has_initial_position:
+		_initial_position = global_position
+		_has_initial_position = true
 	# Boss aguarda em idle. CutsceneSequencer controla a animação de
 	# entrada via StepAnimation (grupo "boss_sprite" no editor).
 	# BossFlowManager liga o BTRunner quando BOSS_FIGHT começar.
@@ -86,6 +95,40 @@ func _start() -> void:
 		set_facing(data.starts_facing_right)
 	set_visual_state(&"magma_dragoon_idle")
 
+
+
+## Devolve o boss ao estado inicial da luta (o jogador morreu na arena).
+## Chamado pelo BossFlowManager.abort_fight(). A luta recomeça pelo fluxo normal:
+## porta → intro → apresentação → BOSS_FIGHT (que religa o BTRunner).
+func reset_for_retry() -> void:
+	# Interrompe a árvore de comportamento (ação em andamento incluída).
+	if bt_runner:
+		bt_runner.stop()
+	is_acting = false
+
+	# Limpa o que a luta deixou na fase.
+	_clear_spawned_objects()
+	if fx_component:
+		fx_component.stop_all()
+
+	# Estado lógico: fase 0, HP cheio, sem i-frames.
+	current_phase = 0
+	_phase_cooldown = 0.0
+	invulnerability = 0.0
+	velocity = Vector2.ZERO
+	if hp_system:
+		hp_system.apply_full_heal()
+
+	# Posição, direção e visual iniciais (o mesmo que o boss faz ao nascer).
+	global_position = _initial_position
+	_start()
+
+
+func _clear_spawned_objects() -> void:
+	for obj in _spawned_objects:
+		if is_instance_valid(obj):
+			obj.queue_free()
+	_spawned_objects.clear()
 
 
 func _process_state(delta: float) -> void:
@@ -208,10 +251,18 @@ func _on_defeated() -> void:
 	# Para a BT imediatamente — limpa is_acting e qualquer ação em curso.
 	if bt_runner:
 		bt_runner.stop()
-	if death_effect:
-		ParticleFX.spawn_at(death_effect, global_position)
-	state_machine.change_state("Death")
+	# Objetos da luta somem; o boss em si fica vivo até a cutscene de derrota.
+	_clear_spawned_objects()
 	boss_defeated.emit(data.has_final_dialogue if data else false)
+
+
+## Destruição do boss: spawna o death_effect sobre o corpo. Para explosões espalhadas,
+## configure o SpawnedParticleDef com burst_count + spawn_interval + position_variance.
+## NÃO esconde o corpo — a cutscene decide quando (StepCall "hide" no grupo "boss").
+## Chamado pela defeat_cutscene (StepCall) ou, sem ela, pelo BossFlowManager.
+func play_destruction() -> void:
+	if death_effect:
+		ParticleFX.spawn_at(death_effect, global_position, Vector2.ZERO, self)
 
 
 # ─────────────────────────────────────────────────────────────
@@ -342,10 +393,21 @@ func _spawn_object(obj: SpawnableObject) -> Node2D:
 	# sempre a direção de MUNDO, nunca o offset_flip.
 	if instance.has_method("launch"):
 		instance.launch(world_dir)
+	# Se o objeto tem um HitComponent, liga-o ao sistema de hit com os dados
+	# deste SpawnableObject. O tipo de dano usa a mesma string da damage_tag.
+	var hit_component := instance.get_node_or_null("HitComponent") as HitComponent
+	if hit_component:
+		hit_component.attacker       = self
+		hit_component.damage         = obj.damage
+		hit_component.damage_tag     = obj.damage_tag
+		hit_component.damage_type_id = StringName(obj.damage_tag)
 	if obj.lifetime > 0.0:
 		get_tree().create_timer(obj.lifetime).timeout.connect(instance.queue_free)
 	if obj.spawn_fx:
 		ParticleFX.spawn_at(obj.spawn_fx, spawn_pos)
+	# Rastreia para o reset_for_retry() poder limpar (descarta os já liberados).
+	_spawned_objects = _spawned_objects.filter(func(o): return is_instance_valid(o))
+	_spawned_objects.append(instance)
 	return instance
 
 

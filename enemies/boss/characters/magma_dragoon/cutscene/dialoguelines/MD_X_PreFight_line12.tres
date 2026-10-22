@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="DialogueLine" format=3 uid="uid://dqowqlhwjdq2p"]
+
+[ext_resource type="Script" uid="uid://8bmfodtxaosy" path="res://Cutscene and Talk system/DialogueLine.gd" id="1_15m2n"]
+
+[resource]
+script = ExtResource("1_15m2n")
+speaker = "Magma Dragoon"
+text = "You got that right! ....NOW FIGHT ME!"
+metadata/_custom_type_script = "uid://8bmfodtxaosy"

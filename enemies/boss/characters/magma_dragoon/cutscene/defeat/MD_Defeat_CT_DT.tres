@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="CutsceneData" format=3 uid="uid://c3bge1xn6bjjm"]
+
+[ext_resource type="Script" uid="uid://bm6eb134mii7m" path="res://Cutscene and Talk system/CutsceneData.gd" id="1_521l3"]
+[ext_resource type="Script" uid="uid://cbnu10kg40vow" path="res://Cutscene and Talk system/CutsceneStep.gd" id="2_kiabm"]
+[ext_resource type="Resource" uid="uid://dbkyoif8jl5sl" path="res://enemies/boss/characters/magma_dragoon/cutscene/defeat/MD_DefeatPose_StepAnim.tres" id="3_521l3"]
+[ext_resource type="Resource" uid="uid://5hgsixn3gom0" path="res://enemies/boss/characters/magma_dragoon/cutscene/defeat/MD_Defeat_CT_EffectsDT.tres" id="4_6ndca"]
+[ext_resource type="Script" uid="uid://bdbtui2yb4kst" path="res://Cutscene and Talk system/steps/StepCall.gd" id="5_vsbgj"]
+
+[sub_resource type="Resource" id="Resource_mbx28"]
+script = ExtResource("5_vsbgj")
+target_group = "sprite_boss"
+method = &"hide"
+metadata/_custom_type_script = "uid://bdbtui2yb4kst"
+
+[resource]
+script = ExtResource("1_521l3")
+steps = Array[ExtResource("2_kiabm")]([ExtResource("3_521l3"), ExtResource("4_6ndca"), SubResource("Resource_mbx28")])
+can_skip = false
+metadata/_custom_type_script = "uid://bm6eb134mii7m"

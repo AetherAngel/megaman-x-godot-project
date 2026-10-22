@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="StepEffects" format=3 uid="uid://5hgsixn3gom0"]
+
+[ext_resource type="Script" uid="uid://dy6rjhdvcg1s7" path="res://Cutscene and Talk system/steps/StepEffects.gd" id="1_kn4ce"]
+[ext_resource type="Resource" uid="uid://6qvnl376fxyw" path="res://enemies/boss/characters/magma_dragoon/cutscene/defeat/Explosion_Cutscene_FX.tres" id="1_w3hn8"]
+
+[resource]
+script = ExtResource("1_kn4ce")
+effects = ExtResource("1_w3hn8")
+duration = 3.0
+metadata/_custom_type_script = "uid://dy6rjhdvcg1s7"

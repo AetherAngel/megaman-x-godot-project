@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="WeaponRewardData" format=3 uid="uid://cq5jwi8yjid6g"]
+
+[ext_resource type="Script" uid="uid://pp5xsm3b3umx" path="res://enemies/boss/data/WeaponRewardData.gd" id="1_oiu45"]
+
+[resource]
+script = ExtResource("1_oiu45")
+weapon_name = " Rising Fire / Ryuenjin"
+weapon_id = "MD_FireWeapon"
+metadata/_custom_type_script = "uid://pp5xsm3b3umx"

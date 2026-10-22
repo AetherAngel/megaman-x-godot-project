@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="DialogueLine" format=3 uid="uid://dtxuefov4vk8n"]
-
-[ext_resource type="Script" uid="uid://8bmfodtxaosy" path="res://talksystem/DialogueLine.gd" id="1_ta2pp"]
-
-[resource]
-script = ExtResource("1_ta2pp")
-speaker = "Magma Dragoon"
-text = "Heh..... if you want to find out, you'll have to defeat me first."
-metadata/_custom_type_script = "uid://8bmfodtxaosy"

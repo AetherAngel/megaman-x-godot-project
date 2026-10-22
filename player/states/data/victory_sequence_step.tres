@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="VisualSequenceStepData" format=3 uid="uid://dg42jfa8pndrx"]
+
+[ext_resource type="Resource" uid="uid://b10d080mne2vs" path="res://player/states/data/victory_base_vsdata.tres" id="1_e1qn2"]
+[ext_resource type="Script" uid="uid://c2cfexudcd52x" path="res://player/states/data/VisualSequenceStepData.gd" id="2_76jng"]
+
+[resource]
+script = ExtResource("2_76jng")
+base_visual = ExtResource("1_e1qn2")
+wait_for_completion = false
+custom_delay = 1.0
+metadata/_custom_type_script = "uid://c2cfexudcd52x"

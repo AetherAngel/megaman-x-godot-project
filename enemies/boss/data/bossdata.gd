@@ -58,6 +58,10 @@ extends Resource
 @export var has_final_dialogue: bool = false
 ## DialogueData tocada durante BOSS_FINAL_DIALOGUE.
 @export var final_dialogue: DialogueData
+## CutsceneData tocada depois da fala final: animação de derrota, destruição (StepCall
+## "play_destruction" no grupo "boss"), espera... O boss fica vivo até ela. Sem cutscene,
+## o boss é destruído direto.
+@export var defeat_cutscene: CutsceneData
 
 @export_group("Reward")
-@export var weapon_reward: WeaponData
+@export var weapon_reward: WeaponRewardData

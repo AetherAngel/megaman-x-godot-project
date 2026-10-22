@@ -13,8 +13,15 @@ extends Area2D
 
 var _direction: int = 1  # 1 = direita, -1 = esquerda — setado por launch()
 
+## Dano, tipo e attacker são configurados por Boss._spawn_object() a partir do
+## SpawnableObject — este projétil só reporta o hit.
+@onready var _hit_component: HitComponent = get_node_or_null("HitComponent")
+
 
 func _ready() -> void:
+	add_to_group(&"projectile")  # limpo na vitória do boss (BossFlowManager)
+	if not _hit_component:
+		push_warning("HadoukenProjectile: nó HitComponent não encontrado — este tiro não causará dano.")
 	body_entered.connect(_on_hit)
 	area_entered.connect(_on_hit)
 
@@ -31,8 +38,9 @@ func _physics_process(delta: float) -> void:
 	position.x += _direction * speed * delta
 
 
-func _on_hit(_other: Node) -> void:
-	# TODO: aplicar dano via SpawnableObject.damage/damage_tag quando o
-	# sistema de hitbox existir. Por enquanto só desaparece ao tocar
-	# player ou parede — sem sistema de dano ainda.
+func _on_hit(other: Node) -> void:
+	# Notifica o HitBus; ele valida o alvo (descarta parede e o próprio boss)
+	# e encaminha ao take_damage() do player.
+	if _hit_component:
+		_hit_component.report(other)
 	queue_free()

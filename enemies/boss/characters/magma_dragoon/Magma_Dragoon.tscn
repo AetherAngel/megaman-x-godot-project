@@ -13,9 +13,13 @@
 [ext_resource type="Script" uid="uid://rg6q1i13pr2e" path="res://systems/hp/HealHandler.gd" id="10_hbm5q"]
 [ext_resource type="Script" uid="uid://bhop81oa8825s" path="res://systems/bt/BTRunner.gd" id="11_5xrn2"]
 [ext_resource type="Resource" uid="uid://c81n7wtouww34" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/BT_MagmaDragoon.tres" id="13_q2uox"]
+[ext_resource type="Script" uid="uid://b5hlcaqkwh84f" path="res://systems/hit/HitComponent.gd" id="14_x7lyi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iqyqf"]
 size = Vector2(26, 51)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x7lyi"]
+size = Vector2(26, 50)
 
 [sub_resource type="Resource" id="Resource_b3b7r"]
 script = ExtResource("4_hvucu")
@@ -24,6 +28,8 @@ i_frame_duration = 0.5
 metadata/_custom_type_script = "uid://e0fdf85ku13p"
 
 [node name="MagmaDragoon" type="CharacterBody2D" unique_id=1848140003]
+collision_layer = 8
+collision_mask = 3
 script = ExtResource("1_kily3")
 data = ExtResource("2_goqol")
 metadata/_custom_type_script = "uid://bnr60sryg3esd"
@@ -31,6 +37,14 @@ metadata/_custom_type_script = "uid://bnr60sryg3esd"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1440878989]
 position = Vector2(0, 8.5)
 shape = SubResource("RectangleShape2D_iqyqf")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=988706498]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1339037315]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_x7lyi")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1919485480 groups=["sprite_boss"]]
 sprite_frames = ExtResource("3_s0wqp")
@@ -65,3 +79,9 @@ metadata/_custom_type_script = "uid://rg6q1i13pr2e"
 script = ExtResource("11_5xrn2")
 tree = ExtResource("13_q2uox")
 metadata/_custom_type_script = "uid://bhop81oa8825s"
+
+[node name="HitComponent" type="Node" parent="." unique_id=370197657]
+script = ExtResource("14_x7lyi")
+metadata/_custom_type_script = "uid://b5hlcaqkwh84f"
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://tix1lr4uyapx"]
 
 [ext_resource type="Script" uid="uid://cncaxcewukotj" path="res://player/objects/projectiles/FourthProjectile.gd" id="1_ubua4"]
+[ext_resource type="Script" uid="uid://b5hlcaqkwh84f" path="res://systems/hit/HitComponent.gd" id="2_teq67"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4lb82"]
 
@@ -17,3 +18,7 @@ sprite_frames = SubResource("SpriteFrames_4lb82")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2112962059]
 shape = SubResource("RectangleShape2D_105cg")
+
+[node name="HitComponent" type="Node" parent="." unique_id=1056549417]
+script = ExtResource("2_teq67")
+metadata/_custom_type_script = "uid://b5hlcaqkwh84f"

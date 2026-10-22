@@ -29,7 +29,7 @@ sprite_frames = SubResource("SpriteFrames_kdbss")
 animation = &"active"
 
 [node name="CenterPoint" type="Marker2D" parent="." unique_id=1625475195]
-position = Vector2(0, 30)
+position = Vector2(1, 30)
 
 [node name="PlayerSpawner" type="Marker2D" parent="." unique_id=976073397]
 position = Vector2(0, -5)
@@ -43,6 +43,7 @@ position = Vector2(40, 31.6875)
 shape = SubResource("RectangleShape2D_uafux")
 
 [node name="WalkableArea" type="StaticBody2D" parent="." unique_id=1852817018]
+position = Vector2(1, 0)
 
 [node name="WalkCollision" type="CollisionShape2D" parent="WalkableArea" unique_id=587775231]
 position = Vector2(-0.5, 38)

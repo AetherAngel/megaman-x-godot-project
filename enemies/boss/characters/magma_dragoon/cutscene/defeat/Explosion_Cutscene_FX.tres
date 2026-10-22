@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CutsceneEffects" format=3 uid="uid://6qvnl376fxyw"]
+
+[ext_resource type="Resource" uid="uid://dej1gfbvltov0" path="res://enemies/boss/characters/magma_dragoon/cutscene/defeat/Explosion_SpawnParticle_FX_Def.tres" id="1_cswmb"]
+[ext_resource type="Script" uid="uid://bh6m6cpgdsuoe" path="res://Cutscene and Talk system/CutsceneEffects.gd" id="3_lh0y1"]
+
+[resource]
+script = ExtResource("3_lh0y1")
+sfx_id = "explosion"
+sfx_volume = -20.0
+sfx_pitch = 0.8
+sfx_count = 15
+sfx_interval = 0.2
+sfx_max_overlap = 15
+fx = ExtResource("1_cswmb")
+fx_target_group = "sprite_boss"
+metadata/_custom_type_script = "uid://bh6m6cpgdsuoe"

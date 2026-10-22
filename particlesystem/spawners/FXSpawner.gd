@@ -13,6 +13,10 @@ extends Node2D
 var _active: bool = false
 var _timer:  float = 0.0
 var owner_node: Node2D = null
+## Opcional (ondas de uma sequência, ex: Step de cutscene): devolve true quando a
+## sequência acabou. Então o spawner para e libera o anchor — nada novo nasce.
+var cancel: Callable = Callable()
+var owner_anchor: Node = null
 
 
 func _ready() -> void:
@@ -49,5 +53,12 @@ func set_direction(dir: Vector2) -> void:
 # ── Interno ──────────────────────────────────────────────────
 
 func _do_spawn() -> void:
+	if cancel.is_valid() and cancel.call():
+		_active = false
+		if is_instance_valid(owner_anchor):
+			owner_anchor.queue_free()
+		else:
+			queue_free()
+		return
 	if ParticleFX and definition:
 		ParticleFX.spawn_at_resolved(definition, global_position, spawn_direction, owner_node)

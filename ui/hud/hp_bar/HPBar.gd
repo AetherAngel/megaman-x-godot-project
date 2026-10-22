@@ -131,11 +131,15 @@ func _on_units_changed(new_current: int, new_max: int) -> void:
 
 	# Dano.
 	if new_current < prev_current:
+		# Fecha qualquer animação anterior interrompida: a barra volta a mostrar
+		# exatamente prev_current antes de esconder as novas unidades.
+		force_show_units(prev_current)
 		state_handler.start_damage(prev_current - new_current)
 		return
 
 	# Cura.
 	if new_current > prev_current:
+		force_show_units(prev_current)
 		state_handler.start_heal(new_current - prev_current)
 		return
 
@@ -146,8 +150,9 @@ func _on_units_changed(new_current: int, new_max: int) -> void:
 
 ## Esconde a unit mais alta visível (dano).
 func hide_top_unit() -> void:
-	for i in range(current_units, -1, -1):
-		if i < _unit_sprites.size() and _unit_sprites[i].visible:
+	# Busca a partir do topo real (não de current_units, que já é o valor NOVO).
+	for i in range(_unit_sprites.size() - 1, -1, -1):
+		if _unit_sprites[i].visible:
 			_unit_sprites[i].visible = false
 			return
 

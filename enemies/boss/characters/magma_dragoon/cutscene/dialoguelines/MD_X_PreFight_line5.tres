@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="DialogueLine" format=3 uid="uid://404ij3tonswk"]
+
+[ext_resource type="Script" uid="uid://8bmfodtxaosy" path="res://Cutscene and Talk system/DialogueLine.gd" id="1_g3fok"]
+
+[resource]
+script = ExtResource("1_g3fok")
+speaker = "X"
+text = "A... chance... your dream?"
+metadata/_custom_type_script = "uid://8bmfodtxaosy"

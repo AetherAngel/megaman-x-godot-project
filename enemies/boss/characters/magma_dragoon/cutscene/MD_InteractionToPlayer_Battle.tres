@@ -1,9 +1,10 @@
 [gd_resource type="Resource" script_class="StepDialogue" format=3 uid="uid://cji7x7sd7byfw"]
 
 [ext_resource type="Resource" uid="uid://dw6xhwck250g" path="res://enemies/boss/characters/magma_dragoon/cutscene/MD_PreFightTalk_Data.tres" id="1_efhdm"]
-[ext_resource type="Script" uid="uid://bh4t0tasg40hp" path="res://talksystem/steps/StepDialogue.gd" id="2_dsx2n"]
+[ext_resource type="Script" uid="uid://bh4t0tasg40hp" path="res://Cutscene and Talk system/steps/StepDialogue.gd" id="2_dsx2n"]
 
 [resource]
 script = ExtResource("2_dsx2n")
 dialogue = ExtResource("1_efhdm")
+skip_if_seen = true
 metadata/_custom_type_script = "uid://bh4t0tasg40hp"

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="DialogueLine" format=3 uid="uid://812pwa8xkvn7"]
+
+[ext_resource type="Script" uid="uid://8bmfodtxaosy" path="res://Cutscene and Talk system/DialogueLine.gd" id="1_txoyu"]
+
+[resource]
+script = ExtResource("1_txoyu")
+speaker = "Magma Dragoon"
+text = "I needed to see your true potential. If this had been just a sparring match, I never would have had the chance."
+metadata/_custom_type_script = "uid://8bmfodtxaosy"

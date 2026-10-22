@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="DialogueLine" format=3 uid="uid://c32wx46uhp4pi"]
+
+[ext_resource type="Script" uid="uid://8bmfodtxaosy" path="res://Cutscene and Talk system/DialogueLine.gd" id="1_hixxr"]
+
+[resource]
+script = ExtResource("1_hixxr")
+speaker = "X"
+text = "Such a waste... Why Dragoon? "
+metadata/_custom_type_script = "uid://8bmfodtxaosy"

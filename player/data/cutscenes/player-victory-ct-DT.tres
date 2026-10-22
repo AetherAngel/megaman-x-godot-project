@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="CutsceneData" format=3 uid="uid://d1ewfq7nu4ej8"]
+
+[ext_resource type="Script" uid="uid://bm6eb134mii7m" path="res://Cutscene and Talk system/CutsceneData.gd" id="1_5wnbr"]
+[ext_resource type="Script" uid="uid://cbnu10kg40vow" path="res://Cutscene and Talk system/CutsceneStep.gd" id="2_t44ci"]
+[ext_resource type="Script" uid="uid://bbrkie5yvjxim" path="res://Cutscene and Talk system/steps/StepMusic.gd" id="3_l6f10"]
+[ext_resource type="Script" uid="uid://bgqpn08duborv" path="res://Cutscene and Talk system/steps/StepWait.gd" id="4_tvris"]
+[ext_resource type="Script" uid="uid://dn13wwlso37we" path="res://Cutscene and Talk system/steps/StepAnimation.gd" id="5_ewy2q"]
+[ext_resource type="Script" uid="uid://do5uyv5u6wkui" path="res://Cutscene and Talk system/steps/StepFade.gd" id="6_s2aut"]
+
+[sub_resource type="Resource" id="Resource_fal4u"]
+script = ExtResource("3_l6f10")
+music_id = "stage_clear"
+volume = -15.0
+metadata/_custom_type_script = "uid://bbrkie5yvjxim"
+
+[sub_resource type="Resource" id="Resource_l6f10"]
+script = ExtResource("4_tvris")
+duration = 7.0
+metadata/_custom_type_script = "uid://bgqpn08duborv"
+
+[sub_resource type="Resource" id="Resource_tvris"]
+script = ExtResource("5_ewy2q")
+target_group = "player"
+animation = "Victory"
+wait_to_finish = null
+step_total_duration = 2.0
+skip_if_seen = null
+metadata/_custom_type_script = "uid://dn13wwlso37we"
+
+[sub_resource type="Resource" id="Resource_ewy2q"]
+script = ExtResource("6_s2aut")
+wait_to_finish = false
+metadata/_custom_type_script = "uid://do5uyv5u6wkui"
+
+[resource]
+script = ExtResource("1_5wnbr")
+steps = Array[ExtResource("2_t44ci")]([SubResource("Resource_fal4u"), SubResource("Resource_l6f10"), SubResource("Resource_tvris"), SubResource("Resource_ewy2q")])
+can_skip = false
+metadata/_custom_type_script = "uid://bm6eb134mii7m"

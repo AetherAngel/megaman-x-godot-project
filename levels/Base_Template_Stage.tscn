@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://ceard18cowa2m" path="res://levels/test_stage/ReadySystem.gd" id="2_ox1ej"]
 [ext_resource type="PackedScene" uid="uid://dbebdytn3ceue" path="res://Menus/DebugPanel.tscn" id="3_s1wpk"]
 [ext_resource type="Texture2D" uid="uid://cydufwq2xgp6q" path="res://resources/pause.png" id="4_s3ume"]
-[ext_resource type="PackedScene" uid="uid://b36kb0vb7nxx3" path="res://talksystem/DialogueBox.tscn" id="5_81nr4"]
-[ext_resource type="Script" uid="uid://dqacfnqy0h7go" path="res://talksystem/DialogueBox.gd" id="6_f0oam"]
+[ext_resource type="PackedScene" uid="uid://b36kb0vb7nxx3" path="res://Cutscene and Talk system/DialogueBox.tscn" id="5_81nr4"]
+[ext_resource type="Script" uid="uid://dqacfnqy0h7go" path="res://Cutscene and Talk system/DialogueBox.gd" id="6_f0oam"]
 [ext_resource type="Script" uid="uid://dlw8i7rsuuj8j" path="res://levels/ReadyText.gd" id="8_7dehk"]
 [ext_resource type="PackedScene" uid="uid://dei4yhbcq83sw" path="res://player/GMCamera.tscn" id="8_ox1ej"]
 

@@ -20,6 +20,14 @@ var force_wall_facing: bool = false
 var wall_slide_direction: int = 0
 var switched_armor: String
 
+# ── Morte ────────────────────────────────────────────────────
+## True entre o zero_health e o respawn — impede iniciar a sequência duas vezes.
+var _is_dying: bool = false
+## Onde o Player nasceu na fase — destino do respawn quando não há checkpoint ativo.
+var _spawn_position: Vector2 = Vector2.ZERO
+## Motivo do lock de invulnerabilidade durante a sequência de morte.
+const DEATH_LOCK: StringName = &"death"
+
 @export var current_character: PlayerCharacterData
 @export var current_armor: ArmorData
 @export var previous_armor: ArmorData
@@ -65,6 +73,7 @@ func _ready() -> void:
 	process_priority = 0
 	process_mode = Node.PROCESS_MODE_PAUSABLE
 	add_to_group("player")
+	_spawn_position = global_position
 
 	_init_layer_nodes()
 
@@ -82,6 +91,7 @@ func _ready() -> void:
 
 	# Conecta APÓS set_initial para não reagir desnecessariamente no _ready.
 	CharacterManagement.character_switched.connect(_on_character_switched)
+	zero_health.connect(_on_zero_health)
 
 	_setup_character()
 
@@ -133,6 +143,96 @@ func take_damage(value: float, inflicter = null) -> void:
 
 
 # ============================================================
+# MORTE E RESPAWN
+# ============================================================
+
+## Chamado quando o HP chega a zero (Actor.zero_health).
+## Congela o Player, trava novos hits e toca a death_cutscene da ficha do
+## personagem atual. A cutscene chama respawn() no momento certo (StepCall).
+func _on_zero_health() -> void:
+	if _is_dying:
+		return
+	_is_dying = true
+
+	can_control = false
+	velocity    = Vector2.ZERO
+	set_physics_process(false)
+
+	var hp := get_node_or_null("HPSystem") as HPSystem
+	if hp:
+		hp.lock(DEATH_LOCK)
+
+	# Cancela braço/buster/efeitos de carga em andamento, para a pose de morte
+	# aparecer limpa (mesma limpeza da troca de personagem).
+	arm_base_layer.reset()
+	buster_layer._cancel()
+	fx_component.stop_all()
+
+	_set_camera_target(null)
+
+	var cutscene: CutsceneData = current_character.death_cutscene if current_character else null
+	if cutscene:
+		CutsceneSequencer.play(cutscene)
+	else:
+		push_warning("[Player] Sem death_cutscene na ficha do personagem — respawn direto.")
+		respawn()
+
+
+## Reaparece no checkpoint ativo (ou no ponto inicial da fase) com HP cheio.
+## Chamado pelo StepCall da death_cutscene, ou direto se não houver cutscene.
+## Ordem importa: o HP volta ANTES de zerar emitted_zero_health, senão o Actor
+## veria HP zero e emitiria zero_health de novo.
+func respawn() -> void:
+	# Ondas de FX da morte (ex: orbes repetidas) param aqui, no preto do fade.
+	ParticleFX.stop_all_continuous()
+
+	# Avisa o GameManager da falha: ele decide o que resetar (música, luta de boss...).
+	GameManager.on_player_failed()
+
+	var hp := get_node_or_null("HPSystem") as HPSystem
+	if hp:
+		hp.apply_full_heal()
+	emitted_zero_health = false
+	if hp:
+		hp.unlock(DEATH_LOCK)
+
+	velocity = Vector2.ZERO
+	set_physics_process(true)
+	_is_dying = false
+
+	var checkpoint := GameManager.active_checkpoint
+	if is_instance_valid(checkpoint):
+		checkpoint.respawn_player(self)  # move, mostra e entra no state Intro
+	else:
+		global_position = _spawn_position
+		visible = true
+		state_machine.change_state("Intro")
+
+	_set_camera_target(self)
+
+
+## Toca uma VisualSequence do personagem atual pelo nome (ex: "Death").
+## Tem a mesma assinatura (play(String)) que o CutsceneSequencer chama em qualquer
+## nó do grupo, então o StepAnimation funciona com o Player sem mudar o sequencer.
+## O arquivo de sprites vem do personagem ativo (VisualLibrary.load_frames).
+func play(sequence_name: String) -> void:
+	state_machine.visual_sequence_player.play(self, sequence_name)
+
+
+## Entra no state Victory: o Player fica parado e nenhum outro state sobrescreve a
+## pose. Chamado pelo BossFlowManager antes da victory_cutscene.
+func start_victory() -> void:
+	state_machine.change_state("Victory")
+
+
+## Define quem a câmera principal segue. null = a câmera para onde está.
+func _set_camera_target(new_target: Node2D) -> void:
+	var cam := get_tree().get_first_node_in_group("GmCamera") as StablePixelCamera
+	if cam:
+		cam.target = new_target
+
+
+# ============================================================
 # SETUP
 # ============================================================
 
@@ -144,6 +244,9 @@ func play_stage_intro() -> void:
 ## Compartilhado entre _ready() e _on_character_switched().
 func _setup_character() -> void:
 	ArmorManager.on_player_ready(self)
+
+	# Efeito de morte vem da ficha: o Actor o spawna sozinho no zero_health.
+	death_effect = current_character.death_effect
 
 	# Capability flags substituem if ["X","Zero"] hardcoded.
 	# Adicionar novo personagem = criar ficha com has_buster = true/false.

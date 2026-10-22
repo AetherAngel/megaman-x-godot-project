@@ -175,6 +175,9 @@ class BossHPBehavior extends RefCounted:
 		# de sinalizar "true" pro HPStateHandler (que troca o behavior
 		# imediatamente e nunca chama process() de novo nesta instância).
 		if _filled >= _target:
+			# A barra do boss começa com current_units = 0 (HUD.setup). Sincroniza com
+			# o valor preenchido; sem isso o primeiro dano seria lido como cura.
+			bar.current_units = _target
 			GameManager.on_boss_presentation_complete()
 			return true
 

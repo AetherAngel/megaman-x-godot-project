@@ -9,6 +9,12 @@ var _running: bool = false
 ## antigo é ignorado — assim um Step seguinte nunca é avançado por engano
 ## por causa de algo que pertencia ao Step anterior.
 var _step_token: int = 0
+## Muda a cada step terminado: cancela os sons em loop/burst do step anterior.
+var _effects_token: int = 0
+## Cutscenes já vistas (terminadas ou puladas) nesta partida: chave → true.
+## Usado por CutsceneData.skip_if_seen. Em memória de propósito: vale por partida,
+## não por save (ver reset_seen()).
+var _seen: Dictionary = {}
 # PATCH — adiciona signal cutscene_finished emitido ao fim de cada cutscene.
 # BossFlowManager escuta esse signal para saber quando a intro_cutscene terminou.
 signal cutscene_finished(cutscene: CutsceneData)
@@ -25,6 +31,7 @@ func play(cutscene: CutsceneData, on_skip: Callable = Callable()) -> void:
 	_cutscene   = cutscene
 	_step_index = 0
 	_running    = true
+	_effects_token += 1   # invalida efeitos pendentes de uma cutscene anterior
 
 	if on_skip.is_valid():
 		_cutscene.on_skip = on_skip
@@ -32,11 +39,30 @@ func play(cutscene: CutsceneData, on_skip: Callable = Callable()) -> void:
 	GameManager.set_input_mode(GameManager.InputMode.MENU)
 	InputManager.can_process_player_input = false
 
+	# Já vista nesta partida e marcada pelo designer: pula na hora, como um Enter.
+	if cutscene.skip_if_seen and has_been_seen(cutscene):
+		_skip()
+		return
+
 	_run_step()
 
 
 func is_running() -> bool:
 	return _running
+
+
+## True se a cutscene já terminou (ou foi pulada) nesta partida.
+func has_been_seen(cutscene: CutsceneData) -> bool:
+	return _seen.has(_seen_key(cutscene))
+
+
+## Esquece as cutscenes vistas. Chamado quando uma fase começa (nova partida).
+func reset_seen() -> void:
+	_seen.clear()
+
+
+func _seen_key(cutscene: CutsceneData) -> String:
+	return cutscene.resource_path if not cutscene.resource_path.is_empty() else str(cutscene.get_instance_id())
 
 
 # =========================
@@ -54,7 +80,10 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _skip() -> void:
 	_running = false
+	_effects_token += 1
 	TalkManager.skip_all()
+	if _cutscene:
+		_seen[_seen_key(_cutscene)] = true
 
 	if not _cutscene:
 		return
@@ -83,6 +112,11 @@ func _run_step() -> void:
 	_step_token += 1
 	var step = _cutscene.steps[_step_index]
 
+	# Step marcado para pular em repetição: segue direto para o próximo.
+	if step.skip_if_seen and has_been_seen(_cutscene):
+		_advance()
+		return
+
 	# NOTA: get_class() retorna a classe nativa da engine da qual o Resource
 	# herda (sempre "Resource" para CutsceneStep e suas subclasses), NUNCA o
 	# class_name customizado (StepAnimation, StepDialogue, etc). Por isso o
@@ -104,6 +138,18 @@ func _run_step() -> void:
 	elif step is StepEquipArmor:
 		_run_step_equip(step as StepEquipArmor)
 
+	elif step is StepFade:
+		_run_step_fade(step as StepFade)
+
+	elif step is StepCall:
+		_run_step_call(step as StepCall)
+
+	elif step is StepEffects:
+		_run_step_effects(step as StepEffects)
+
+	elif step is StepMusic:
+		_run_step_music(step as StepMusic)
+
 	elif step is StepChangeScene:
 		get_tree().change_scene_to_file((step as StepChangeScene).scene_path)
 
@@ -122,6 +168,9 @@ func _run_step_animation(step: StepAnimation) -> void:
 		get_tree().create_timer(step.step_total_duration).timeout.connect(
 			_on_step_master_timer.bind(step, token)
 		)
+
+	# SFX/FX opcionais junto com a animação (no início do step).
+	_apply_effects(step.effects, step.target_group, step.wait_to_finish or has_master_timer)
 
 	# Com movimento físico embutido: o "fim natural" do Step é o movimento
 	# terminar (pousar), NÃO a animação — ela vira só um loop visual,
@@ -221,7 +270,134 @@ func _run_step_equip(step: StepEquipArmor) -> void:
 	_advance()
 
 
+## Fade de tela via ScreenFade. Com wait_to_finish, avança quando o fade termina.
+func _run_step_fade(step: StepFade) -> void:
+	var token := _step_token
+
+	if step.mode == StepFade.Mode.FADE_OUT:
+		ScreenFade.fade_out(step.duration)
+	else:
+		ScreenFade.fade_in(step.duration)
+
+	if step.wait_to_finish and step.duration > 0.0:
+		ScreenFade.fade_finished.connect(_advance_if_current.bind(token), CONNECT_ONE_SHOT)
+	else:
+		_advance_if_current(token)
+
+
+## Chama um método em todos os nós do grupo e avança. Nunca espera nada:
+## se nenhum nó tiver o método, avisa e segue (não trava a sequência).
+func _run_step_call(step: StepCall) -> void:
+	var called := false
+	for target in get_tree().get_nodes_in_group(step.target_group):
+		if target.has_method(step.method):
+			target.call(step.method)
+			called = true
+
+	if not called:
+		push_warning("[CutsceneSequencer] StepCall: nenhum nó do grupo '%s' tem o método '%s' — avançando." % [step.target_group, step.method])
+	_advance()
+
+
+## SFX e FX sozinhos. Avança na hora, ou depois de duration (o som em loop vale até lá).
+func _run_step_effects(step: StepEffects) -> void:
+	var token := _step_token
+	_apply_effects(step.effects, "", step.duration > 0.0)
+	if step.duration > 0.0:
+		get_tree().create_timer(step.duration).timeout.connect(_advance_if_current.bind(token))
+	else:
+		_advance_if_current(token)
+
+
+## Troca ou para a música atual e avança.
+func _run_step_music(step: StepMusic) -> void:
+	if step.action == StepMusic.Action.STOP:
+		SoundManager.stop_music()
+	elif step.music_id.is_empty():
+		push_warning("[CutsceneSequencer] StepMusic PLAY sem music_id — avançando.")
+	else:
+		SoundManager.play_music(step.music_id, step.volume)
+	_advance()
+
+
+# ── Efeitos (SFX/FX) ─────────────────────────────────────────
+
+## Dispara o FX e inicia o som (com burst/repetição) de um CutsceneEffects.
+## default_fx_group: onde o FX nasce quando o resource não define fx_target_group.
+## step_has_duration: se o step dura algum tempo (para o aviso do som em loop).
+func _apply_effects(effects: CutsceneEffects, default_fx_group: String, step_has_duration: bool) -> void:
+	if not effects:
+		return
+	# Cancelamento da sequência: vale enquanto este step estiver ativo. Quando ele termina
+	# (ou a cutscene acaba/é pulada/é substituída), spawns pendentes de FX e SFX não nascem.
+	var token := _effects_token
+	var cancel := func() -> bool: return not _running or token != _effects_token
+	_spawn_effect_fx(effects, default_fx_group, cancel)
+	if effects.sfx_id.is_empty():
+		return
+	if effects.sfx_until_end and not step_has_duration:
+		push_warning("[CutsceneSequencer] sfx_until_end em um step que termina na hora — o som toca uma vez só. Dê duração ao step.")
+	_play_effect_sfx(effects, token)
+
+
+func _spawn_effect_fx(effects: CutsceneEffects, default_group: String, cancel: Callable) -> void:
+	if not effects.fx:
+		return
+
+	var group := effects.fx_target_group if not effects.fx_target_group.is_empty() else default_group
+	var spawned := false
+	if not group.is_empty():
+		for target in get_tree().get_nodes_in_group(group):
+			if target is Node2D:
+				var node := target as Node2D
+				ParticleFX.spawn_at(effects.fx, node.global_position + effects.fx_offset, Vector2.ZERO, node, cancel)
+				spawned = true
+		if not spawned:
+			push_warning("[CutsceneSequencer] FX: nenhum nó no grupo '%s' — usando o centro da câmera." % group)
+
+	if spawned:
+		return
+	var cam := get_tree().get_first_node_in_group("GmCamera") as Node2D
+	if cam:
+		ParticleFX.spawn_at(effects.fx, cam.global_position + effects.fx_offset, Vector2.ZERO, null, cancel)
+	else:
+		push_warning("[CutsceneSequencer] FX sem alvo e sem câmera — nada spawnado.")
+
+
+## Toca o SFX com a MESMA semântica de burst do FX: sfx_count sons INDIVIDUAIS, o início de
+## um separado do início do próximo por sfx_interval. Com sfx_interval = 0, todos na hora.
+## Com sfx_until_end, repete até o step acabar. Cada espera é seguida de uma checagem: quando
+## o step acaba (_effects_token muda) ou a cutscene termina, os sons restantes não tocam.
+func _play_effect_sfx(effects: CutsceneEffects, token: int) -> void:
+	var total := maxi(effects.sfx_count, 1)
+	var slot := 0
+
+	if effects.sfx_until_end and effects.sfx_interval <= 0.0:
+		push_warning("[CutsceneSequencer] sfx_until_end precisa de sfx_interval > 0 — o som toca uma vez só.")
+		_play_sfx_slot(effects)
+		return
+
+	while _running and token == _effects_token:
+		_play_sfx_slot(effects)
+		slot += 1
+		if not effects.sfx_until_end and slot >= total:
+			return
+		if effects.sfx_interval > 0.0:
+			await get_tree().create_timer(effects.sfx_interval).timeout
+		# sfx_interval == 0: o próximo som do burst começa na hora (mesmo frame).
+
+
+## Um "slot" do burst. Anti-empilhamento: se já há sfx_max_overlap instâncias tocando, este
+## slot é PULADO (não adiado), mantendo a cadência do burst igual à do FX.
+func _play_sfx_slot(effects: CutsceneEffects) -> void:
+	if effects.sfx_max_overlap > 0 \
+			and SoundManager.get_active_sfx_count(effects.sfx_id) >= effects.sfx_max_overlap:
+		return
+	SoundManager.play_sfx(effects.sfx_id, effects.sfx_volume, effects.sfx_pitch)
+
+
 func _advance() -> void:
+	_effects_token += 1
 	_step_index += 1
 	_run_step()
 
@@ -235,6 +411,9 @@ func _on_dialogue_finished() -> void:
 func _finish() -> void:
 	var finished_cutscene := _cutscene   # guarda antes de limpar
 	_running = false
+	_effects_token += 1
+	if finished_cutscene:
+		_seen[_seen_key(finished_cutscene)] = true
 	GameManager.set_input_mode(GameManager.InputMode.PLAYER)
 	InputManager.can_process_player_input = true
 	_cutscene = null
