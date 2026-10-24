@@ -40,6 +40,8 @@ enum Type {
 ##   - FXChainDef → cadeia segmentada (ParticleFX.spawn_chain). Segue o
 ##     último objeto criado por um SPAWN_OBJECT anterior na mesma ação —
 ##     configure o SPAWN_OBJECT da cabeça ANTES deste evento na sequência.
+##   - BarrageDef → saraivada em lanes (BarrageController): roda o preamble, chove com
+##     espaçamento controlado e, ao terminar, avança a AnimPhase atual (use exit = ON_SIGNAL).
 ## Pra suportar um Def novo no futuro: só adicionar um `elif` em
 ## _dispatch_spawn_fx(), este campo não precisa mudar.
 @export var fx_resource: Resource

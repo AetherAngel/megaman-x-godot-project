@@ -59,6 +59,8 @@ damage = 3.0
 damage_type_id = &"fire"
 damage_tag = "fire"
 auto_report = true
+report_mode = 1
+recheck_interval = 0.05
 metadata/_custom_type_script = "uid://b5hlcaqkwh84f"
 
 [node name="Sprite Animation" type="AnimatedSprite2D" parent="." unique_id=633111683]
@@ -75,33 +77,6 @@ autoplay = "flowing"
 frame_progress = 0.94999284
 centered = false
 
-[node name="@AnimatedSprite2D@39838" type="AnimatedSprite2D" parent="." unique_id=2138701959]
-visible = false
-position = Vector2(208, 0)
-sprite_frames = SubResource("SpriteFrames_apir7")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.94999284
-centered = false
-
-[node name="@AnimatedSprite2D@39840" type="AnimatedSprite2D" parent="." unique_id=1014064888]
-visible = false
-position = Vector2(416, 0)
-sprite_frames = SubResource("SpriteFrames_apir7")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.94999284
-centered = false
-
-[node name="@AnimatedSprite2D@39842" type="AnimatedSprite2D" parent="." unique_id=2064951461]
-visible = false
-position = Vector2(624, 0)
-sprite_frames = SubResource("SpriteFrames_apir7")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.94999284
-centered = false
-
 [node name="@AnimatedSprite2D@18968" type="AnimatedSprite2D" parent="." unique_id=981973492]
 sprite_frames = SubResource("SpriteFrames_apir7")
 animation = &"flowing"
@@ -109,29 +84,9 @@ autoplay = "flowing"
 frame_progress = 0.8784389
 centered = false
 
-[node name="@AnimatedSprite2D@18969" type="AnimatedSprite2D" parent="." unique_id=1508031095]
-visible = false
-position = Vector2(208, 0)
+[node name="@AnimatedSprite2D@19412" type="AnimatedSprite2D" parent="." unique_id=992979569]
 sprite_frames = SubResource("SpriteFrames_apir7")
 animation = &"flowing"
 autoplay = "flowing"
-frame_progress = 0.8784389
-centered = false
-
-[node name="@AnimatedSprite2D@18971" type="AnimatedSprite2D" parent="." unique_id=872879255]
-visible = false
-position = Vector2(416, 0)
-sprite_frames = SubResource("SpriteFrames_apir7")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.8784389
-centered = false
-
-[node name="@AnimatedSprite2D@18973" type="AnimatedSprite2D" parent="." unique_id=1073263841]
-visible = false
-position = Vector2(624, 0)
-sprite_frames = SubResource("SpriteFrames_apir7")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.8784389
+frame_progress = 0.95320773
 centered = false

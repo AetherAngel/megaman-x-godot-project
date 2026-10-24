@@ -81,6 +81,28 @@ extends Resource
 
 
 
+# ── Collision ─────────────────────────────────────────────────
+## Perfis de colisão do corpo. O Player tem UM único CollisionShape2D, que só muda de
+## tamanho conforme o state ativo (State.collision_stance). Cada personagem informa suas
+## medidas aqui — adicionar personagem ou perfil não cria nó nenhum.
+##
+## REGRA: a hitbox é o CORPO, não o desenho. Ignore braço do buster, cabelo, saber e
+## pernas esticadas; a altura vem do desenho (feet_offset_y fixa a base, só o topo muda).
+enum Stance { STAND, DASH, CROUCH }
+
+## Distância do pivô do Player até os pés (px). Os pés ficam fixos em todos os perfis.
+@export var feet_offset_y: float = 22.0
+## Folga (px) além da meia-largura do corpo em que o WallRay enxerga a parede.
+## Sem isso o raio terminaria dentro do corpo de personagens mais largos.
+@export var wall_reach: float = 2.0
+## Corpo em pé. O padrão (20x32) é o do X.
+@export var stand_size: Vector2 = Vector2(20, 32)
+## Corpo durante o dash. Vector2.ZERO = usa o stand_size.
+@export var dash_size: Vector2 = Vector2.ZERO
+## Corpo agachado (reservado para o crouch). Vector2.ZERO = usa o stand_size.
+@export var crouch_size: Vector2 = Vector2.ZERO
+
+
 # ── Charge System ─────────────────────────────────────────────
 @export var charge_input:     String = "shoot"
 @export var charge_lv1_time:  float  = 0.75
@@ -101,6 +123,17 @@ extends Resource
 # ─────────────────────────────────────────────────────────────
 # HELPERS
 # ─────────────────────────────────────────────────────────────
+
+## Tamanho do corpo para o perfil `stance` (Stance). Perfil não configurado
+## (Vector2.ZERO) cai no stand_size.
+func get_collision_size(stance: int) -> Vector2:
+	match stance:
+		Stance.DASH:
+			return dash_size if dash_size != Vector2.ZERO else stand_size
+		Stance.CROUCH:
+			return crouch_size if crouch_size != Vector2.ZERO else stand_size
+	return stand_size
+
 
 ## Retorna a ArmorData padrão do personagem.
 ## Prefere default_armor (referência direta).

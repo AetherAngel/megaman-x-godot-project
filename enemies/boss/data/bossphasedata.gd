@@ -16,6 +16,23 @@ extends Resource
 ## ex: "Idle", "Berserker"
 @export var entry_state: String = "Idle"
 
+@export_group("Entry")
+## Combo de entrada da fase (ex: a fúria). Tocado UMA vez, assim que a fase entra em vigor,
+## e fica fora do pool de `patterns` — nunca é sorteado de novo.
+## Se esta fase tiver invencibilidade na entrada, marque `invulnerable` nas AnimPhases do combo.
+## Não use `loop` aqui. Ignorado na fase 0 (ela não "entra" por transição).
+@export var entry_pattern: AttackPattern
+
+@export_group("Selection")
+enum SelectionMode {
+	WEIGHTED_RANDOM,     ## sorteio ponderado por weight (comportamento anterior)
+	SEQUENTIAL,          ## na ordem da lista; ao fim volta ao primeiro. Ignora weight.
+	WEIGHTED_NO_REPEAT,  ## sorteio ponderado, mas nunca repete o combo anterior em seguida
+}
+## Como o próximo combo é escolhido dentro desta fase.
+## Em todos os modos o `condition` do combo continua valendo.
+@export var selection_mode: SelectionMode = SelectionMode.WEIGHTED_RANDOM
+
 @export_group("Visuals")
 ## Nome do animation set para esta fase (passado ao VisualLibrary).
 ## ex: "magna_dragoon_phase1", "magna_dragoon_berserker"

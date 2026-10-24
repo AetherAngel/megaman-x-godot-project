@@ -148,8 +148,19 @@ func _resolve_pos(def: SpawnedParticleDef, fallback: Vector2, owner: Node2D) -> 
 	if owner and not def.marker_path.is_empty():
 		var marker := owner.get_node_or_null(NodePath(def.marker_path))
 		if marker is Node2D:
-			return (marker as Node2D).global_position
+			return marker_global_position(def, owner, marker as Node2D)
 	return fallback
+
+
+## Posição global do marker. Com def.mirror_marker_with_facing, o X é espelhado em torno do
+## pivô do dono quando ele olha para o lado oposto ao da arte nativa (owner.get_facing_flip()).
+## Ponto único de resolução: o ParticleInstance (follow_marker) também passa por aqui.
+func marker_global_position(def: SpawnedParticleDef, owner: Node2D, marker: Node2D) -> Vector2:
+	if not def.mirror_marker_with_facing or not owner.has_method("get_facing_flip"):
+		return marker.global_position
+	var local := owner.to_local(marker.global_position)
+	local.x *= float(owner.get_facing_flip())
+	return owner.to_global(local)
 
 
 func _resolve_direction(def: SpawnedParticleDef, normal: Vector2, owner: Node2D) -> Vector2:
@@ -227,6 +238,23 @@ func _spawn_single(def: SpawnedParticleDef, pos: Vector2, base_dir: Vector2, own
 		_play_def_sfx(def)
 	
 	
+
+## Spawna UMA partícula com direção, velocidade e vida EXATAS (sem spread, sem sorteio).
+## Para quem calcula a trajetória por conta própria (ex: BarrageController).
+## O fade_out do def usa essa vida — desligue-o se a partícula deve sumir fora da tela.
+func spawn_exact(def: SpawnedParticleDef, pos: Vector2, dir: Vector2, speed: float, lifetime: float) -> void:
+	if not def or not def.sprite_frames:
+		return
+	var container := _get_container()
+	if not container:
+		return
+	var instance := ParticleInstance.new()
+	container.add_child(instance)
+	instance.global_position = pos
+	instance.setup(def, dir.normalized(), speed)
+	instance.set_lifetime(lifetime)
+	_play_def_sfx(def)
+
 
 # ============================================================
 # DYNAMIC PARTICLES

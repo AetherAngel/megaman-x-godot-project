@@ -149,6 +149,13 @@ func _is_invulnerable() -> bool:
 	return invulnerability > 0.0 or not toggleable_invulnerabilities.is_empty()
 
 
+## Versão pública de _is_invulnerable(), para quem está de fora perguntar se um
+## hit seria descartado agora (ex: HitComponent em modo CONTINUOUS).
+## Só delega — a regra continua em um único lugar.
+func is_invulnerable() -> bool:
+	return _is_invulnerable()
+
+
 func _process_invulnerability(delta: float) -> void:
 	if invulnerability > 0.0:
 		invulnerability -= delta

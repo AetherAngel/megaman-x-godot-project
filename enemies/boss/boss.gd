@@ -23,6 +23,17 @@ var _phase_cooldown: float = 0.0
 var arena_bounds:   Rect2 = Rect2(0, 0, 320, 224)
 var is_defeated:    bool  = false
 
+## Distância horizontal (px) abaixo da qual o boss considera o alvo "alinhado" e mantém
+## o facing atual — evita ficar virando de um lado pro outro quando o X é quase igual.
+const FACE_DEAD_ZONE := 4.0
+
+## Fase cujo threshold de HP já foi cruzado, mas que só entra em vigor quando o combo
+## atual terminar (ver _check_phase_transition e select_pattern). -1 = nenhuma.
+var _pending_phase: int = -1
+## Memória da seleção de combos (reiniciada a cada fase e no retry).
+var _sequence_index: int = 0
+var _last_pattern: AttackPattern = null
+
 ## Flag para sistemas externos (DamageHandler, etc.).
 ## A BT NÃO usa esta flag para controlar o tick — ela controla internamente via RUNNING.
 var is_acting: bool = false
@@ -113,8 +124,12 @@ func reset_for_retry() -> void:
 
 	# Estado lógico: fase 0, HP cheio, sem i-frames.
 	current_phase = 0
+	_pending_phase = -1
+	_sequence_index = 0
+	_last_pattern = null
 	_phase_cooldown = 0.0
 	invulnerability = 0.0
+	toggleable_invulnerabilities.clear()  # travas de AnimPhase.invulnerable da luta anterior
 	velocity = Vector2.ZERO
 	if hp_system:
 		hp_system.apply_full_heal()
@@ -204,8 +219,11 @@ func _is_immune_to(tag: String) -> bool:
 # PHASE SYSTEM
 # ─────────────────────────────────────────────────────────────
 
+## O HP cruzou o threshold → só MARCA a fase como pendente. Ela entra em vigor no próximo
+## select_pattern(), isto é, quando o combo em andamento terminar — o boss não interrompe
+## a própria sequência de ataques no meio.
 func _check_phase_transition() -> void:
-	if not data or _phase_cooldown > 0.0:
+	if not data or _phase_cooldown > 0.0 or _pending_phase >= 0:
 		return
 	var ratio := hp_system.hp_ratio if hp_system else 0.0
 	for i in data.phases.size():
@@ -213,7 +231,7 @@ func _check_phase_transition() -> void:
 			continue
 		var phase: BossPhaseData = data.phases[i]
 		if ratio <= phase.hp_threshold:
-			_activate_phase(i)
+			_pending_phase = i
 			return
 
 
@@ -221,6 +239,9 @@ func _activate_phase(index: int) -> void:
 	if not data or index >= data.phases.size():
 		return
 	current_phase   = index
+	_pending_phase  = -1
+	_sequence_index = 0
+	_last_pattern   = null
 	_phase_cooldown = 1.0
 	var phase: BossPhaseData = data.phases[index]
 	if not phase.phase_music.is_empty():
@@ -303,26 +324,100 @@ func set_facing(right: bool) -> void:
 	sprite.flip_h = (right != native_right)
 
 
+## +1 ou -1: o quanto o visual está espelhado em relação à arte NATIVA (BossData.native_facing_right).
+## Mesma regra do offset_flip de _spawn_object(). Lido pelo ParticleFX para espelhar markers
+## (SpawnedParticleDef.mirror_marker_with_facing).
+func get_facing_flip() -> int:
+	var native_right := data.native_facing_right if data else true
+	return -1 if facing_right != native_right else 1
+
+
+## true se uma fase já foi "ganha" por HP mas ainda não entrou em vigor.
+## Lido pelo BTAction para não repetir (loop) o combo atual.
+func has_pending_phase() -> bool:
+	return _pending_phase >= 0
+
+
+## Vira para o alvo (comparando só o X). Alinhado (dentro da zona morta) mantém o facing.
+## Quem decide QUANDO chamar é o BTAction, na entrada de cada combo.
+func face_toward(target: Node2D) -> void:
+	if not is_instance_valid(target):
+		return
+	var dx := target.global_position.x - global_position.x
+	if absf(dx) <= FACE_DEAD_ZONE:
+		return
+	set_facing(dx > 0.0)
+
+
+## Escolhe o próximo combo. Chamado pelo BTAction ao iniciar cada combo.
+## ATENÇÃO: efeito colateral intencional — se há fase pendente, é AQUI que ela entra em
+## vigor (música, SFX, phase_changed), porque este é o ponto seguro: o combo anterior
+## acabou. Nesse caso devolve o entry_pattern da nova fase (uma vez só).
 func select_pattern(player_ref: Node = null) -> AttackPattern:
+	if _pending_phase >= 0:
+		var entering := _pending_phase
+		_pending_phase = -1
+		_activate_phase(entering)
+		var entered := get_current_phase_data()
+		if entered and entered.entry_pattern and not entered.entry_pattern.attacks.is_empty():
+			return entered.entry_pattern
+
 	var phase := get_current_phase_data()
 	if not phase:
 		return null
+
+	var chosen: AttackPattern = null
+	match phase.selection_mode:
+		BossPhaseData.SelectionMode.SEQUENTIAL:
+			chosen = _pick_sequential(phase, player_ref)
+		BossPhaseData.SelectionMode.WEIGHTED_NO_REPEAT:
+			chosen = _pick_weighted(_eligible_patterns(phase, player_ref), _last_pattern)
+		_:
+			chosen = _pick_weighted(_eligible_patterns(phase, player_ref))
+	_last_pattern = chosen
+	return chosen
+
+
+func _eligible_patterns(phase: BossPhaseData, player_ref: Node) -> Array[AttackPattern]:
 	var eligible: Array[AttackPattern] = []
 	for pattern in phase.patterns:
-		if _pattern_condition_met(pattern, player_ref):
+		if pattern and _pattern_condition_met(pattern, player_ref):
 			eligible.append(pattern)
+	return eligible
+
+
+## Sorteio ponderado por weight. `avoid` é excluído, a menos que seja a única opção.
+func _pick_weighted(eligible: Array[AttackPattern], avoid: AttackPattern = null) -> AttackPattern:
 	if eligible.is_empty():
 		return null
-	var total_weight := 0.0
+	var pool: Array[AttackPattern] = []
 	for p in eligible:
+		if p != avoid or eligible.size() == 1:
+			pool.append(p)
+	if pool.is_empty():
+		pool = eligible
+	var total_weight := 0.0
+	for p in pool:
 		total_weight += p.weight
 	var roll := randf() * total_weight
 	var accumulated := 0.0
-	for p in eligible:
+	for p in pool:
 		accumulated += p.weight
 		if roll <= accumulated:
 			return p
-	return eligible[-1]
+	return pool[-1]
+
+
+## Próximo da lista (a partir de onde parou) que esteja elegível; ao fim volta ao primeiro.
+func _pick_sequential(phase: BossPhaseData, player_ref: Node) -> AttackPattern:
+	var count := phase.patterns.size()
+	for step in count:
+		var idx := (_sequence_index + step) % count
+		var pattern := phase.patterns[idx]
+		if pattern and _pattern_condition_met(pattern, player_ref):
+			_sequence_index = (idx + 1) % count
+			return pattern
+	return null
 
 
 func _pattern_condition_met(pattern: AttackPattern, player_ref: Node) -> bool:

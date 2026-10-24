@@ -76,6 +76,13 @@ func change_state(new_state_name: String) -> void:
 	current_state_name  = new_state_name
 	current_state       = states[new_state_name]
 
+	# Perfil de colisão: só hosts que o suportam (Player). Antes do enter(), para o corpo
+	# já ter o tamanho certo desde o primeiro frame do state.
+	if _host.has_method("apply_collision_stance"):
+		var stance = current_state.get("collision_stance")
+		if stance != null:
+			_host.apply_collision_stance(stance)
+
 	if current_state.has_method("enter"):
 		current_state.enter()
 

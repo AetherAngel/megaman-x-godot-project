@@ -37,6 +37,10 @@ extends Resource
 ## Se true, atualiza a posição do marker a cada frame enquanto a partícula vive.
 ## Útil para efeitos que devem "sair do chão" mesmo enquanto o dono se move.
 @export var follow_marker: bool = false
+## Se true, espelha o X do marker em torno do pivô do dono quando ele está virado para o lado
+## oposto ao da arte nativa (o dono precisa ter get_facing_flip(), ex: Boss). Posicione o
+## marker no editor na orientação NATIVA da arte. Desligado = comportamento de sempre.
+@export var mirror_marker_with_facing: bool = false
 ## Offset visual do FX
 @export var offset: Vector2 = Vector2.ZERO
 ## Variação aleatória de posição (± por eixo) aplicada a CADA partícula. Serve para

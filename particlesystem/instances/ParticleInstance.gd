@@ -33,6 +33,11 @@ func setup(def: SpawnedParticleDef, direction: Vector2, speed: float, owner: Nod
 				_sprite.play(anim)
 
 
+## Substitui a vida sorteada no setup() por uma exata (ParticleFX.spawn_exact).
+func set_lifetime(seconds: float) -> void:
+	_lifetime = maxf(0.05, seconds)
+
+
 func _process(delta: float) -> void:
 	if not _def:
 		queue_free()
@@ -51,7 +56,7 @@ func _process(delta: float) -> void:
 			return
 		var marker := _owner.get_node_or_null(NodePath(_def.marker_path))
 		if marker is Node2D:
-			global_position = (marker as Node2D).global_position
+			global_position = ParticleFX.marker_global_position(_def, _owner, marker as Node2D)
 
 	# Movimento normal (só aplica se não está seguindo marker)
 	if not _def.follow_marker:

@@ -35,6 +35,13 @@ enum ExitOn {
 ## Evita que o boss trave para sempre por um bug de sincronização.
 @export var signal_timeout: float = 5.0
 
+@export_group("Invulnerability")
+## Se true, o ator fica invulnerável enquanto ESTA fase de animação durar.
+## A duração é a da própria fase (ON_FINISH / ON_TIMER / ON_SIGNAL) — não há segundo
+## tempo para manter em sincronia. Liberada ao sair da fase, ao fim da ação ou se ela
+## for interrompida.
+@export var invulnerable: bool = false
+
 @export_group("Frame Events")
 ## Eventos disparados em frames específicos desta fase.
 ## Configurados no editor como peças de lego.

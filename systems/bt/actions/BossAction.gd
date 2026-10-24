@@ -30,6 +30,8 @@ var _fired_events:       Array[bool] = []
 ## ação. Usado como "cabeça" quando um SPAWN_FX com fx_resource = FXChainDef
 ## dispara depois — configure o SPAWN_OBJECT antes na sequência de frames.
 var _last_spawned_object: Node2D = null
+## true enquanto esta ação mantém sua trava em actor.toggleable_invulnerabilities.
+var _invuln_active: bool = false
 
 
 # ─────────────────────────────────────────────────────────────
@@ -37,6 +39,7 @@ var _last_spawned_object: Node2D = null
 # ─────────────────────────────────────────────────────────────
 
 func start(actor: Node) -> void:
+	_set_invulnerable(actor, false)  # nunca herda trava de uma execução anterior
 	_phase_index      = 0
 	_phase_timer      = 0.0
 	_signal_triggered = false
@@ -67,6 +70,7 @@ func update(actor: Node, delta: float) -> bool:
 
 
 func finish(actor: Node) -> void:
+	_set_invulnerable(actor, false)
 	actor.is_acting = false
 	on_finish(actor)
 
@@ -115,7 +119,23 @@ func _enter_phase(actor: Node, phase: AnimPhase) -> void:
 	_fired_events       = []
 	_fired_events.resize(phase.frame_events.size())
 	_fired_events.fill(false)
+	_set_invulnerable(actor, phase.invulnerable)
 	actor.set_visual_state(phase.anim_name)
+
+
+## Liga/desliga a trava de invulnerabilidade desta ação no ator.
+## A própria ação (Resource) é o token: duas fontes de invulnerabilidade nunca
+## se confundem, e a trava some exatamente com quem a criou.
+func _set_invulnerable(actor: Node, enabled: bool) -> void:
+	if enabled == _invuln_active:
+		return
+	if not "toggleable_invulnerabilities" in actor:
+		return
+	_invuln_active = enabled
+	if enabled:
+		actor.toggleable_invulnerabilities.append(self)
+	else:
+		actor.toggleable_invulnerabilities.erase(self)
 
 
 func _should_advance(_actor: Node, phase: AnimPhase) -> bool:
@@ -206,9 +226,18 @@ func _dispatch_spawn_fx(actor: Node2D, event: FrameEvent) -> void:
 					_last_spawned_object.set_meta(&"fx_chain_controller", controller)
 			else:
 				push_warning("[BossAction] SPAWN_FX com FXChainDef mas nenhum objeto foi spawnado antes (falta um SPAWN_OBJECT anterior na sequência).")
+		elif event.fx_resource is BarrageDef:
+			# Saraivada em lanes. Ao terminar, avança a fase atual — use exit = ON_SIGNAL nesta
+			# AnimPhase: a pose (e a invulnerabilidade) duram exatamente a saraivada.
+			var barrage := BarrageController.start(event.fx_resource, actor)
+			if barrage:
+				barrage.finished.connect(advance_phase)
+			else:
+				advance_phase()  # não conseguiu iniciar: a fase não fica presa esperando o sinal
 		else:
 			push_warning("[BossAction] fx_resource com tipo não suportado: %s" % event.fx_resource.get_class())
 		return
 
 	if event.particle_def:
-		ParticleFX.spawn_at(event.particle_def, actor.global_position)
+		# owner = actor: resolve marker_path (e mirror_marker_with_facing) em relação ao boss.
+		ParticleFX.spawn_at(event.particle_def, actor.global_position, Vector2.ZERO, actor)

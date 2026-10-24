@@ -38,6 +38,7 @@ var _is_running: bool = false
 var _pattern: AttackPattern = null
 var _pattern_index: int = 0
 var _current_action: BossAction = null
+var _player_ref: Node = null  # guardado para reavaliar o facing se o pattern repetir (loop)
 
 
 func tick(actor: Node, blackboard: BTBlackboard) -> Status:
@@ -78,8 +79,25 @@ func _resolve_start_action(actor: Node, blackboard: BTBlackboard) -> BossAction:
 	_pattern = actor.select_pattern(player_ref)
 	if not _pattern or _pattern.attacks.is_empty():
 		return null
+	_player_ref = player_ref
 	_pattern_index = 0
+	_begin_pattern(actor)
 	return _pattern.attacks[0]
+
+
+## Ponto ÚNICO de entrada de um combo (início e reinício por loop).
+## Ajusta o facing UMA vez, antes do primeiro ataque; durante a sequência nada o
+## reajusta. Combos com face_player_on_start = false mantêm a direção atual.
+func _begin_pattern(actor: Node) -> void:
+	if not _pattern or not _pattern.face_player_on_start:
+		return
+	if actor.has_method("face_toward") and is_instance_valid(_player_ref) and _player_ref is Node2D:
+		actor.face_toward(_player_ref)
+
+
+## Fase pendente no Boss: o combo atual deve ser o último, mesmo com loop = true.
+func _has_pending_phase(actor: Node) -> bool:
+	return actor.has_method("has_pending_phase") and actor.has_pending_phase()
 
 
 ## Chamado quando a BossAction atual do pattern termina. Avança pro
@@ -91,8 +109,9 @@ func _advance_pattern(actor: Node) -> Status:
 		_current_action.start(actor)
 		return Status.RUNNING
 
-	if _pattern.loop:
+	if _pattern.loop and not _has_pending_phase(actor):
 		_pattern_index = 0
+		_begin_pattern(actor)
 		_current_action = _pattern.attacks[0]
 		_current_action.start(actor)
 		return Status.RUNNING
@@ -106,6 +125,7 @@ func _reset_attack_state() -> void:
 	_pattern = null
 	_pattern_index = 0
 	_current_action = null
+	_player_ref = null
 
 
 func interrupt(actor: Node) -> void:

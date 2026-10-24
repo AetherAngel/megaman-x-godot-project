@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AttackPattern" format=3 uid="uid://d16jhm7xdg7wi"]
+
+[ext_resource type="Script" uid="uid://dbtctnct07w57" path="res://systems/bt/actions/BossAction.gd" id="1_6tuuv"]
+[ext_resource type="Resource" uid="uid://cqwsheows5qog" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/BossAction_MeteorFall.tres" id="2_6tuuv"]
+[ext_resource type="Script" uid="uid://j3pj4beqbcci" path="res://enemies/boss/data/attackpattern.gd" id="3_6588l"]
+
+[resource]
+script = ExtResource("3_6588l")
+pattern_id = "MeteorFall"
+attacks = Array[ExtResource("1_6tuuv")]([ExtResource("2_6tuuv")])
+metadata/_custom_type_script = "uid://j3pj4beqbcci"

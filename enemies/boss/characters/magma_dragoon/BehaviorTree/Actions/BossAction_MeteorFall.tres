@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="BossAction" format=3 uid="uid://cqwsheows5qog"]
+
+[ext_resource type="Script" uid="uid://13j7x4cikp7v" path="res://systems/bt/actions/AnimPhase.gd" id="1_8hrph"]
+[ext_resource type="Resource" uid="uid://c1uu2hojagklj" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/AnimPhase/MeteorFall_AnimPhase.tres" id="2_4ivpd"]
+[ext_resource type="Script" uid="uid://dbtctnct07w57" path="res://systems/bt/actions/BossAction.gd" id="3_a7yw4"]
+
+[resource]
+script = ExtResource("3_a7yw4")
+phases = Array[ExtResource("1_8hrph")]([ExtResource("2_4ivpd")])
+metadata/_custom_type_script = "uid://dbtctnct07w57"

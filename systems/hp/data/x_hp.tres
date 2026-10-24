@@ -4,4 +4,5 @@
 
 [resource]
 script = ExtResource("1_pq1ls")
+i_frame_duration = 3.0
 metadata/_custom_type_script = "uid://e0fdf85ku13p"

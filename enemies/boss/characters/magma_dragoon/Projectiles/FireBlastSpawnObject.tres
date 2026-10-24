@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SpawnableObject" format=3 uid="uid://b1cm03m5ymyil"]
+
+[ext_resource type="Script" uid="uid://0bn0ryx8sb1h" path="res://enemies/boss/data/spawnableobject.gd" id="1_c7bli"]
+
+[resource]
+script = ExtResource("1_c7bli")
+scene_path = "uid://djni0ovheiiu1"
+lifetime = 15.0
+damage = 4.0
+damage_tag = "fire"
+metadata/_custom_type_script = "uid://0bn0ryx8sb1h"

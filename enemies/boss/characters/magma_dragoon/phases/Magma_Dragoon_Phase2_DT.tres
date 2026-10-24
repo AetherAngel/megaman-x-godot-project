@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="BossPhaseData" format=3 uid="uid://dwtgi5c5dhas2"]
+
+[ext_resource type="Resource" uid="uid://d16jhm7xdg7wi" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/AttackPattern_MeteorFall.tres" id="1_ab4u0"]
+[ext_resource type="Script" uid="uid://j3pj4beqbcci" path="res://enemies/boss/data/attackpattern.gd" id="1_jabmx"]
+[ext_resource type="Script" uid="uid://cytcncmfat5pu" path="res://enemies/boss/data/bossphasedata.gd" id="2_ab4u0"]
+
+[resource]
+script = ExtResource("2_ab4u0")
+hp_threshold = 0.5
+entry_state = "Fury"
+entry_pattern = ExtResource("1_ab4u0")
+metadata/_custom_type_script = "uid://cytcncmfat5pu"

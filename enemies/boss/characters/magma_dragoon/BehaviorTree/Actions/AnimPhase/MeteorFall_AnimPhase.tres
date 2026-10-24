@@ -1,0 +1,43 @@
+[gd_resource type="Resource" script_class="AnimPhase" format=3 uid="uid://c1uu2hojagklj"]
+
+[ext_resource type="Script" uid="uid://ouu8ril4nkjk" path="res://systems/bt/actions/FrameEvent.gd" id="1_oh80w"]
+[ext_resource type="Script" uid="uid://sev6biwlyfqi" path="res://particlesystem/resources/SpawnedParticleDef.gd" id="2_lq08u"]
+[ext_resource type="SpriteFrames" uid="uid://crd2vxirucipb" path="res://resources/animations/spr_magma_dragoon_shot1.tres" id="3_ahykd"]
+[ext_resource type="Script" uid="uid://13j7x4cikp7v" path="res://systems/bt/actions/AnimPhase.gd" id="5_lpm1p"]
+
+[sub_resource type="Resource" id="Resource_4khg1"]
+script = ExtResource("2_lq08u")
+sprite_frames = ExtResource("3_ahykd")
+animations = Array[String](["magma_dragoon_shot"])
+burst_count = 35
+spawn_interval = 0.2
+repeat_interval = 1.0
+wave = true
+repeat_duration = 4.0
+marker_path = "FireBlastEffect"
+mirror_marker_with_facing = true
+position_variance = Vector2(2, 2)
+lifetime = 2.0
+spread_angle = 25.0
+velocity_min = 60.0
+scale_start = Vector2(0.2, 0.2)
+scale_end = Vector2(0.5, 0.5)
+z_index = 15
+metadata/_custom_type_script = "uid://sev6biwlyfqi"
+
+[sub_resource type="Resource" id="Resource_plwj0"]
+script = ExtResource("1_oh80w")
+frame = 2
+type = 2
+particle_def = SubResource("Resource_4khg1")
+metadata/_custom_type_script = "uid://ouu8ril4nkjk"
+
+[resource]
+script = ExtResource("5_lpm1p")
+anim_name = &"magma_dragoon_fireshielding"
+exit = 1
+exit_timer = 12.0
+signal_timeout = 12.0
+invulnerable = true
+frame_events = Array[ExtResource("1_oh80w")]([SubResource("Resource_plwj0")])
+metadata/_custom_type_script = "uid://13j7x4cikp7v"

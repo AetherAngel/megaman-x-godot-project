@@ -5,6 +5,10 @@ class_name State
 var cancel_used := false
 var combo_consumed := false
 var player: Player
+## Perfil de colisão do corpo enquanto este state estiver ativo. Aplicado pelo
+## StateMachine.change_state(): nenhum state chama nada por conta própria.
+## Configure no Inspector (Dash e AirDash = DASH); o padrão é em pé.
+@export var collision_stance: PlayerCharacterData.Stance = PlayerCharacterData.Stance.STAND
 
 func enter() -> void: pass
 func exit() -> void: pass

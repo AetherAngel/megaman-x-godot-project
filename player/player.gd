@@ -39,6 +39,10 @@ var forced_move_speed: float = 0.0
 
 @onready var state_machine: StateMachine = $StateMachine
 @onready var wall_ray: RayCast2D = $WallRay
+## Único CollisionShape2D do corpo; muda de tamanho por perfil (apply_collision_stance).
+@onready var body_collision: CollisionShape2D = $BodyCollision
+## Perfil de colisão aplicado (PlayerCharacterData.Stance). -1 = nenhum ainda.
+var _collision_stance: int = -1
 
 @onready var layer_head: AnimatedSprite2D = $ArmorLayerHead
 @onready var layer_body: AnimatedSprite2D = $ArmorLayerBody
@@ -240,6 +244,30 @@ func play_stage_intro() -> void:
 	state_machine.change_state("Intro")
 
 
+## Aplica o perfil de colisão do corpo (em pé, dash, agachado) com as medidas da ficha do
+## personagem. Os pés ficam fixos (feet_offset_y); só o topo sobe/desce, e o alcance do
+## WallRay acompanha a meia-largura. Chamado pelo StateMachine.change_state().
+## set_deferred: um hit pode trocar de state dentro de um callback de física, onde o Godot
+## proíbe alterar shapes.
+## LIMITAÇÃO conhecida: não verifica teto ao crescer (ex: sair do dash sob teto baixo).
+## Tratar junto com o crouch.
+func apply_collision_stance(stance: int) -> void:
+	if not current_character or not body_collision or stance == _collision_stance:
+		return
+	var shape := body_collision.shape as RectangleShape2D
+	if not shape:
+		push_warning("Player: BodyCollision precisa de um RectangleShape2D.")
+		return
+	_collision_stance = stance
+
+	var size := current_character.get_collision_size(stance)
+	shape.set_deferred("size", size)
+	body_collision.set_deferred("position", Vector2(0.0, current_character.feet_offset_y - size.y * 0.5))
+
+	var side := -1.0 if wall_ray.target_position.x < 0.0 else 1.0
+	wall_ray.target_position.x = side * (size.x * 0.5 + current_character.wall_reach)
+
+
 ## Inicializa todos os sistemas para o current_character atual.
 ## Compartilhado entre _ready() e _on_character_switched().
 func _setup_character() -> void:
@@ -257,6 +285,11 @@ func _setup_character() -> void:
 
 	visual_library.initialize(self)
 	state_machine.initialize(self)
+
+	# Medidas do corpo vêm da ficha. Zera o cache: trocar de personagem muda o tamanho
+	# mesmo que o perfil (em pé) seja o mesmo.
+	_collision_stance = -1
+	apply_collision_stance(PlayerCharacterData.Stance.STAND)
 
 	print("✅ Personagem carregado: %s" % current_character.display_name)
 	if current_armor:
