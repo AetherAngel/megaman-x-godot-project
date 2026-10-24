@@ -79,6 +79,14 @@ extends Resource
 @export var scale_start: Vector2 = Vector2.ONE
 @export var scale_end: Vector2 = Vector2.ONE
 @export var z_index: int = 10
+## Rotação FIXA do sprite, em graus, no sentido ANTI-HORÁRIO (positivo gira "para cima").
+## 0 = transform original da arte. Ex: arte desenhada para a DIREITA + 90 = aponta para cima.
+## (O Godot gira no sentido horário; aqui o sinal é invertido de propósito.)
+@export var sprite_rotation_degrees: float = 0.0
+## Se true, o sprite também gira para apontar na direção do movimento de cada partícula
+## (soma-se à rotação fixa acima). Use sprite_rotation_degrees para compensar para onde a
+## arte ORIGINAL aponta: desenhada para a esquerda = 180; para a direita = 0.
+@export var rotate_to_direction: bool = false
 
 @export_group("Color")
 @export var modulate_start: Color = Color.WHITE

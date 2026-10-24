@@ -4,10 +4,11 @@
 	"stage_test":   { "file": "stage_test.wav",   "volume_db": -20.0  },
 	"stage_sigma":  { "file": "stage_sigma.wav",  "volume_db": -8.0  },
 	"dr_light":  	{ "file": "dr_light_theme.wav",  "volume_db": -20.0  },
-	"boss_fight": { "file": "boss_mmx4_theme.wav",   "volume_db": -20.0  },
+	"boss_fight": { "file": "boss_mmx4_theme.wav",   "volume_db": -15.0  },
 	"stage_skylagoon":  	{ "file": "mmx4_skylagoon.wav",  "volume_db": -8.0  },
 	"stage_magmadragon":  	{ "file": "mmx4_magmadragon.wav",  "volume_db": -8.0  },
-	"stage_clear":  	{ "file": "stage_clear.wav",  "volume_db": -8.0  }
+	"stage_clear":  	{ "file": "stage_clear.wav",  "volume_db": -8.0  },
+	"boss_intro":  	{ "file": "mmx_bossintro.wav",  "volume_db": -15.0  }
   },
   "sfx": {
 	"jump":               { "file": "jump.wav",               "volume_db": 0.0, "pitch": 1.0 },

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bm6eb134mii7m" path="res://Cutscene and Talk system/CutsceneData.gd" id="1_c5jfb"]
 [ext_resource type="Script" uid="uid://cbnu10kg40vow" path="res://Cutscene and Talk system/CutsceneStep.gd" id="2_atrh0"]
+[ext_resource type="Script" uid="uid://bbrkie5yvjxim" path="res://Cutscene and Talk system/steps/StepMusic.gd" id="3_kat8h"]
 [ext_resource type="Resource" uid="uid://5ow5el5xfos0" path="res://enemies/boss/characters/magma_dragoon/cutscene/MD_Intro1.tres" id="3_orbm7"]
 [ext_resource type="Resource" uid="uid://cji7x7sd7byfw" path="res://enemies/boss/characters/magma_dragoon/cutscene/MD_InteractionToPlayer_Battle.tres" id="4_uxom7"]
 [ext_resource type="Script" uid="uid://ivpx7ytxrnkj" path="res://resources/PhysicalMovePhase.gd" id="4_w048k"]
@@ -9,6 +10,11 @@
 [ext_resource type="Script" uid="uid://dis8iifq507di" path="res://resources/PhysicalMoveDef.gd" id="5_kat8h"]
 [ext_resource type="Script" uid="uid://bfv7qiwsjmeyl" path="res://Cutscene and Talk system/steps/StepPhysicalMove.gd" id="6_fifrr"]
 [ext_resource type="Script" uid="uid://dn13wwlso37we" path="res://Cutscene and Talk system/steps/StepAnimation.gd" id="7_inukb"]
+
+[sub_resource type="Resource" id="Resource_fifrr"]
+script = ExtResource("3_kat8h")
+music_id = "boss_intro"
+metadata/_custom_type_script = "uid://bbrkie5yvjxim"
 
 [sub_resource type="Resource" id="Resource_jlshy"]
 script = ExtResource("4_w048k")
@@ -47,6 +53,6 @@ metadata/_custom_type_script = "uid://dn13wwlso37we"
 
 [resource]
 script = ExtResource("1_c5jfb")
-steps = Array[ExtResource("2_atrh0")]([ExtResource("3_orbm7"), SubResource("Resource_0yys5"), SubResource("Resource_w048k"), ExtResource("4_uxom7"), ExtResource("5_16s3x")])
+steps = Array[ExtResource("2_atrh0")]([SubResource("Resource_fifrr"), ExtResource("3_orbm7"), SubResource("Resource_0yys5"), SubResource("Resource_w048k"), ExtResource("4_uxom7"), ExtResource("5_16s3x")])
 can_skip = false
 metadata/_custom_type_script = "uid://bm6eb134mii7m"

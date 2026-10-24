@@ -2,11 +2,13 @@
 
 [ext_resource type="SpriteFrames" uid="uid://crd2vxirucipb" path="res://resources/animations/spr_magma_dragoon_shot1.tres" id="2_ot48r"]
 [ext_resource type="Script" uid="uid://b5hlcaqkwh84f" path="res://systems/hit/HitComponent.gd" id="3_kx5tp"]
+[ext_resource type="Script" path="res://systems/barrage/BarrageProjectile.gd" id="4_bprj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_shmlr"]
 size = Vector2(23, 21)
 
 [node name="FireBlast" type="Area2D" unique_id=1069394859]
+script = ExtResource("4_bprj")
 light_mask = 0
 visibility_layer = 37
 z_index = 10
@@ -21,7 +23,7 @@ shape = SubResource("RectangleShape2D_shmlr")
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=660171049]
 visibility_layer = 5
 sprite_frames = ExtResource("2_ot48r")
-animation = &"magma_dragoon_shot"
+animation = &"magma_dragoon_shot_loop"
 flip_h = true
 
 [node name="HitComponent" type="Node" parent="." unique_id=1141124980]

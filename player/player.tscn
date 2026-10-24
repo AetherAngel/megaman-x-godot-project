@@ -134,6 +134,7 @@ metadata/_custom_type_script = "uid://di1kk7rbaqxvl"
 script = ExtResource("8_hg6s5")
 dash_spark_def = ExtResource("12_jd2rm")
 dash_smoke_def = ExtResource("13_q28gw")
+collision_stance = 1
 metadata/_custom_type_script = "uid://di1kk7rbaqxvl"
 
 [node name="Fall" type="Node" parent="StateMachine" unique_id=1031334965]
@@ -146,6 +147,7 @@ metadata/_custom_type_script = "uid://di1kk7rbaqxvl"
 
 [node name="AirDash" type="Node" parent="StateMachine" unique_id=2141480847]
 script = ExtResource("11_2ieo8")
+collision_stance = 1
 metadata/_custom_type_script = "uid://di1kk7rbaqxvl"
 
 [node name="SaberUnequip" type="Node" parent="StateMachine" unique_id=842928347]

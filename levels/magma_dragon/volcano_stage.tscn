@@ -83,6 +83,29 @@ animations = [{
 "speed": 12.0
 }]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_pm54l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_643hg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_643hg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_dclax")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_vfp21")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_vfp21")
+}],
+"loop": true,
+"name": &"flowing",
+"speed": 12.0
+}]
+
 [node name="BaseTemplateStage" unique_id=2084639981 instance=ExtResource("1_gbtut")]
 
 [node name="HUDLayer" parent="." index="0" unique_id=1701649666]
@@ -147,99 +170,25 @@ autoplay = "flowing"
 frame_progress = 0.1936366
 centered = false
 
-[node name="@AnimatedSprite2D@19302" type="AnimatedSprite2D" parent="TileMapLayer/LavaRiverEntity" index="7" unique_id=1661893307]
-visible = false
-position = Vector2(208, 0)
-sprite_frames = SubResource("SpriteFrames_vfp21")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.1936366
-centered = false
-
-[node name="@AnimatedSprite2D@19304" type="AnimatedSprite2D" parent="TileMapLayer/LavaRiverEntity" index="8" unique_id=674993204]
-visible = false
-position = Vector2(416, 0)
-sprite_frames = SubResource("SpriteFrames_vfp21")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.1936366
-centered = false
-
-[node name="@AnimatedSprite2D@19306" type="AnimatedSprite2D" parent="TileMapLayer/LavaRiverEntity" index="9" unique_id=1022919112]
-visible = false
-position = Vector2(624, 0)
-sprite_frames = SubResource("SpriteFrames_vfp21")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.1936366
-centered = false
-
-[node name="@AnimatedSprite2D@18939" type="AnimatedSprite2D" parent="TileMapLayer/LavaRiverEntity" index="10" unique_id=553179904]
+[node name="@AnimatedSprite2D@18939" type="AnimatedSprite2D" parent="TileMapLayer/LavaRiverEntity" index="7" unique_id=553179904]
 sprite_frames = SubResource("SpriteFrames_k7rqg")
 animation = &"flowing"
 autoplay = "flowing"
 frame_progress = 0.83096397
 centered = false
 
-[node name="@AnimatedSprite2D@18940" type="AnimatedSprite2D" parent="TileMapLayer/LavaRiverEntity" index="11" unique_id=102555453]
-visible = false
-position = Vector2(208, 0)
-sprite_frames = SubResource("SpriteFrames_k7rqg")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.83096397
-centered = false
-
-[node name="@AnimatedSprite2D@18942" type="AnimatedSprite2D" parent="TileMapLayer/LavaRiverEntity" index="12" unique_id=1009440470]
-visible = false
-position = Vector2(416, 0)
-sprite_frames = SubResource("SpriteFrames_k7rqg")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.83096397
-centered = false
-
-[node name="@AnimatedSprite2D@18944" type="AnimatedSprite2D" parent="TileMapLayer/LavaRiverEntity" index="13" unique_id=1185408448]
-visible = false
-position = Vector2(624, 0)
-sprite_frames = SubResource("SpriteFrames_k7rqg")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.83096397
-centered = false
-
-[node name="@AnimatedSprite2D@93101" type="AnimatedSprite2D" parent="TileMapLayer/LavaRiverEntity" index="14" unique_id=169771996]
+[node name="@AnimatedSprite2D@93101" type="AnimatedSprite2D" parent="TileMapLayer/LavaRiverEntity" index="8" unique_id=169771996]
 sprite_frames = SubResource("SpriteFrames_k7rqg")
 animation = &"flowing"
 autoplay = "flowing"
 frame_progress = 0.2861514
 centered = false
 
-[node name="@AnimatedSprite2D@93102" type="AnimatedSprite2D" parent="TileMapLayer/LavaRiverEntity" index="15" unique_id=1758016764]
-visible = false
-position = Vector2(208, 0)
-sprite_frames = SubResource("SpriteFrames_k7rqg")
+[node name="@AnimatedSprite2D@64122" type="AnimatedSprite2D" parent="TileMapLayer/LavaRiverEntity" index="9" unique_id=2109561585]
+sprite_frames = SubResource("SpriteFrames_pm54l")
 animation = &"flowing"
 autoplay = "flowing"
-frame_progress = 0.2861514
-centered = false
-
-[node name="@AnimatedSprite2D@93104" type="AnimatedSprite2D" parent="TileMapLayer/LavaRiverEntity" index="16" unique_id=359431730]
-visible = false
-position = Vector2(416, 0)
-sprite_frames = SubResource("SpriteFrames_k7rqg")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.2861514
-centered = false
-
-[node name="@AnimatedSprite2D@93106" type="AnimatedSprite2D" parent="TileMapLayer/LavaRiverEntity" index="17" unique_id=216354488]
-visible = false
-position = Vector2(624, 0)
-sprite_frames = SubResource("SpriteFrames_k7rqg")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.2861514
+frame_progress = 0.07943716
 centered = false
 
 [node name="Checkpoint" parent="." index="6" unique_id=1985951108 instance=ExtResource("5_k3k4u")]
@@ -287,151 +236,23 @@ autoplay = "flowing"
 frame_progress = 0.1936366
 centered = false
 
-[node name="@AnimatedSprite2D@19364" type="AnimatedSprite2D" parent="LavaRiverEntity" index="6" unique_id=1197243137]
-visible = false
-position = Vector2(208, 0)
-sprite_frames = SubResource("SpriteFrames_vfp21")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.1936366
-centered = false
-
-[node name="@AnimatedSprite2D@19366" type="AnimatedSprite2D" parent="LavaRiverEntity" index="7" unique_id=573457132]
-visible = false
-position = Vector2(416, 0)
-sprite_frames = SubResource("SpriteFrames_vfp21")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.1936366
-centered = false
-
-[node name="@AnimatedSprite2D@19368" type="AnimatedSprite2D" parent="LavaRiverEntity" index="8" unique_id=1603382677]
-visible = false
-position = Vector2(624, 0)
-sprite_frames = SubResource("SpriteFrames_vfp21")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.1936366
-centered = false
-
-[node name="@AnimatedSprite2D@19370" type="AnimatedSprite2D" parent="LavaRiverEntity" index="9" unique_id=330140935]
-visible = false
-position = Vector2(832, 0)
-sprite_frames = SubResource("SpriteFrames_vfp21")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.1936366
-centered = false
-
-[node name="@AnimatedSprite2D@19372" type="AnimatedSprite2D" parent="LavaRiverEntity" index="10" unique_id=660732548]
-visible = false
-position = Vector2(1040, 0)
-sprite_frames = SubResource("SpriteFrames_vfp21")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.1936366
-centered = false
-
-[node name="@AnimatedSprite2D@18946" type="AnimatedSprite2D" parent="LavaRiverEntity" index="11" unique_id=1485942814]
+[node name="@AnimatedSprite2D@18946" type="AnimatedSprite2D" parent="LavaRiverEntity" index="6" unique_id=1485942814]
 sprite_frames = SubResource("SpriteFrames_k7rqg")
 animation = &"flowing"
 autoplay = "flowing"
 frame_progress = 0.83096397
 centered = false
 
-[node name="@AnimatedSprite2D@18947" type="AnimatedSprite2D" parent="LavaRiverEntity" index="12" unique_id=267668795]
-visible = false
-position = Vector2(208, 0)
-sprite_frames = SubResource("SpriteFrames_k7rqg")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.83096397
-centered = false
-
-[node name="@AnimatedSprite2D@18949" type="AnimatedSprite2D" parent="LavaRiverEntity" index="13" unique_id=514496392]
-visible = false
-position = Vector2(416, 0)
-sprite_frames = SubResource("SpriteFrames_k7rqg")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.83096397
-centered = false
-
-[node name="@AnimatedSprite2D@18951" type="AnimatedSprite2D" parent="LavaRiverEntity" index="14" unique_id=696692166]
-visible = false
-position = Vector2(624, 0)
-sprite_frames = SubResource("SpriteFrames_k7rqg")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.83096397
-centered = false
-
-[node name="@AnimatedSprite2D@18953" type="AnimatedSprite2D" parent="LavaRiverEntity" index="15" unique_id=1966289157]
-visible = false
-position = Vector2(832, 0)
-sprite_frames = SubResource("SpriteFrames_k7rqg")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.83096397
-centered = false
-
-[node name="@AnimatedSprite2D@18955" type="AnimatedSprite2D" parent="LavaRiverEntity" index="16" unique_id=267781675]
-visible = false
-position = Vector2(1040, 0)
-sprite_frames = SubResource("SpriteFrames_k7rqg")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.83096397
-centered = false
-
-[node name="@AnimatedSprite2D@93163" type="AnimatedSprite2D" parent="LavaRiverEntity" index="17" unique_id=1746431458]
+[node name="@AnimatedSprite2D@93163" type="AnimatedSprite2D" parent="LavaRiverEntity" index="7" unique_id=1746431458]
 sprite_frames = SubResource("SpriteFrames_k7rqg")
 animation = &"flowing"
 autoplay = "flowing"
 frame_progress = 0.2861514
 centered = false
 
-[node name="@AnimatedSprite2D@93164" type="AnimatedSprite2D" parent="LavaRiverEntity" index="18" unique_id=926601866]
-visible = false
-position = Vector2(208, 0)
-sprite_frames = SubResource("SpriteFrames_k7rqg")
+[node name="@AnimatedSprite2D@64184" type="AnimatedSprite2D" parent="LavaRiverEntity" index="8" unique_id=2083848211]
+sprite_frames = SubResource("SpriteFrames_pm54l")
 animation = &"flowing"
 autoplay = "flowing"
-frame_progress = 0.2861514
-centered = false
-
-[node name="@AnimatedSprite2D@93166" type="AnimatedSprite2D" parent="LavaRiverEntity" index="19" unique_id=727851519]
-visible = false
-position = Vector2(416, 0)
-sprite_frames = SubResource("SpriteFrames_k7rqg")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.2861514
-centered = false
-
-[node name="@AnimatedSprite2D@93168" type="AnimatedSprite2D" parent="LavaRiverEntity" index="20" unique_id=661540114]
-visible = false
-position = Vector2(624, 0)
-sprite_frames = SubResource("SpriteFrames_k7rqg")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.2861514
-centered = false
-
-[node name="@AnimatedSprite2D@93170" type="AnimatedSprite2D" parent="LavaRiverEntity" index="21" unique_id=540654494]
-visible = false
-position = Vector2(832, 0)
-sprite_frames = SubResource("SpriteFrames_k7rqg")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.2861514
-centered = false
-
-[node name="@AnimatedSprite2D@93172" type="AnimatedSprite2D" parent="LavaRiverEntity" index="22" unique_id=2110773794]
-visible = false
-position = Vector2(1040, 0)
-sprite_frames = SubResource("SpriteFrames_k7rqg")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.2861514
+frame_progress = 0.07943716
 centered = false

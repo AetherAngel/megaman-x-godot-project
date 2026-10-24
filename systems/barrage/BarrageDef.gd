@@ -70,15 +70,25 @@ extends Resource
 @export var ground_offset_y: float = 34.0
 ## Quanto acima do topo da câmera os meteoros nascem (px).
 @export var spawn_margin: float = 24.0
+## Segundos extras de vida do projétil real além do pouso calculado. Normalmente quem o remove
+## é o contato com o chão; isto só evita que ele suma no ar se o chão real for mais baixo que
+## ground_offset_y.
+@export var landing_margin: float = 0.5
 
 @export_group("Visuals")
 ## FX contínuo opcional durante o start_delay (ex: a saraivada de bolas subindo da boca).
-## Precisa de repeat_interval > 0. Deixe repeat_duration = 0: o controller o encerra quando
-## a chuva começa. marker_path / mirror_marker_with_facing valem normalmente.
+## Aqui o def roda como fluxo contínuo: usa repeat_interval (> 0) e burst_count a cada tick,
+## e IGNORA wave, repeat_duration e spawn_interval. Quem o encerra é o controller, quando a
+## chuva começa. marker_path e mirror_marker_with_facing valem normalmente.
 @export var preamble_fx: SpawnedParticleDef
 ## Visual de cada meteoro. Direção, velocidade e vida vêm da lane (spread, velocity e
 ## lifetime deste def são ignorados). Desligue fade_out.
 @export var meteor_fx: SpawnedParticleDef
+## Projétil REAL: reaproveita o SpawnableObject do boss. Usa scene_path, damage e damage_tag;
+## ignora offset, flip_with_facing, spawn_at_player, lifetime e spawn_fx (posição e vida vêm
+## da lane). A cena precisa expor fire(direction, speed, lifetime) — ex: BarrageProjectile.
+## Se definido, substitui o meteor_fx (a lane escolhida é exatamente a mesma).
+@export var meteor_object: SpawnableObject
 
 @export_group("Debug")
 ## Desenha na tela as lanes reservadas (ciano), o espaço mínimo entre elas, os corredores

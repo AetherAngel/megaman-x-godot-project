@@ -22,6 +22,13 @@ func setup(def: SpawnedParticleDef, direction: Vector2, speed: float, owner: Nod
 	_sprite = AnimatedSprite2D.new()
 	add_child(_sprite)
 
+	# Rotação do sprite (padrão 0 = transform original). Só o sprite gira, não o nó.
+	# sprite_rotation_degrees é ANTI-HORÁRIO; o rotation do Godot é horário — daí o sinal.
+	var sprite_angle := -deg_to_rad(def.sprite_rotation_degrees)
+	if def.rotate_to_direction and direction != Vector2.ZERO:
+		sprite_angle += direction.angle()
+	_sprite.rotation = sprite_angle
+
 	if def.sprite_frames:
 		_sprite.sprite_frames = def.sprite_frames
 			# Espelha o sprite se inherit_facing estiver ativo

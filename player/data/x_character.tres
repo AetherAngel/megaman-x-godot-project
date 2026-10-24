@@ -33,6 +33,7 @@ death_cutscene = ExtResource("1_5hbyn")
 death_effect = SubResource("Resource_l3dgn")
 victory_cutscene = ExtResource("7_3xmb7")
 default_armor = ExtResource("1_3mfpk")
+dash_size = Vector2(20, 26)
 charge_max_level = 3
 has_stock = true
 has_plasma = true

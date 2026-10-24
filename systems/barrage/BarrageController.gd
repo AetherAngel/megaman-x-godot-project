@@ -24,6 +24,7 @@ var _rain_started: bool = false
 var _ground_y: float = 0.0
 var _dir: Vector2 = Vector2.DOWN
 var _preamble_anchor: Node2D = null
+var _projectile_scene: PackedScene = null
 
 ## Lanes usadas: { "x": X de pouso, "land_at": instante do pouso }.
 var _lanes: Array = []
@@ -61,8 +62,16 @@ func _setup(def: BarrageDef, owner: Node2D) -> void:
 	_ground_y = owner.global_position.y + def.ground_offset_y
 	_next_spawn_at = def.start_delay
 
-	if not def.meteor_fx:
-		push_warning("BarrageController: BarrageDef sem meteor_fx — nenhum meteoro será emitido.")
+	if def.meteor_object:
+		_projectile_scene = load(def.meteor_object.scene_path) as PackedScene
+		if not _projectile_scene:
+			push_warning("BarrageController: não consegui carregar a cena do meteor_object: %s" % def.meteor_object.scene_path)
+	if not _projectile_scene and not def.meteor_fx:
+		push_warning("BarrageController: BarrageDef sem meteor_object nem meteor_fx — nenhum meteoro será emitido.")
+
+	# O boss rastreia o controller: reset_for_retry() o libera junto com os projéteis.
+	if owner.has_method("bind_spawned_object"):
+		owner.bind_spawned_object(self)
 
 	if def.preamble_fx and def.start_delay > 0.0:
 		_preamble_anchor = ParticleFX.spawn_continuous(def.preamble_fx, owner.global_position, owner)
@@ -109,9 +118,28 @@ func _try_spawn() -> void:
 	var spawn_pos := Vector2(x, _ground_y) - _dir * travel
 	var lifetime := travel / maxf(_def.speed, 1.0)
 
-	ParticleFX.spawn_exact(_def.meteor_fx, spawn_pos, _dir, maxf(_def.speed, 1.0), lifetime)
+	var speed := maxf(_def.speed, 1.0)
+	if _projectile_scene:
+		_spawn_projectile(spawn_pos, speed, lifetime)
+	else:
+		ParticleFX.spawn_exact(_def.meteor_fx, spawn_pos, _dir, speed, lifetime)
 	_lanes.append({"x": x, "land_at": _elapsed + lifetime})
 	_spawned += 1
+
+
+## Projétil real: mesma lane, mesma direção, mesma velocidade do visual.
+func _spawn_projectile(pos: Vector2, speed: float, lifetime: float) -> void:
+	var node := _projectile_scene.instantiate() as Node2D
+	if not node:
+		return
+	get_tree().current_scene.add_child(node)
+	node.global_position = pos
+	if node.has_method("fire"):
+		node.fire(_dir, speed, lifetime + _def.landing_margin)
+	else:
+		push_warning("BarrageController: a cena do projétil não tem fire(direction, speed, lifetime).")
+	if _owner_node.has_method("bind_spawned_object"):
+		_owner_node.bind_spawned_object(node, _def.meteor_object)
 
 
 ## Sorteia um X de pouso que respeite todas as regras. NAN = nenhum encontrado.
@@ -155,7 +183,7 @@ func _prune_lanes() -> void:
 # ── Estado ───────────────────────────────────────────────────
 
 func _spawn_window_open() -> bool:
-	if not _def.meteor_fx:
+	if not _projectile_scene and not _def.meteor_fx:
 		return false
 	if _def.max_total > 0 and _spawned >= _def.max_total:
 		return false

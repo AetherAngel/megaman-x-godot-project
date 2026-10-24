@@ -488,22 +488,29 @@ func _spawn_object(obj: SpawnableObject) -> Node2D:
 	# sempre a direção de MUNDO, nunca o offset_flip.
 	if instance.has_method("launch"):
 		instance.launch(world_dir)
-	# Se o objeto tem um HitComponent, liga-o ao sistema de hit com os dados
-	# deste SpawnableObject. O tipo de dano usa a mesma string da damage_tag.
-	var hit_component := instance.get_node_or_null("HitComponent") as HitComponent
-	if hit_component:
-		hit_component.attacker       = self
-		hit_component.damage         = obj.damage
-		hit_component.damage_tag     = obj.damage_tag
-		hit_component.damage_type_id = StringName(obj.damage_tag)
+	bind_spawned_object(instance, obj)
 	if obj.lifetime > 0.0:
 		get_tree().create_timer(obj.lifetime).timeout.connect(instance.queue_free)
 	if obj.spawn_fx:
 		ParticleFX.spawn_at(obj.spawn_fx, spawn_pos)
+	return instance
+
+
+## Liga um objeto recém-instanciado ao sistema de hit (se `obj` for passado e o objeto tiver
+## um HitComponent) e ao reset_for_retry(), que o limpa. Usado por _spawn_object() e por quem
+## spawna objetos por conta própria (ex: BarrageController). O tipo de dano usa a mesma
+## string da damage_tag.
+func bind_spawned_object(instance: Node2D, obj: SpawnableObject = null) -> void:
+	if obj:
+		var hit_component := instance.get_node_or_null("HitComponent") as HitComponent
+		if hit_component:
+			hit_component.attacker       = self
+			hit_component.damage         = obj.damage
+			hit_component.damage_tag     = obj.damage_tag
+			hit_component.damage_type_id = StringName(obj.damage_tag)
 	# Rastreia para o reset_for_retry() poder limpar (descarta os já liberados).
 	_spawned_objects = _spawned_objects.filter(func(o): return is_instance_valid(o))
 	_spawned_objects.append(instance)
-	return instance
 
 
 func debug_force_phase(index: int) -> void:
