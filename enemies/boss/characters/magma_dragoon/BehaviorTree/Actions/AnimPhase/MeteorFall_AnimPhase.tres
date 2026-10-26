@@ -29,6 +29,8 @@ script = ExtResource("6_barr")
 start_delay = 4.5
 duration = 10.0
 spawn_interval = 0.2
+lane_cooldown = 0.3
+min_spacing = 48.0
 preamble_fx = SubResource("Resource_4khg1")
 meteor_object = ExtResource("7_fbso")
 metadata/_custom_type_script = "uid://buejktiiqgsik"
@@ -40,11 +42,17 @@ type = 2
 fx_resource = SubResource("Resource_bar01")
 metadata/_custom_type_script = "uid://ouu8ril4nkjk"
 
+[sub_resource type="Resource" id="Resource_lq08u"]
+script = ExtResource("1_oh80w")
+type = 3
+value = &"snd_dg_fireblast"
+metadata/_custom_type_script = "uid://ouu8ril4nkjk"
+
 [resource]
 script = ExtResource("5_lpm1p")
 anim_name = &"magma_dragoon_fireshielding"
 exit = 2
 signal_timeout = 16.0
 invulnerable = true
-frame_events = Array[ExtResource("1_oh80w")]([SubResource("Resource_plwj0")])
+frame_events = Array[ExtResource("1_oh80w")]([SubResource("Resource_plwj0"), SubResource("Resource_lq08u")])
 metadata/_custom_type_script = "uid://13j7x4cikp7v"

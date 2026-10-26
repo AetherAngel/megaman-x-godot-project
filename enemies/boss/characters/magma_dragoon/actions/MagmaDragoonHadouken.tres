@@ -20,11 +20,18 @@ type = 2
 fx_resource = ExtResource("4_dt7t3")
 metadata/_custom_type_script = "uid://ouu8ril4nkjk"
 
+[sub_resource type="Resource" id="Resource_gyypb"]
+script = ExtResource("2_t4t80")
+frame = 6
+type = 3
+value = &"snd_dg_hadouken"
+metadata/_custom_type_script = "uid://ouu8ril4nkjk"
+
 [sub_resource type="Resource" id="Resource_pg4rd"]
 script = ExtResource("1_bhmn0")
 anim_name = &"magma_dragoon_hadouken_standing"
 exit = 1
-frame_events = Array[ExtResource("2_t4t80")]([SubResource("Resource_dt7t3"), SubResource("Resource_prkk4")])
+frame_events = Array[ExtResource("2_t4t80")]([SubResource("Resource_dt7t3"), SubResource("Resource_prkk4"), SubResource("Resource_gyypb")])
 metadata/_custom_type_script = "uid://13j7x4cikp7v"
 
 [resource]

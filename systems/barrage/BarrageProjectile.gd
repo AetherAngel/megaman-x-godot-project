@@ -13,26 +13,41 @@ extends Area2D
 ## e pode estar dentro de um teto; sem isso ele sumiria no mesmo instante.
 @export var world_grace_time: float = 0.4
 
+@export_group("Scale")
+## Escala do objeto INTEIRO (visual, hitbox e HitComponent) ao ser disparado e ao chegar ao
+## chão. Mesmo critério do FX (ParticleInstance): scale = lerp(start, end, t), t = tempo
+## decorrido / tempo de voo. Iguais = tamanho constante (sem interpolação).
+## Use escala UNIFORME (x = y): é a que mantém hitbox e visual proporcionais ao girar.
+@export var scale_start: Vector2 = Vector2.ONE
+@export var scale_end: Vector2 = Vector2.ONE
+
 @onready var _sprite: AnimatedSprite2D = get_node_or_null("Sprite") as AnimatedSprite2D
 
 var _velocity: Vector2 = Vector2.ZERO
 var _life_left: float = 0.0
 var _age: float = 0.0
+## Tempo ao longo do qual o scale interpola (o voo até o pouso calculado, não a margem extra).
+var _scale_time: float = 1.0
 
 
 func _ready() -> void:
 	set_physics_process(false)  # só liga quando for disparado (fire)
+	scale = scale_start         # a escala da raiz é controlada por scale_start / scale_end
 	body_entered.connect(_on_body_entered)
 	if _sprite and _sprite.sprite_frames:
 		_sprite.play(_sprite.animation)
 
 
 ## Dispara o projétil. `lifetime` é um teto: normalmente o contato com o chão o remove antes.
-func fire(direction: Vector2, speed: float, lifetime: float) -> void:
+## `flight_time` é o tempo até o pouso calculado, ao longo do qual o scale vai de start a end
+## (padrão: o próprio lifetime).
+func fire(direction: Vector2, speed: float, lifetime: float, flight_time: float = -1.0) -> void:
 	var dir := direction.normalized()
 	_velocity = dir * speed
 	_life_left = lifetime
 	_age = 0.0
+	_scale_time = maxf(flight_time if flight_time > 0.0 else lifetime, 0.001)
+	scale = scale_start
 	rotation = dir.angle() - _art_angle()
 	set_physics_process(true)
 
@@ -41,6 +56,8 @@ func _physics_process(delta: float) -> void:
 	global_position += _velocity * delta
 	_age += delta
 	_life_left -= delta
+	if scale_start != scale_end:
+		scale = scale_start.lerp(scale_end, clampf(_age / _scale_time, 0.0, 1.0))
 	if _life_left <= 0.0:
 		queue_free()
 

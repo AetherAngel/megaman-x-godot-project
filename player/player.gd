@@ -40,7 +40,7 @@ var forced_move_speed: float = 0.0
 @onready var state_machine: StateMachine = $StateMachine
 @onready var wall_ray: RayCast2D = $WallRay
 ## Único CollisionShape2D do corpo; muda de tamanho por perfil (apply_collision_stance).
-@onready var body_collision: CollisionShape2D = $BodyCollision
+@onready var body_collision: CollisionShape2D = get_node_or_null("BodyCollision") as CollisionShape2D
 ## Perfil de colisão aplicado (PlayerCharacterData.Stance). -1 = nenhum ainda.
 var _collision_stance: int = -1
 
@@ -288,6 +288,8 @@ func _setup_character() -> void:
 
 	# Medidas do corpo vêm da ficha. Zera o cache: trocar de personagem muda o tamanho
 	# mesmo que o perfil (em pé) seja o mesmo.
+	if not body_collision:
+		push_error("Player: nó 'BodyCollision' não encontrado. Renomeie o CollisionShape2D do corpo (antes 'CollisionNormal'): sem ele os perfis de colisão (dash, crouch) NÃO funcionam.")
 	_collision_stance = -1
 	apply_collision_stance(PlayerCharacterData.Stance.STAND)
 

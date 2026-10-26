@@ -9,6 +9,8 @@ size = Vector2(23, 21)
 
 [node name="FireBlast" type="Area2D" unique_id=1069394859]
 script = ExtResource("4_bprj")
+scale_start = Vector2(0.5, 0.5)
+scale_end = Vector2(0.5, 0.5)
 light_mask = 0
 visibility_layer = 37
 z_index = 10

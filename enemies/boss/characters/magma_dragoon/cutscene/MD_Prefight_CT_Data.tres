@@ -7,9 +7,11 @@
 [ext_resource type="Resource" uid="uid://cji7x7sd7byfw" path="res://enemies/boss/characters/magma_dragoon/cutscene/MD_InteractionToPlayer_Battle.tres" id="4_uxom7"]
 [ext_resource type="Script" uid="uid://ivpx7ytxrnkj" path="res://resources/PhysicalMovePhase.gd" id="4_w048k"]
 [ext_resource type="Resource" uid="uid://b8b4a4b6a6l2m" path="res://enemies/boss/characters/magma_dragoon/cutscene/MD_Intro2.tres" id="5_16s3x"]
+[ext_resource type="Script" uid="uid://bh6m6cpgdsuoe" path="res://Cutscene and Talk system/CutsceneEffects.gd" id="5_fifrr"]
 [ext_resource type="Script" uid="uid://dis8iifq507di" path="res://resources/PhysicalMoveDef.gd" id="5_kat8h"]
 [ext_resource type="Script" uid="uid://bfv7qiwsjmeyl" path="res://Cutscene and Talk system/steps/StepPhysicalMove.gd" id="6_fifrr"]
 [ext_resource type="Script" uid="uid://dn13wwlso37we" path="res://Cutscene and Talk system/steps/StepAnimation.gd" id="7_inukb"]
+[ext_resource type="Script" uid="uid://dy6rjhdvcg1s7" path="res://Cutscene and Talk system/steps/StepEffects.gd" id="10_inukb"]
 
 [sub_resource type="Resource" id="Resource_fifrr"]
 script = ExtResource("3_kat8h")
@@ -22,7 +24,7 @@ set_velocity = true
 velocity = Vector2(0, 15)
 gravity_scale = 1.5
 exit = 2
-duration = 0.2
+duration = 0.05
 metadata/_custom_type_script = "uid://ivpx7ytxrnkj"
 
 [sub_resource type="Resource" id="Resource_8f25m"]
@@ -41,9 +43,20 @@ script = ExtResource("7_inukb")
 target_group = "sprite_boss"
 animation = "magma_dragoon_intro_falling"
 wait_to_finish = false
-step_total_duration = 1.0
+step_total_duration = 0.4
 physical_move = SubResource("Resource_r2l5a")
 metadata/_custom_type_script = "uid://dn13wwlso37we"
+
+[sub_resource type="Resource" id="Resource_kkywm"]
+script = ExtResource("5_fifrr")
+sfx_id = "snd_landing"
+metadata/_custom_type_script = "uid://bh6m6cpgdsuoe"
+
+[sub_resource type="Resource" id="Resource_edmh2"]
+script = ExtResource("10_inukb")
+effects = SubResource("Resource_kkywm")
+duration = 0.1
+metadata/_custom_type_script = "uid://dy6rjhdvcg1s7"
 
 [sub_resource type="Resource" id="Resource_w048k"]
 script = ExtResource("7_inukb")
@@ -53,6 +66,6 @@ metadata/_custom_type_script = "uid://dn13wwlso37we"
 
 [resource]
 script = ExtResource("1_c5jfb")
-steps = Array[ExtResource("2_atrh0")]([SubResource("Resource_fifrr"), ExtResource("3_orbm7"), SubResource("Resource_0yys5"), SubResource("Resource_w048k"), ExtResource("4_uxom7"), ExtResource("5_16s3x")])
+steps = Array[ExtResource("2_atrh0")]([SubResource("Resource_fifrr"), ExtResource("3_orbm7"), SubResource("Resource_0yys5"), SubResource("Resource_edmh2"), SubResource("Resource_w048k"), ExtResource("4_uxom7"), ExtResource("5_16s3x")])
 can_skip = false
 metadata/_custom_type_script = "uid://bm6eb134mii7m"

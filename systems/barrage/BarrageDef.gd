@@ -50,13 +50,12 @@ extends Resource
 @export var lane_width: float = 24.0
 ## Segundos de espera, contados do POUSO, antes de reutilizar um corredor.
 @export var lane_cooldown: float = 1.0
-## Distância horizontal mínima entre meteoros ATIVOS (px).
-## CUIDADO: a diagonal VARRE o corpo. Para um alvo de largura w e altura h, o meteoro
-## (largura m, ângulo a) cobre horizontalmente  w + m + h·tan(a)  — bem mais que a largura.
-## Valores padrão validados por simulação de esquiva (jogador a 180 px/s, percepção
-## atrasada 0,3 s, meteoro de até 40 px, Zero em pé 26x42 como pior caso): 100% das
-## saraivadas sem acerto inevitável. Com 64 px / 45° o pior caso caía para 83%.
-## Alternativa mais inclinada: ângulo 45° com min_spacing 112.
+## Distância HORIZONTAL entre os CENTROS das trajetórias de meteoros ATIVOS (px) — isto é, entre
+## os X de pouso (e, por serem paralelas, também entre os pontos de nascimento). NÃO é a folga
+## livre entre as hitboxes nem a distância perpendicular:
+##   folga horizontal entre hitboxes = min_spacing − T / cos(a)      (T = espessura da hitbox)
+##   distância perpendicular         = min_spacing · cos(a)
+## NÃO depende do scale do meteoro. Fórmulas, tabelas e como recalcular: ver README.md.
 @export var min_spacing: float = 96.0
 ## Margem das bordas da câmera onde nenhum meteoro pousa.
 @export var edge_margin: float = 16.0

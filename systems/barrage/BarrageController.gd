@@ -135,7 +135,7 @@ func _spawn_projectile(pos: Vector2, speed: float, lifetime: float) -> void:
 	get_tree().current_scene.add_child(node)
 	node.global_position = pos
 	if node.has_method("fire"):
-		node.fire(_dir, speed, lifetime + _def.landing_margin)
+		node.fire(_dir, speed, lifetime + _def.landing_margin, lifetime)
 	else:
 		push_warning("BarrageController: a cena do projétil não tem fire(direction, speed, lifetime).")
 	if _owner_node.has_method("bind_spawned_object"):

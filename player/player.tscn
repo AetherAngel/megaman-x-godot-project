@@ -45,9 +45,8 @@
 [ext_resource type="Script" uid="uid://db640w6e7h8nu" path="res://systems/hp/DamageHandler.gd" id="40_dx5ib"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sh265"]
+resource_local_to_scene = true
 size = Vector2(20, 32)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4flbx"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_onrkg"]
 animations = [{
@@ -98,13 +97,9 @@ slide_on_ceiling = false
 script = ExtResource("1_boad6")
 invuln_on_hit = 2.0
 
-[node name="CollisionNormal" type="CollisionShape2D" parent="." unique_id=471860809]
+[node name="BodyCollision" type="CollisionShape2D" parent="." unique_id=471860809]
 position = Vector2(0, 6)
 shape = SubResource("RectangleShape2D_sh265")
-
-[node name="CollisionDash" type="CollisionShape2D" parent="." unique_id=308051907]
-shape = SubResource("RectangleShape2D_4flbx")
-disabled = true
 
 [node name="VisualSequencePlayer" type="Node" parent="." unique_id=2144864865]
 script = ExtResource("23_knn7v")

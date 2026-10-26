@@ -26,11 +26,18 @@ type = 2
 fx_resource = ExtResource("4_e55tp")
 metadata/_custom_type_script = "uid://ouu8ril4nkjk"
 
+[sub_resource type="Resource" id="Resource_b6ocj"]
+script = ExtResource("2_sgryt")
+frame = 3
+type = 3
+value = &"snd_dg_hadouken"
+metadata/_custom_type_script = "uid://ouu8ril4nkjk"
+
 [sub_resource type="Resource" id="Resource_pg4rd"]
 script = ExtResource("1_b6ocj")
 anim_name = &"magma_dragoon_hadouken_crouching"
 exit = 1
-frame_events = Array[ExtResource("2_sgryt")]([SubResource("Resource_dt7t3"), SubResource("Resource_prkk4")])
+frame_events = Array[ExtResource("2_sgryt")]([SubResource("Resource_dt7t3"), SubResource("Resource_prkk4"), SubResource("Resource_b6ocj")])
 metadata/_custom_type_script = "uid://13j7x4cikp7v"
 
 [resource]
