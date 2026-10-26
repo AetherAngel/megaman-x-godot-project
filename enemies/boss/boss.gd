@@ -30,6 +30,12 @@ const FACE_DEAD_ZONE := 4.0
 ## Fase cujo threshold de HP já foi cruzado, mas que só entra em vigor quando o combo
 ## atual terminar (ver _check_phase_transition e select_pattern). -1 = nenhuma.
 var _pending_phase: int = -1
+## Grupo dos nós de chão PERIGOSOS (ex: a TileMapLayer LavaFloor). Ficar sobre eles exige
+## recuperação (ver is_landing_safe / prepare_recovery).
+const UNSAFE_GROUND_GROUP := &"unsafe_ground"
+## Posição de onde o ataque atual começou, em chão seguro — só para a saída segura.
+var _recovery_anchor: Vector2 = Vector2.ZERO
+var _has_recovery_anchor: bool = false
 ## Memória da seleção de combos (reiniciada a cada fase e no retry).
 var _sequence_index: int = 0
 var _last_pattern: AttackPattern = null
@@ -125,6 +131,7 @@ func reset_for_retry() -> void:
 	# Estado lógico: fase 0, HP cheio, sem i-frames.
 	current_phase = 0
 	_pending_phase = -1
+	_has_recovery_anchor = false
 	_sequence_index = 0
 	_last_pattern = null
 	_phase_cooldown = 0.0
@@ -330,6 +337,59 @@ func set_facing(right: bool) -> void:
 func get_facing_flip() -> int:
 	var native_right := data.native_facing_right if data else true
 	return -1 if facing_right != native_right else 1
+
+
+# ─────────────────────────────────────────────────────────────
+# POUSO E RECUPERAÇÃO — chamados pela BossAction (check_landing / recovery_phases)
+# ─────────────────────────────────────────────────────────────
+
+## true se o boss está no chão E esse chão não é do grupo UNSAFE_GROUND_GROUP. Decide pelo
+## collider do chão (física real), nunca pela altura: o fosso e a plataforma da arena
+## compartilham a mesma collision layer, e só o grupo as diferencia.
+func is_landing_safe() -> bool:
+	if not is_on_floor():
+		return false
+	return _is_safe_ground(get_floor_collider())
+
+
+func _is_safe_ground(collider: Object) -> bool:
+	return collider != null and not (collider is Node and (collider as Node).is_in_group(UNSAFE_GROUND_GROUP))
+
+
+## Guarda a posição atual como "último ponto seguro" (se ela for mesmo segura).
+func mark_recovery_anchor() -> void:
+	if is_landing_safe():
+		_recovery_anchor = global_position
+		_has_recovery_anchor = true
+
+
+## Escolhe o lado do pulo de recuperação e vira o boss para ele. Testa primeiro o lado do
+## jogador (ele está na arena) e depois o oposto; um lado só vale se a PREDIÇÃO do pulo (mesma
+## física do jogo, ver Actor.predict_physical_move) POUSA em chão seguro. Uma parede no meio
+## do caminho não é checada à parte: se ela impede a saída, o corpo desliza de volta e pousa
+## no fosso — e aí o collider do pouso já reprova o lado. false = nenhum lado serve.
+func prepare_recovery(move_def: PhysicalMoveDef) -> bool:
+	var native_right := data.native_facing_right if data else true
+	var player := get_tree().get_first_node_in_group("player") as Node2D
+	var prefer_right := (player.global_position.x >= global_position.x) if player else facing_right
+	for right in [prefer_right, not prefer_right]:
+		var flip := 1 if right == native_right else -1
+		var r := predict_physical_move(move_def, flip)
+		if r.landed and _is_safe_ground(r.floor_collider):
+			set_facing(right)
+			return true
+	return false
+
+
+## Saída segura quando a recuperação não é possível: volta ao último ponto seguro, em vez de
+## deixar o boss atacando dentro do fosso. Sem ponto guardado, só avisa.
+func recovery_failsafe() -> void:
+	if not _has_recovery_anchor:
+		push_warning("Boss: recuperação impossível e nenhum ponto seguro guardado.")
+		return
+	stop_physical_move()
+	velocity = Vector2.ZERO
+	global_position = _recovery_anchor
 
 
 ## true se uma fase já foi "ganha" por HP mas ainda não entrou em vigor.

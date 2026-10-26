@@ -20,6 +20,7 @@ enum ExitOn {
 	ON_TIMER,   ## avança após exit_timer segundos (útil para loops cronometrados)
 	ON_SIGNAL,  ## avança quando BossAction.advance_phase() for chamado manualmente
 				## use para: aguardar FX externo, aguardar condição complexa do boss
+	ON_MOVE_END,  ## avança quando o physical_move desta fase termina (ex: pulo até pousar)
 }
 
 @export_group("Animation")
@@ -34,6 +35,20 @@ enum ExitOn {
 ## Se o signal não chegar em signal_timeout segundos, avança forçado.
 ## Evita que o boss trave para sempre por um bug de sincronização.
 @export var signal_timeout: float = 5.0
+
+@export_group("Movement")
+## Movimento físico executado ao entrar nesta fase (reaproveita Actor.start_physical_move:
+## mesma gravidade, colisões e condições de saída TIMER / APEX / LANDING). Use
+## exit = ON_MOVE_END para a fase durar até o movimento terminar. A animação vem DESTE
+## AnimPhase — o campo `animation` das fases do movimento não é usado no combate.
+## O movimento só começa/termina aqui; quem decide o próximo ataque continua sendo a BT.
+@export var physical_move: PhysicalMoveDef
+
+@export_group("Landing")
+## Se true, ao TERMINAR esta fase o boss verifica se pousou em chão seguro
+## (Boss.is_landing_safe). Se não, executa as recovery_phases da BossAction e só depois
+## segue para a próxima fase — o resto do combo só continua depois de voltar à arena.
+@export var check_landing: bool = false
 
 @export_group("Invulnerability")
 ## Se true, o ator fica invulnerável enquanto ESTA fase de animação durar.

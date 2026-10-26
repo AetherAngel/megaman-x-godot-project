@@ -24,6 +24,7 @@ extends Node2D
 ## tem nenhuma relação com quando o próximo elo é criado.
 
 signal ready_to_spawn_next
+signal leader_disappeared
 
 var leader:            Node2D  = null
 var delay:             float   = 0.08  # atraso de POSIÇÃO (espaçamento) — FXChainDef.segment_interval
@@ -46,6 +47,10 @@ var _facing_mirrored: bool = false  # true quando a cabeça diverge da orientaç
 var _last_watch_progress:   float = 0.0
 var _last_watch_loop_count: int   = 0
 var _toggled_once:          bool  = false
+var _leader_disappearance_reported: bool = false
+# Movimento após o desaparecimento do leader.
+var _last_leader_velocity: Vector2 = Vector2.ZERO
+var _moving_without_leader: bool = false
 
 
 func setup(
@@ -117,9 +122,32 @@ func _process(delta: float) -> void:
 		# só congelo aqui. Quem decide quando eu realmente sumo é o
 		# FXChainController, via remove_segment(), no momento certo do dominó
 		# (ou o max_lifetime acima, se configurado).
+		if not _leader_disappearance_reported:
+			_leader_disappearance_reported = true
+			leader_disappeared.emit()
+
+		# Sem a opção explicitamente habilitada, mantém o comportamento
+		# original: o segmento congela e aguarda a regra de destruição
+		# existente, como o dominó ou max_lifetime.
+		if not (_behavior and _behavior.continue_moving_after_leader_disappears):
+			return
+
+		# A transição acontece uma única vez. A posição atual do segmento
+		# é preservada como origem do movimento independente; não usamos
+		# o histórico para reposicioná-lo após a perda do leader.
+		_moving_without_leader = true
+
+		# Sem velocidade observável, não inventamos movimento.
+		if _last_leader_velocity.length_squared() <= 0.0001:
+			return
+
+		# Continua a trajetória usando a última velocidade não nula
+		# registrada enquanto o leader ainda existia.
+		global_position += _last_leader_velocity * delta
 		return
 
 	_history.append({"t": _elapsed, "pos": leader.global_position})
+	_update_last_leader_velocity()
 	_trim_history()
 
 	# Se nasceu invisível e nada mais controla a visibilidade dele, revela
@@ -260,11 +288,13 @@ func get_loop_count() -> int:
 	return int(_loop_elapsed / cycle)
 
 
-## Aplica flip horizontal no sprite deste segmento. Chamado pelo
-## FXChainController quando FXChainDef.flip_mode != NONE.
+## Aplica o flip horizontal e registra o resultado para diagnóstico.
+## Remova os prints após confirmar se o valor chega corretamente.
 func set_flip(flip_h: bool) -> void:
-	if _sprite:
-		_sprite.flip_h = flip_h
+	if not is_instance_valid(_sprite):
+		return
+
+	_sprite.flip_h = not flip_h
 
 
 ## Espelha offset.x/body_offset.x quando a cabeça diverge da orientação
@@ -290,3 +320,24 @@ func get_movement_direction() -> float:
 ## efeito dominó (ou pelo próprio segmento, via max_lifetime).
 func remove_segment() -> void:
 	queue_free()
+
+
+
+
+func _update_last_leader_velocity() -> void:
+	if _history.size() < 2:
+		return
+
+	var previous: Dictionary = _history[_history.size() - 2]
+	var latest: Dictionary = _history[_history.size() - 1]
+
+	var elapsed_time: float = latest["t"] - previous["t"]
+	if elapsed_time <= 0.0001:
+		return
+
+	var displacement: Vector2 = latest["pos"] - previous["pos"]
+
+	# Só atualiza quando existe movimento observável.
+	# Se o leader parar, preservamos a última velocidade não nula.
+	if displacement.length_squared() > 0.0001:
+		_last_leader_velocity = displacement / elapsed_time

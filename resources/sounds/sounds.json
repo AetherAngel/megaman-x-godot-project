@@ -29,6 +29,9 @@
 	"snd_landing": 		{ "file": "dg_chakuchi.wav",		  "volume_db": -10.0, "pitch": 0.7},
 	"snd_dg_hadouken": 		{ "file": "dg_hadouken.wav",		  "volume_db": -20.0, "pitch": 1.0},
 	"snd_dg_fireblast": 		{ "file": "dg_firebullet.wav",		  "volume_db": -20.0, "pitch": 1.0},
+	"snd_dg_fire_sfx": 		{ "file": "dg_fire_sfx.wav",		  "volume_db": -20.0, "pitch": 1.0},
+	"snd_dg_nosedive_jumping": 		{ "file": "dg_nosedive_jumping.wav",		  "volume_db": -20.0, "pitch": 1.0},
+	"snd_dg_nosedive_falling": 		{ "file": "dg_nosedive_falling.wav",		  "volume_db": -20.0, "pitch": 1.1},
 	"snd_bossdoorclose": 		{ "file": "snd_bossdoorclose.wav",		  "volume_db": -10.0, "pitch": 1.0}
   },
   "stage_music": {

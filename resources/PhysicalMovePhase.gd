@@ -17,6 +17,11 @@ enum ExitOn { TIMER, APEX, LANDING }
 ## A fase ainda sai pelo ExitOn ou pelo stop_physical_move (timer chefe).
 @export var continuous: bool = false
 @export var velocity: Vector2 = Vector2.ZERO
+## Se true, o X de `velocity` é espelhado quando o ator está virado para o lado OPOSTO ao da
+## orientação nativa da arte (Actor.get_facing_flip()). Autore a velocidade na orientação
+## nativa: o mesmo movimento serve para os dois lados (ex: NoseDive, pulo de volta à arena).
+## Desligado (padrão) = velocidade absoluta, como sempre foi (ex: intro do Magma Dragoon).
+@export var mirror_with_facing: bool = false
 ## Multiplica a gravidade normal do Actor durante esta fase.
 ## 1.0 = igual sempre foi. 0.0 = suspensa (ex: "ficar parado no ar").
 ## >1.0 = mais pesada que o normal (ex: arrasto na subida, ainda

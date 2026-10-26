@@ -58,6 +58,10 @@ func _spawn_segment(index: int, leader: Node2D) -> void:
 	add_child(segment)
 	segment.setup(_def.segment_def, leader, _def.segment_interval, visual, _def.body_offset, behavior, _def.spawn_interval)
 	_segments.append(segment)
+	# Só o primeiro segmento segue a cabeça original.
+	# Os demais seguem outros segmentos da cadeia.
+	if index == 0:
+		segment.leader_disappeared.connect(_on_head_disappeared)
 
 	if index + 1 < _def.segment_count:
 		segment.ready_to_spawn_next.connect(_on_segment_ready_to_spawn_next.bind(segment, index + 1))
@@ -91,6 +95,8 @@ func _update_flip() -> void:
 	# Assume arte desenhada olhando pra direita por padrão. Se o seu
 	# sprite for o contrário, inverte aqui.
 	var flip_h: bool = moving_right
+			
+
 	for i in _segments.size():
 		var segment := _segments[i]
 		if not is_instance_valid(segment):
@@ -123,13 +129,53 @@ func on_hit() -> void:
 	_run_domino()
 
 
+## Destrói os segmentos em sequência, respeitando o intervalo configurado.
+## A ordem pode ser invertida através de FXChainDef.domino_forward.
 func _run_domino() -> void:
-	for i in range(_segments.size() - 1, -1, -1):
+	var count: int = _segments.size()
+
+	# Define o índice inicial, o limite e o sentido da iteração.
+	var start: int = 0 if _def.domino_forward else count - 1
+	var end: int = count if _def.domino_forward else -1
+	var step: int = 1 if _def.domino_forward else -1
+
+	for i in range(start, end, step):
 		var segment := _segments[i]
+
 		if is_instance_valid(segment):
 			segment.remove_segment()
-		if i > 0:
+
+		# Aguarda entre remoções, mas não depois da última.
+		if i != (end - step):
 			await get_tree().create_timer(_def.domino_delay).timeout
+
+			# Interrompe se o controlador sair da árvore durante a espera.
 			if not is_inside_tree():
 				return
+
+	queue_free()
+
+
+
+func _on_head_disappeared() -> void:
+	if _chain_stopped or not _def:
+		return
+
+	var behavior: FXChainSegmentBehavior = null
+	if not _def.segment_behaviors.is_empty():
+		behavior = _def.segment_behaviors[0]
+
+	if not behavior or not behavior.destroy_when_leader_disappears:
+		return
+
+	if _def.domino_delay > 0.0:
+		on_hit()
+		return
+
+	_chain_stopped = true
+
+	for segment in _segments:
+		if is_instance_valid(segment):
+			segment.remove_segment()
+
 	queue_free()

@@ -62,31 +62,3 @@ auto_report = true
 report_mode = 1
 recheck_interval = 0.05
 metadata/_custom_type_script = "uid://b5hlcaqkwh84f"
-
-[node name="Sprite Animation" type="AnimatedSprite2D" parent="." unique_id=633111683]
-sprite_frames = SubResource("SpriteFrames_apir7")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.30627567
-centered = false
-
-[node name="@AnimatedSprite2D@39837" type="AnimatedSprite2D" parent="." unique_id=610690897]
-sprite_frames = SubResource("SpriteFrames_apir7")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.94999284
-centered = false
-
-[node name="@AnimatedSprite2D@18968" type="AnimatedSprite2D" parent="." unique_id=981973492]
-sprite_frames = SubResource("SpriteFrames_apir7")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.8784389
-centered = false
-
-[node name="@AnimatedSprite2D@19412" type="AnimatedSprite2D" parent="." unique_id=992979569]
-sprite_frames = SubResource("SpriteFrames_apir7")
-animation = &"flowing"
-autoplay = "flowing"
-frame_progress = 0.95320773
-centered = false

@@ -72,3 +72,6 @@ enum FlipMode {
 ## dominó, disparado por FXChainController.on_hit(). O Segmento 1 (mais
 ## perto da cabeça) é removido por último.
 @export var domino_delay: float = 0.1
+## Define se a destruição do dominó começa pelo primeiro segmento.
+## False preserva a ordem atual, do último para o primeiro.
+@export var domino_forward: bool = false

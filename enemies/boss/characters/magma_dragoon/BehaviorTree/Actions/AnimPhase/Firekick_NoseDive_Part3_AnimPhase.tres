@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="AnimPhase" format=3 uid="uid://latu328jftxc"]
+
+[ext_resource type="Script" uid="uid://ouu8ril4nkjk" path="res://systems/bt/actions/FrameEvent.gd" id="1_o0nej"]
+[ext_resource type="Script" uid="uid://ivpx7ytxrnkj" path="res://resources/PhysicalMovePhase.gd" id="2_7x1ow"]
+[ext_resource type="Script" uid="uid://dis8iifq507di" path="res://resources/PhysicalMoveDef.gd" id="3_mig00"]
+[ext_resource type="Script" uid="uid://13j7x4cikp7v" path="res://systems/bt/actions/AnimPhase.gd" id="4_ahv87"]
+
+[sub_resource type="Resource" id="Resource_o0nej"]
+script = ExtResource("1_o0nej")
+frame = 1
+type = 3
+value = &"snd_dg_nosedive_falling"
+metadata/_custom_type_script = "uid://ouu8ril4nkjk"
+
+[sub_resource type="Resource" id="Resource_v240m"]
+script = ExtResource("2_7x1ow")
+gravity_scale = 0.0
+duration = 0.2
+metadata/_custom_type_script = "uid://ivpx7ytxrnkj"
+
+[sub_resource type="Resource" id="Resource_sn58l"]
+script = ExtResource("3_mig00")
+phases = Array[ExtResource("2_7x1ow")]([SubResource("Resource_v240m")])
+metadata/_custom_type_script = "uid://dis8iifq507di"
+
+[resource]
+script = ExtResource("4_ahv87")
+anim_name = &"magma_dragoon_firekick_apextokick"
+physical_move = SubResource("Resource_sn58l")
+frame_events = Array[ExtResource("1_o0nej")]([SubResource("Resource_o0nej")])
+metadata/_custom_type_script = "uid://13j7x4cikp7v"

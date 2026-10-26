@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="AnimPhase" format=3 uid="uid://dkf2p4coeti06"]
+
+[ext_resource type="Script" uid="uid://ouu8ril4nkjk" path="res://systems/bt/actions/FrameEvent.gd" id="1_ce8sn"]
+[ext_resource type="Script" uid="uid://ivpx7ytxrnkj" path="res://resources/PhysicalMovePhase.gd" id="2_rrex8"]
+[ext_resource type="Script" uid="uid://dis8iifq507di" path="res://resources/PhysicalMoveDef.gd" id="3_lbuje"]
+[ext_resource type="Script" uid="uid://13j7x4cikp7v" path="res://systems/bt/actions/AnimPhase.gd" id="4_0ctbd"]
+
+[sub_resource type="Resource" id="Resource_gwmkm"]
+script = ExtResource("2_rrex8")
+set_velocity = true
+velocity = Vector2(-180, -380)
+mirror_with_facing = true
+exit = 1
+metadata/_custom_type_script = "uid://ivpx7ytxrnkj"
+
+[sub_resource type="Resource" id="Resource_yqfg4"]
+script = ExtResource("3_lbuje")
+phases = Array[ExtResource("2_rrex8")]([SubResource("Resource_gwmkm")])
+metadata/_custom_type_script = "uid://dis8iifq507di"
+
+[resource]
+script = ExtResource("4_0ctbd")
+anim_name = &"magma_dragoon_firekick_jumptoapex"
+exit = 3
+physical_move = SubResource("Resource_yqfg4")
+metadata/_custom_type_script = "uid://13j7x4cikp7v"

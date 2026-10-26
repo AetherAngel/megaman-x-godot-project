@@ -1,0 +1,86 @@
+[gd_resource type="Resource" script_class="AttackPattern" format=3 uid="uid://cns0l5hudxpu"]
+
+[ext_resource type="Script" uid="uid://dbtctnct07w57" path="res://systems/bt/actions/BossAction.gd" id="1_23fh0"]
+[ext_resource type="Script" uid="uid://13j7x4cikp7v" path="res://systems/bt/actions/AnimPhase.gd" id="2_px0pm"]
+[ext_resource type="Script" uid="uid://ouu8ril4nkjk" path="res://systems/bt/actions/FrameEvent.gd" id="3_12a6x"]
+[ext_resource type="Script" uid="uid://cuxhkrb0626y" path="res://particlesystem/resources/FXChainDef.gd" id="4_bhxrs"]
+[ext_resource type="Resource" uid="uid://br5ivcpi50n40" path="res://enemies/boss/characters/magma_dragoon/Projectiles/FireBlastSpawnObject_2.tres" id="4_px0pm"]
+[ext_resource type="Script" uid="uid://cvu2tawmdbxh0" path="res://particlesystem/resources/FXChainSegmentBehavior.gd" id="5_rpriy"]
+[ext_resource type="Script" uid="uid://b8dec6vwih6r" path="res://particlesystem/resources/FXChainSegmentDef.gd" id="6_yxald"]
+[ext_resource type="SpriteFrames" uid="uid://crd2vxirucipb" path="res://resources/animations/spr_magma_dragoon_shot1.tres" id="7_bm5df"]
+[ext_resource type="Script" uid="uid://c5ury7kcfbi3o" path="res://particlesystem/resources/FXChainSegmentVisual.gd" id="8_27w1n"]
+[ext_resource type="Script" uid="uid://j3pj4beqbcci" path="res://enemies/boss/data/attackpattern.gd" id="9_kachw"]
+
+[sub_resource type="Resource" id="Resource_rpriy"]
+script = ExtResource("3_12a6x")
+frame = 3
+type = 4
+spawn_object = ExtResource("4_px0pm")
+metadata/_custom_type_script = "uid://ouu8ril4nkjk"
+
+[sub_resource type="Resource" id="Resource_px0pm"]
+script = ExtResource("5_rpriy")
+destroy_when_leader_disappears = true
+continue_moving_after_leader_disappears = true
+metadata/_custom_type_script = "uid://cvu2tawmdbxh0"
+
+[sub_resource type="Resource" id="Resource_e2utt"]
+script = ExtResource("6_yxald")
+sprite_frames = ExtResource("7_bm5df")
+animation = "magma_dragoon_shot_loop"
+segment_scale = Vector2(0.9, 0.9)
+z_index = 20
+metadata/_custom_type_script = "uid://b8dec6vwih6r"
+
+[sub_resource type="Resource" id="Resource_2n5e1"]
+script = ExtResource("4_bhxrs")
+segment_def = SubResource("Resource_e2utt")
+segment_count = 8
+segment_interval = 0.2
+spawn_interval = 0.3
+spawn_delay = 0.0
+flip_mode = 1
+segment_behaviors = Array[ExtResource("5_rpriy")]([SubResource("Resource_px0pm"), SubResource("Resource_px0pm"), SubResource("Resource_px0pm"), SubResource("Resource_px0pm"), SubResource("Resource_px0pm"), SubResource("Resource_px0pm"), SubResource("Resource_px0pm"), SubResource("Resource_px0pm")])
+domino_delay = 0.5
+domino_forward = true
+metadata/_custom_type_script = "uid://cuxhkrb0626y"
+
+[sub_resource type="Resource" id="Resource_glbh0"]
+script = ExtResource("3_12a6x")
+frame = 3
+type = 2
+fx_resource = SubResource("Resource_2n5e1")
+metadata/_custom_type_script = "uid://ouu8ril4nkjk"
+
+[sub_resource type="Resource" id="Resource_12a6x"]
+script = ExtResource("3_12a6x")
+type = 3
+value = &"snd_dg_fireblast"
+metadata/_custom_type_script = "uid://ouu8ril4nkjk"
+
+[sub_resource type="Resource" id="Resource_bhxrs"]
+script = ExtResource("3_12a6x")
+frame = 3
+type = 3
+value = &"snd_dg_fire_sfx"
+metadata/_custom_type_script = "uid://ouu8ril4nkjk"
+
+[sub_resource type="Resource" id="Resource_a63ec"]
+script = ExtResource("2_px0pm")
+anim_name = &"magma_dragoon_flamethrower"
+exit = 1
+exit_timer = 8.0
+signal_timeout = 8.0
+frame_events = Array[ExtResource("3_12a6x")]([SubResource("Resource_rpriy"), SubResource("Resource_glbh0"), SubResource("Resource_12a6x"), SubResource("Resource_bhxrs")])
+metadata/_custom_type_script = "uid://13j7x4cikp7v"
+
+[sub_resource type="Resource" id="Resource_vehhp"]
+script = ExtResource("1_23fh0")
+phases = Array[ExtResource("2_px0pm")]([SubResource("Resource_a63ec")])
+metadata/_custom_type_script = "uid://dbtctnct07w57"
+
+[resource]
+script = ExtResource("9_kachw")
+pattern_id = "Flame Attack"
+attacks = Array[ExtResource("1_23fh0")]([SubResource("Resource_vehhp")])
+metadata/_custom_type_script = "uid://j3pj4beqbcci"

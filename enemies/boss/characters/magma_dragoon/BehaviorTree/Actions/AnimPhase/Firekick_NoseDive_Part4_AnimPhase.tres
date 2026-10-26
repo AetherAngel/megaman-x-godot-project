@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="AnimPhase" format=3 uid="uid://dv5pe6w4md10t"]
+
+[ext_resource type="Script" uid="uid://ouu8ril4nkjk" path="res://systems/bt/actions/FrameEvent.gd" id="1_6pbde"]
+[ext_resource type="Script" uid="uid://ivpx7ytxrnkj" path="res://resources/PhysicalMovePhase.gd" id="2_1668e"]
+[ext_resource type="Script" uid="uid://dis8iifq507di" path="res://resources/PhysicalMoveDef.gd" id="3_c5nkx"]
+[ext_resource type="Script" uid="uid://13j7x4cikp7v" path="res://systems/bt/actions/AnimPhase.gd" id="4_4xvan"]
+
+[sub_resource type="Resource" id="Resource_fujsv"]
+script = ExtResource("2_1668e")
+set_velocity = true
+velocity = Vector2(-300, -250)
+mirror_with_facing = true
+exit = 2
+metadata/_custom_type_script = "uid://ivpx7ytxrnkj"
+
+[sub_resource type="Resource" id="Resource_2dyrl"]
+script = ExtResource("2_1668e")
+set_velocity = true
+duration = 0.0
+metadata/_custom_type_script = "uid://ivpx7ytxrnkj"
+
+[sub_resource type="Resource" id="Resource_gt5nu"]
+script = ExtResource("3_c5nkx")
+phases = Array[ExtResource("2_1668e")]([SubResource("Resource_fujsv"), SubResource("Resource_2dyrl")])
+metadata/_custom_type_script = "uid://dis8iifq507di"
+
+[resource]
+script = ExtResource("4_4xvan")
+anim_name = &"magma_dragoon_firekick_falling"
+exit = 3
+exit_timer = 3.0
+physical_move = SubResource("Resource_gt5nu")
+check_landing = true
+metadata/_custom_type_script = "uid://13j7x4cikp7v"

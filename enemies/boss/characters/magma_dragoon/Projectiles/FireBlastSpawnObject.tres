@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_c7bli")
 scene_path = "uid://djni0ovheiiu1"
+offset = Vector2(-27, 7)
 lifetime = 15.0
 damage = 4.0
 damage_tag = "fire"

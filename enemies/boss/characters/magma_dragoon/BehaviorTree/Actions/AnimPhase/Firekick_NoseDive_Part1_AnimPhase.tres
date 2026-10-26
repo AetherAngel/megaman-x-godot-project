@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AnimPhase" format=3 uid="uid://c814sym5p3g3e"]
+
+[ext_resource type="Script" uid="uid://ouu8ril4nkjk" path="res://systems/bt/actions/FrameEvent.gd" id="1_hqkc1"]
+[ext_resource type="Script" uid="uid://13j7x4cikp7v" path="res://systems/bt/actions/AnimPhase.gd" id="2_jvles"]
+
+[sub_resource type="Resource" id="Resource_hqkc1"]
+script = ExtResource("1_hqkc1")
+type = 3
+value = &"snd_dg_nosedive_jumping"
+metadata/_custom_type_script = "uid://ouu8ril4nkjk"
+
+[resource]
+script = ExtResource("2_jvles")
+anim_name = &"magma_dragoon_firekick_jump"
+exit_timer = 0.2
+signal_timeout = 1.0
+frame_events = Array[ExtResource("1_hqkc1")]([SubResource("Resource_hqkc1")])
+metadata/_custom_type_script = "uid://13j7x4cikp7v"

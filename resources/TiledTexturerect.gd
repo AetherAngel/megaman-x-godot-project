@@ -45,6 +45,11 @@ enum Direction { UP, DOWN, LEFT, RIGHT }
 ## para nunca confundi-las com o CollisionShape2D original nem com as de outro nó.
 const COPY_META := &"_tiled_collision_copy"
 
+## Marca os sprites (tiles) gerados por este nó (valor = id da instância dona), para
+## limpá-los por meta em vez de depender da lista `_tiles`, que se perde ao recarregar
+## o script ou a cena.
+const TILE_META := &"_tiled_sprite_tile"
+
 var _tiles: Array[AnimatedSprite2D] = []
 var _collision_copies: Array[CollisionShape2D] = []
 
@@ -61,11 +66,8 @@ func _build() -> void:
 	if not is_inside_tree():
 		return
 
-	# Limpa tiles antigos
-	for tile in _tiles:
-		if is_instance_valid(tile):
-			tile.queue_free()
-	_tiles.clear()
+	# Limpa tiles e cópias de colisão antigos
+	_clear_tiles()
 	_clear_collision_copies()
 
 	if not sprite_frames:
@@ -95,6 +97,7 @@ func _build() -> void:
 		sprite.sprite_frames = sprite_frames
 		sprite.animation = anim
 		sprite.centered = false
+		sprite.set_meta(TILE_META, get_instance_id())
 
 		# Forma mais confiável de fazer autoplay
 		if autoplay:
@@ -111,16 +114,30 @@ func _build() -> void:
 		if autoplay:
 			sprite.play()
 
-		# No editor mostra só o primeiro tile
+		# No editor mostra só o primeiro tile.
+		# Sem `owner` de propósito (igual às cópias de colisão): os tiles são regenerados a cada
+		# _build e NÃO devem ser salvos dentro da cena — com owner, cada sessão do editor gravava
+		# mais nós `@AnimatedSprite2D@…` no .tscn, que ninguém mais limpava.
 		if Engine.is_editor_hint():
 			sprite.visible = (i == 0)
-			sprite.owner = get_tree().edited_scene_root
 
 		_tiles.append(sprite)
 
 		# Colisão: o original já é o tile 0, então só copia a partir do tile 1.
 		if shape and i > 0:
 			_add_collision_copy(shape, offset)
+
+
+## Remove os tiles gerados por este nó. Varre os filhos por meta (e não só `_tiles`), assim
+## a limpeza funciona mesmo depois de recarregar o script ou a cena.
+func _clear_tiles() -> void:
+	for tile in _tiles:
+		if is_instance_valid(tile):
+			tile.queue_free()
+	_tiles.clear()
+	for child in get_children():
+		if child.has_meta(TILE_META) and not child.is_queued_for_deletion():
+			child.queue_free()
 
 
 # ── Posição de cada tile ──────────────────────────────────────

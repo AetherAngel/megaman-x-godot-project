@@ -262,20 +262,37 @@ func _process_physical_move(_delta: float) -> void:
 	# ── CONTINUOUS ─────────────────────────────────────────
 	# Mantém a velocity da fase todo frame até ExitOn / stop.
 	if phase.continuous and phase.set_velocity:
-		velocity = phase.velocity
+		velocity = _phase_velocity(phase, get_facing_flip())
 	# ───────────────────────────────────────────────────────
 
-	var should_exit := false
+	if _physical_exit_reached(phase, _physical_move_timer, _apex_was_rising, velocity.y, is_on_floor()):
+		_advance_physical_move()
+
+
+## Condição de saída de uma fase — ponto ÚNICO, usado pelo movimento real e pela predição
+## (predict_physical_move), para os dois nunca divergirem.
+func _physical_exit_reached(phase: PhysicalMovePhase, timer: float, apex_rising: bool, vy: float, on_floor: bool) -> bool:
 	match phase.exit:
 		PhysicalMovePhase.ExitOn.TIMER:
-			should_exit = _physical_move_timer >= phase.duration
+			return timer >= phase.duration
 		PhysicalMovePhase.ExitOn.APEX:
-			should_exit = _apex_was_rising and velocity.y >= 0.0
+			return apex_rising and vy >= 0.0
 		PhysicalMovePhase.ExitOn.LANDING:
-			should_exit = is_on_floor()
+			return on_floor
+	return false
 
-	if should_exit:
-		_advance_physical_move()
+
+## Velocidade de uma fase, com o X espelhado se phase.mirror_with_facing (flip = +1 / -1).
+func _phase_velocity(phase: PhysicalMovePhase, flip: int) -> Vector2:
+	if phase.mirror_with_facing:
+		return Vector2(phase.velocity.x * flip, phase.velocity.y)
+	return phase.velocity
+
+
+## +1 / -1: o quanto o visual está espelhado em relação à arte nativa. O padrão assume arte
+## nativa virada para a DIREITA; quem tem outra convenção (ex: Boss) sobrescreve.
+func get_facing_flip() -> int:
+	return 1 if facing_right else -1
 
 
 func _enter_physical_move_phase(index: int) -> void:
@@ -286,7 +303,7 @@ func _enter_physical_move_phase(index: int) -> void:
 
 	_physical_move_gravity_scale = phase.gravity_scale
 	if phase.set_velocity:
-		velocity = phase.velocity
+		velocity = _phase_velocity(phase, get_facing_flip())
 
 	physical_move_phase_entered.emit(phase)
 
@@ -299,6 +316,102 @@ func _advance_physical_move() -> void:
 		physical_move_finished.emit()
 		return
 	_enter_physical_move_phase(next_index)
+
+
+## Simula, SEM mover o Actor, uma PhysicalMoveDef como ela rodaria agora: mesma gravidade
+## (_apply_gravity), mesmas condições de saída (_physical_exit_reached), mesmo limite de queda
+## e colisões do mundo via test_move. `flip` = fator de espelhamento do lado a testar.
+## Depois que a sequência termina, continua em queda livre até pousar (como o jogo faria).
+## Parede e teto fazem o corpo DESLIZAR pela superfície, como o move_and_slide do jogo — não
+## abortam a simulação. Devolve: landed (pousou), floor_collider (o que está sob os pés ao
+## pousar: é ele que diz se o pouso é bom), position (onde parou), time (s simulados) e
+## blocked (informativo: encostou em parede/teto no caminho).
+func predict_physical_move(move_def: PhysicalMoveDef, flip: int = 1, max_time: float = 4.0) -> Dictionary:
+	var result := {"landed": false, "blocked": false, "position": global_position,
+			"floor_collider": null, "time": 0.0}
+	if not move_def or move_def.phases.is_empty():
+		return result
+
+	var dt := 1.0 / float(Engine.physics_ticks_per_second)
+	var xf := global_transform
+	var vel := Vector2.ZERO
+	var index := 0
+	var timer := 0.0
+	var apex_rising := false
+	var active := true
+	var gscale: float = move_def.phases[0].gravity_scale
+	var on_floor := is_on_floor()
+	if move_def.phases[0].set_velocity:
+		vel = _phase_velocity(move_def.phases[0], flip)
+	var col := KinematicCollision2D.new()
+
+	for _i in int(max_time / dt):
+		result.time += dt
+		# 1) gravidade (_apply_gravity)
+		if gravity_enabled:
+			vel.y += gravity * (jump_gravity_multiplier if vel.y < 0.0 else fall_gravity_multiplier) * gscale * dt
+		# 2) fase (_process_physical_move)
+		if active:
+			var phase: PhysicalMovePhase = move_def.phases[index]
+			timer += dt
+			if vel.y < 0.0:
+				apex_rising = true
+			if phase.continuous and phase.set_velocity:
+				vel = _phase_velocity(phase, flip)
+			if _physical_exit_reached(phase, timer, apex_rising, vel.y, on_floor):
+				index += 1
+				if index >= move_def.phases.size():
+					active = false
+					gscale = 1.0
+				else:
+					phase = move_def.phases[index]
+					timer = 0.0
+					apex_rising = false
+					gscale = phase.gravity_scale
+					if phase.set_velocity:
+						vel = _phase_velocity(phase, flip)
+		# 3) movimento (_process_movement)
+		vel.y = minf(vel.y, max_fall_speed)
+		var motion := vel * dt
+		if test_move(xf, motion, col):
+			xf.origin += col.get_travel()
+			var normal := col.get_normal()
+			if normal.dot(up_direction) >= cos(floor_max_angle):
+				result.landed = true
+				result.floor_collider = col.get_collider()
+				break
+			result.blocked = true
+			vel = vel.slide(normal)  # parede/teto: desliza e segue, como o jogo
+		else:
+			xf.origin += motion
+		on_floor = false
+
+	result.position = xf.origin
+	return result
+
+
+## O que está sob os pés (o collider do chão), ou null. Lê as colisões do último
+## move_and_slide; sem nenhuma (ex: parado, só com floor snap), usa um raio curto para baixo.
+## Para TileMapLayer o collider é o próprio nó da camada (dá para checar grupos nele).
+func get_floor_collider() -> Object:
+	for i in get_slide_collision_count():
+		var c := get_slide_collision(i)
+		if c.get_normal().dot(up_direction) >= cos(floor_max_angle):
+			return c.get_collider()
+	var from := global_position + Vector2(0.0, _feet_offset_y() - 2.0)
+	var query := PhysicsRayQueryParameters2D.create(from, from + Vector2(0.0, 6.0), collision_mask, [get_rid()])
+	var hit := get_world_2d().direct_space_state.intersect_ray(query)
+	return hit.get("collider") if not hit.is_empty() else null
+
+
+## Distância do pivô até a base do primeiro CollisionShape2D retangular (px, para baixo).
+func _feet_offset_y() -> float:
+	for child in get_children():
+		if child is CollisionShape2D and not (child as CollisionShape2D).disabled:
+			var rect := (child as CollisionShape2D).shape as RectangleShape2D
+			if rect:
+				return (child as CollisionShape2D).position.y + rect.size.y * 0.5
+	return 0.0
 
 
 ## Move suavemente até um destino exato, em `duration` segundos —

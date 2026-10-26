@@ -60,3 +60,8 @@ enum LoopPoint { START, HALF, END }
 ## Tempo máximo (segundos) que este segmento existe, mesmo que nunca
 ## receba remove_segment() via dominó. 0 = sem limite (padrão).
 @export var max_lifetime: float = 0.0
+## Se essa variavel for verdadeira, quando o lider sumir ou for destruído, este segmento irá junto
+@export var destroy_when_leader_disappears: bool = false
+## Se true, o segmento continua avançando na última direção conhecida
+## do leader após seu desaparecimento. False preserva o congelamento atual.
+@export var continue_moving_after_leader_disappears: bool = false

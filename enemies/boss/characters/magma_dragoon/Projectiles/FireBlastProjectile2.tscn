@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://by2fpbnvfhvmu"]
+
+[ext_resource type="Script" uid="uid://ch3cctecpma5q" path="res://enemies/boss/characters/magma_dragoon/actions/HadoukenProjectile.gd" id="1_t0nvg"]
+[ext_resource type="SpriteFrames" uid="uid://crd2vxirucipb" path="res://resources/animations/spr_magma_dragoon_shot1.tres" id="2_xh6aw"]
+[ext_resource type="Script" uid="uid://b5hlcaqkwh84f" path="res://systems/hit/HitComponent.gd" id="3_dqp7w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_shmlr"]
+size = Vector2(23, 21)
+
+[node name="FireBlast" type="Area2D" unique_id=1069394859]
+light_mask = 0
+visibility_layer = 37
+z_index = 10
+collision_layer = 129
+collision_mask = 37
+script = ExtResource("1_t0nvg")
+speed = 120.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1863395787]
+visibility_layer = 5
+position = Vector2(-3.5, 1.5)
+shape = SubResource("RectangleShape2D_shmlr")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=660171049]
+visibility_layer = 5
+sprite_frames = ExtResource("2_xh6aw")
+animation = &"magma_dragoon_shot_loop"
+
+[node name="HitComponent" type="Node" parent="." unique_id=1141124980]
+script = ExtResource("3_dqp7w")
+damage = 3.0
+damage_type_id = &"fire"
+damage_tag = "FireBlast"
+auto_report = true
+metadata/_custom_type_script = "uid://b5hlcaqkwh84f"
