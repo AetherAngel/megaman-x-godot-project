@@ -69,6 +69,8 @@ debug_panel=""
 light_capsule=""
 sprite_boss=""
 arena_resettable=""
+projectile=""
+unsafe_ground="para hazards onde o boss não pode pousar e ficar"
 
 [input]
 

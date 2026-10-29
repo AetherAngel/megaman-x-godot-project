@@ -6,9 +6,18 @@
 [ext_resource type="Resource" uid="uid://latu328jftxc" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/AnimPhase/Firekick_NoseDive_Part3_AnimPhase.tres" id="4_bswmn"]
 [ext_resource type="Script" uid="uid://dbtctnct07w57" path="res://systems/bt/actions/BossAction.gd" id="5_bjxw8"]
 [ext_resource type="Resource" uid="uid://dv5pe6w4md10t" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/AnimPhase/Firekick_NoseDive_Part4_AnimPhase.tres" id="5_pakii"]
+[ext_resource type="Script" uid="uid://ouu8ril4nkjk" path="res://systems/bt/actions/FrameEvent.gd" id="6_lp4jm"]
+
+[sub_resource type="Resource" id="Resource_bswmn"]
+script = ExtResource("1_tyhqn")
+anim_name = &"magma_dragoon_idle"
+exit = 1
+exit_timer = 0.2
+signal_timeout = 0.3
+metadata/_custom_type_script = "uid://13j7x4cikp7v"
 
 [resource]
 script = ExtResource("5_bjxw8")
 phases = Array[ExtResource("1_tyhqn")]([ExtResource("2_fhlc3"), ExtResource("3_lp4jm"), ExtResource("4_bswmn"), ExtResource("5_pakii")])
-recovery_phases = Array[ExtResource("1_tyhqn")]([ExtResource("2_fhlc3"), ExtResource("3_lp4jm"), ExtResource("4_bswmn"), ExtResource("5_pakii")])
+recovery_phases = Array[ExtResource("1_tyhqn")]([SubResource("Resource_bswmn"), ExtResource("2_fhlc3"), ExtResource("3_lp4jm"), ExtResource("4_bswmn"), ExtResource("5_pakii")])
 metadata/_custom_type_script = "uid://dbtctnct07w57"

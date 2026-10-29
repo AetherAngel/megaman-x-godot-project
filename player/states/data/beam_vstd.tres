@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="VisualSequenceStepData" format=3 uid="uid://dmwa7k28hhwvo"]
+
+[ext_resource type="Resource" uid="uid://dabmawxw4whb0" path="res://player/states/data/outro_armor_vsdata.tres" id="1_4fv2e"]
+[ext_resource type="Resource" uid="uid://csygdieyosn4l" path="res://player/states/data/beam_in_base_vsdata.tres" id="1_kcyhw"]
+[ext_resource type="Script" uid="uid://c2cfexudcd52x" path="res://player/states/data/VisualSequenceStepData.gd" id="2_4fv2e"]
+
+[resource]
+script = ExtResource("2_4fv2e")
+base_visual = ExtResource("1_kcyhw")
+armor_visual = ExtResource("1_4fv2e")
+wait_for_completion = false
+custom_delay = 1.0
+metadata/_custom_type_script = "uid://c2cfexudcd52x"

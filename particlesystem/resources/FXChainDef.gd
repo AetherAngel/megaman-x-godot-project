@@ -50,6 +50,10 @@ enum FlipMode {
 @export var flip_mode: FlipMode = FlipMode.NONE
 
 @export_group("Visual por segmento")
+## Se true, os segmentos nascem na origem da cadeia e percorrem
+## o histórico do leader, respeitando o atraso e os offsets.
+## Se false, preserva o comportamento atual.
+@export var spawn_from_origin: bool = false
 ## Offset aplicado a TODOS os segmentos da cadeia de uma vez, somado ao
 ## offset individual de cada um (se houver, em FXChainSegmentVisual).
 ## Útil pra deslocar a cauda inteira sem precisar mexer segmento por
@@ -61,6 +65,7 @@ enum FlipMode {
 ## segment_count, os segmentos sem entrada correspondente usam o visual
 ## padrão de segment_def (anima normalmente, offset zero, z_index do
 ## segment_def).
+
 @export var segment_visuals: Array[FXChainSegmentVisual] = []
 ## Ciclo de vida individual de cada segmento (revelação relativa ao
 ## anterior, vida máxima), editável no editor. Mesma ordem/regra de

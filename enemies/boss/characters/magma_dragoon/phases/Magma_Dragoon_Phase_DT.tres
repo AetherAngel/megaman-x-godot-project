@@ -4,30 +4,11 @@
 [ext_resource type="Resource" uid="uid://bc0a8t6v86jgq" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/AttackPatterns/Hadouken_AttackPattern.tres" id="2_2infp"]
 [ext_resource type="Script" uid="uid://cytcncmfat5pu" path="res://enemies/boss/data/bossphasedata.gd" id="2_f3syo"]
 [ext_resource type="Resource" uid="uid://cns0l5hudxpu" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/AttackPatterns/FlameAttack_AttackPattern.tres" id="3_ubbiw"]
-[ext_resource type="Script" uid="uid://dbtctnct07w57" path="res://systems/bt/actions/BossAction.gd" id="4_lr1vv"]
-[ext_resource type="Script" uid="uid://13j7x4cikp7v" path="res://systems/bt/actions/AnimPhase.gd" id="5_y0oaf"]
-[ext_resource type="Script" uid="uid://ouu8ril4nkjk" path="res://systems/bt/actions/FrameEvent.gd" id="6_44l5n"]
-
-[sub_resource type="Resource" id="Resource_jeun7"]
-script = ExtResource("5_y0oaf")
-anim_name = &"magma_dragoon_idle"
-exit = 1
-metadata/_custom_type_script = "uid://13j7x4cikp7v"
-
-[sub_resource type="Resource" id="Resource_5mif0"]
-script = ExtResource("4_lr1vv")
-phases = Array[ExtResource("5_y0oaf")]([SubResource("Resource_jeun7")])
-metadata/_custom_type_script = "uid://dbtctnct07w57"
-
-[sub_resource type="Resource" id="Resource_dyer0"]
-script = ExtResource("1_uf7pp")
-pattern_id = "idle"
-attacks = Array[ExtResource("4_lr1vv")]([SubResource("Resource_5mif0")])
-metadata/_custom_type_script = "uid://j3pj4beqbcci"
+[ext_resource type="Resource" uid="uid://bc4bce3ow1b3l" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/AttackPatterns/Idle_AttackPattern.tres" id="4_cbckm"]
 
 [resource]
 script = ExtResource("2_f3syo")
-patterns = Array[ExtResource("1_uf7pp")]([ExtResource("2_2infp"), ExtResource("3_ubbiw"), SubResource("Resource_dyer0")])
+patterns = Array[ExtResource("1_uf7pp")]([ExtResource("2_2infp"), ExtResource("3_ubbiw"), ExtResource("4_cbckm")])
 entry_state = ""
 animation_set = "spr_magma_dragoon"
 phase_music = "boss_fight"

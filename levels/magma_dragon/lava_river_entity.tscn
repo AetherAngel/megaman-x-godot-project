@@ -55,10 +55,9 @@ shape = SubResource("RectangleShape2D_n41t6")
 
 [node name="HitComponent" type="Node" parent="LavaHitBox" unique_id=1786961917]
 script = ExtResource("5_ltei0")
-damage = 3.0
 damage_type_id = &"fire"
 damage_tag = "fire"
 auto_report = true
 report_mode = 1
-recheck_interval = 0.05
+recheck_interval = 0.1
 metadata/_custom_type_script = "uid://b5hlcaqkwh84f"

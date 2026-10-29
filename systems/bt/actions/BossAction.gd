@@ -135,6 +135,7 @@ func advance_phase() -> void:
 # ─────────────────────────────────────────────────────────────
 
 func _enter_phase(actor: Node, phase: AnimPhase) -> void:
+	print("[BA] t=%d enter anim=%s recovery=%s tent=%d" % [Time.get_ticks_msec(), phase.anim_name, _in_recovery, _recovery_attempts])
 	_phase_timer        = 0.0
 	_signal_triggered   = false
 	_last_checked_frame = -1
@@ -243,6 +244,7 @@ func _begin_recovery(actor: Node) -> bool:
 
 
 func _apply_failsafe(actor: Node) -> void:
+	print("[BA] t=%d FAILSAFE tent=%d/%d fases_rec=%d" % [Time.get_ticks_msec(), _recovery_attempts, max_recovery_attempts, recovery_phases.size()])
 	if actor.has_method("recovery_failsafe"):
 		actor.recovery_failsafe()
 

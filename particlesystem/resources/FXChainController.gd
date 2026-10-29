@@ -16,14 +16,33 @@ var _segments:      Array[FXChainSegment] = []  # [0] = mais perto da cabeça ..
 var _chain_stopped: bool                  = false
 var _flip_debug_logged: bool               = false  # loga o diagnóstico de facing_right só uma vez por cadeia
 
+var _spawn_from_origin: bool = false
+
+# Posição original da cadeia, capturada antes de qualquer spawn_delay.
+var _origin_position: Vector2 = Vector2.ZERO
+
+# Tempo decorrido desde a inicialização da cadeia.
+var _chain_elapsed: float = 0.0
+
+# Histórico da posição da cabeça, incluindo o período de spawn_delay.
+var _head_history: Array[Dictionary] = []
+
 
 func setup(def: FXChainDef, head: Node2D) -> void:
-	_def  = def
+	_def = def
 	_head = head
 
 	if not _def or not _def.segment_def or not is_instance_valid(_head):
 		queue_free()
 		return
+
+	_origin_position = _head.global_position
+	_chain_elapsed = 0.0
+	_head_history.clear()
+	_head_history.append({
+		"t": 0.0,
+		"pos": _origin_position
+	})
 
 	if _def.spawn_delay > 0.0:
 		await get_tree().create_timer(_def.spawn_delay).timeout
@@ -43,6 +62,7 @@ func _spawn_all_segments() -> void:
 ## último da cadeia, escuta o ready_to_spawn_next dele pra criar o
 ## próximo — é isso que faz a cauda crescer em cascata, um elo de cada
 ## vez, em vez de todos de uma vez.
+
 func _spawn_segment(index: int, leader: Node2D) -> void:
 	if _chain_stopped or index >= _def.segment_count:
 		return
@@ -50,21 +70,57 @@ func _spawn_segment(index: int, leader: Node2D) -> void:
 	var visual: FXChainSegmentVisual = null
 	if index < _def.segment_visuals.size():
 		visual = _def.segment_visuals[index]
+
 	var behavior: FXChainSegmentBehavior = null
 	if index < _def.segment_behaviors.size():
 		behavior = _def.segment_behaviors[index]
 
 	var segment := FXChainSegment.new()
 	add_child(segment)
-	segment.setup(_def.segment_def, leader, _def.segment_interval, visual, _def.body_offset, behavior, _def.spawn_interval)
+
+	if _def.spawn_from_origin:
+		var leader_history: Array[Dictionary] = []
+
+		if leader is FXChainSegment:
+			leader_history = leader.get_position_history()
+		else:
+			leader_history = _head_history
+
+		segment.setup(
+			_def.segment_def,
+			leader,
+			_def.segment_interval,
+			visual,
+			_def.body_offset,
+			behavior,
+			_def.spawn_interval,
+			true,
+			_origin_position,
+			_chain_elapsed,
+			leader_history
+		)
+	else:
+		segment.setup(
+			_def.segment_def,
+			leader,
+			_def.segment_interval,
+			visual,
+			_def.body_offset,
+			behavior,
+			_def.spawn_interval
+		)
+
 	_segments.append(segment)
+
 	# Só o primeiro segmento segue a cabeça original.
-	# Os demais seguem outros segmentos da cadeia.
 	if index == 0:
 		segment.leader_disappeared.connect(_on_head_disappeared)
 
 	if index + 1 < _def.segment_count:
-		segment.ready_to_spawn_next.connect(_on_segment_ready_to_spawn_next.bind(segment, index + 1))
+		segment.ready_to_spawn_next.connect(
+			_on_segment_ready_to_spawn_next.bind(segment, index + 1)
+		)
+		
 
 
 func _on_segment_ready_to_spawn_next(source_segment: FXChainSegment, next_index: int) -> void:
@@ -75,8 +131,33 @@ func _on_segment_ready_to_spawn_next(source_segment: FXChainSegment, next_index:
 
 # ── Facing ────────────────────────────────────────────────────
 
-func _process(_delta: float) -> void:
+
+func _process(delta: float) -> void:
+	_chain_elapsed += delta
+
+	if is_instance_valid(_head):
+		_head_history.append({
+			"t": _chain_elapsed,
+			"pos": _head.global_position
+		})
+
+		# No modo spawn_from_origin, os segmentos precisam do
+		# histórico completo para reconstruir a trajetória.
+		if not _def.spawn_from_origin:
+			var max_history_time: float = (
+				_def.segment_interval * _def.segment_count + 1.0
+			)
+			var cutoff: float = _chain_elapsed - max_history_time
+
+			while (
+				_head_history.size() > 2
+				and _head_history[1]["t"] < cutoff
+			):
+				_head_history.pop_front()
+
 	_update_flip()
+
+
 
 
 func _update_flip() -> void:
@@ -179,3 +260,8 @@ func _on_head_disappeared() -> void:
 			segment.remove_segment()
 
 	queue_free()
+
+
+
+func get_chain_elapsed() -> float:
+	return _chain_elapsed

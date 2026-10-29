@@ -7,12 +7,12 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_shmlr"]
 size = Vector2(23, 21)
 
-[node name="FireBlast" type="Area2D" unique_id=1069394859]
+[node name="FireBlast" type="Area2D" unique_id=1069394859 groups=["projectile"]]
 light_mask = 0
 visibility_layer = 37
 z_index = 10
-collision_layer = 129
-collision_mask = 37
+collision_layer = 128
+collision_mask = 36
 script = ExtResource("1_t0nvg")
 speed = 120.0
 

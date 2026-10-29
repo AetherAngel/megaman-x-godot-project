@@ -6,6 +6,9 @@
 [ext_resource type="Script" uid="uid://bgqpn08duborv" path="res://Cutscene and Talk system/steps/StepWait.gd" id="4_tvris"]
 [ext_resource type="Script" uid="uid://dn13wwlso37we" path="res://Cutscene and Talk system/steps/StepAnimation.gd" id="5_ewy2q"]
 [ext_resource type="Script" uid="uid://do5uyv5u6wkui" path="res://Cutscene and Talk system/steps/StepFade.gd" id="6_s2aut"]
+[ext_resource type="Script" uid="uid://ivpx7ytxrnkj" path="res://resources/PhysicalMovePhase.gd" id="6_tvris"]
+[ext_resource type="Script" uid="uid://dis8iifq507di" path="res://resources/PhysicalMoveDef.gd" id="7_ewy2q"]
+[ext_resource type="Script" uid="uid://bfv7qiwsjmeyl" path="res://Cutscene and Talk system/steps/StepPhysicalMove.gd" id="8_s2aut"]
 
 [sub_resource type="Resource" id="Resource_fal4u"]
 script = ExtResource("3_l6f10")
@@ -23,8 +26,37 @@ script = ExtResource("5_ewy2q")
 target_group = "player"
 animation = "Victory"
 wait_to_finish = null
-step_total_duration = 2.0
+step_total_duration = 1.5
 skip_if_seen = null
+metadata/_custom_type_script = "uid://dn13wwlso37we"
+
+[sub_resource type="Resource" id="Resource_s2aut"]
+script = ExtResource("6_tvris")
+set_velocity = true
+continuous = true
+velocity = Vector2(0, -480)
+gravity_scale = 0.0
+duration = 0.1
+metadata/_custom_type_script = "uid://ivpx7ytxrnkj"
+
+[sub_resource type="Resource" id="Resource_tmq4m"]
+script = ExtResource("7_ewy2q")
+phases = Array[ExtResource("6_tvris")]([SubResource("Resource_s2aut")])
+metadata/_custom_type_script = "uid://dis8iifq507di"
+
+[sub_resource type="Resource" id="Resource_xlrvt"]
+script = ExtResource("8_s2aut")
+target_group = "player"
+move_def = SubResource("Resource_tmq4m")
+metadata/_custom_type_script = "uid://bfv7qiwsjmeyl"
+
+[sub_resource type="Resource" id="Resource_4ulu0"]
+script = ExtResource("5_ewy2q")
+target_group = "player"
+animation = "beam_in"
+wait_to_finish = false
+step_total_duration = 0.05
+physical_move = SubResource("Resource_xlrvt")
 metadata/_custom_type_script = "uid://dn13wwlso37we"
 
 [sub_resource type="Resource" id="Resource_ewy2q"]
@@ -34,6 +66,6 @@ metadata/_custom_type_script = "uid://do5uyv5u6wkui"
 
 [resource]
 script = ExtResource("1_5wnbr")
-steps = Array[ExtResource("2_t44ci")]([SubResource("Resource_fal4u"), SubResource("Resource_l6f10"), SubResource("Resource_tvris"), SubResource("Resource_ewy2q")])
+steps = Array[ExtResource("2_t44ci")]([SubResource("Resource_fal4u"), SubResource("Resource_l6f10"), SubResource("Resource_tvris"), SubResource("Resource_4ulu0"), SubResource("Resource_ewy2q")])
 can_skip = false
 metadata/_custom_type_script = "uid://bm6eb134mii7m"

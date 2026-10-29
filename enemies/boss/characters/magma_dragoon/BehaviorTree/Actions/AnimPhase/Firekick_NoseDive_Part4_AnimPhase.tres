@@ -8,20 +8,20 @@
 [sub_resource type="Resource" id="Resource_fujsv"]
 script = ExtResource("2_1668e")
 set_velocity = true
-velocity = Vector2(-300, -250)
+velocity = Vector2(-300, 250)
 mirror_with_facing = true
 exit = 2
+duration = 0.1
 metadata/_custom_type_script = "uid://ivpx7ytxrnkj"
 
-[sub_resource type="Resource" id="Resource_2dyrl"]
+[sub_resource type="Resource" id="Resource_6pbde"]
 script = ExtResource("2_1668e")
 set_velocity = true
-duration = 0.0
 metadata/_custom_type_script = "uid://ivpx7ytxrnkj"
 
 [sub_resource type="Resource" id="Resource_gt5nu"]
 script = ExtResource("3_c5nkx")
-phases = Array[ExtResource("2_1668e")]([SubResource("Resource_fujsv"), SubResource("Resource_2dyrl")])
+phases = Array[ExtResource("2_1668e")]([SubResource("Resource_fujsv"), SubResource("Resource_6pbde")])
 metadata/_custom_type_script = "uid://dis8iifq507di"
 
 [resource]

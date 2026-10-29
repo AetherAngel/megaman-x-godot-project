@@ -264,6 +264,8 @@ func _process_physical_move(_delta: float) -> void:
 	if phase.continuous and phase.set_velocity:
 		velocity = _phase_velocity(phase, get_facing_flip())
 	# ───────────────────────────────────────────────────────
+	elif phase.hold_horizontal and phase.set_velocity:
+		velocity.x = _phase_velocity(phase, get_facing_flip()).x
 
 	if _physical_exit_reached(phase, _physical_move_timer, _apex_was_rising, velocity.y, is_on_floor()):
 		_advance_physical_move()
@@ -296,6 +298,7 @@ func get_facing_flip() -> int:
 
 
 func _enter_physical_move_phase(index: int) -> void:
+	print("[PM] t=%d enter idx=%d vel=%s" % [Time.get_ticks_msec(), _physical_move_index, velocity])
 	_physical_move_index = index
 	_physical_move_timer = 0.0
 	_apex_was_rising = false
@@ -358,6 +361,8 @@ func predict_physical_move(move_def: PhysicalMoveDef, flip: int = 1, max_time: f
 				apex_rising = true
 			if phase.continuous and phase.set_velocity:
 				vel = _phase_velocity(phase, flip)
+			elif phase.hold_horizontal and phase.set_velocity:
+				vel.x = _phase_velocity(phase, flip).x
 			if _physical_exit_reached(phase, timer, apex_rising, vel.y, on_floor):
 				index += 1
 				if index >= move_def.phases.size():
@@ -370,6 +375,7 @@ func predict_physical_move(move_def: PhysicalMoveDef, flip: int = 1, max_time: f
 					gscale = phase.gravity_scale
 					if phase.set_velocity:
 						vel = _phase_velocity(phase, flip)
+
 		# 3) movimento (_process_movement)
 		vel.y = minf(vel.y, max_fall_speed)
 		var motion := vel * dt

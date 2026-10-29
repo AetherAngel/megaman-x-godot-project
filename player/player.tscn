@@ -5,6 +5,7 @@
 [ext_resource type="Resource" uid="uid://dd5v76e01fs2m" path="res://player/states/data/hurt_vssequence_sqdata.tres" id="6_a2xo5"]
 [ext_resource type="Script" uid="uid://c7vxmd1g07tow" path="res://player/states/Run.gd" id="7_boad6"]
 [ext_resource type="Resource" uid="uid://cw8qk5y72wol4" path="res://player/states/data/victory_sequence_DATA.tres" id="7_fjxoa"]
+[ext_resource type="Resource" uid="uid://b4bguplq7v0xe" path="res://player/states/data/beam_in_vssequence.tres" id="8_gswnw"]
 [ext_resource type="Script" uid="uid://c5l8p3tprl1os" path="res://player/states/Dash.gd" id="8_hg6s5"]
 [ext_resource type="Script" uid="uid://biyhuwhr53ywv" path="res://player/states/StateMachine.gd" id="8_rgyib"]
 [ext_resource type="Script" uid="uid://cjk02m4yfedld" path="res://player/states/Fall.gd" id="9_8t03j"]
@@ -103,7 +104,7 @@ shape = SubResource("RectangleShape2D_sh265")
 
 [node name="VisualSequencePlayer" type="Node" parent="." unique_id=2144864865]
 script = ExtResource("23_knn7v")
-sequence_library = Array[ExtResource("24_7pqkx")]([ExtResource("25_uw77l"), ExtResource("5_7pqkx"), ExtResource("6_a2xo5"), ExtResource("7_fjxoa")])
+sequence_library = Array[ExtResource("24_7pqkx")]([ExtResource("25_uw77l"), ExtResource("5_7pqkx"), ExtResource("6_a2xo5"), ExtResource("7_fjxoa"), ExtResource("8_gswnw")])
 
 [node name="StateMachine" type="Node" parent="." unique_id=972487075]
 script = ExtResource("8_rgyib")

@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="AttackPattern" format=3 uid="uid://bc4bce3ow1b3l"]
+
+[ext_resource type="Script" uid="uid://dbtctnct07w57" path="res://systems/bt/actions/BossAction.gd" id="1_lpk4i"]
+[ext_resource type="Script" uid="uid://13j7x4cikp7v" path="res://systems/bt/actions/AnimPhase.gd" id="2_kcbhj"]
+[ext_resource type="Script" uid="uid://ouu8ril4nkjk" path="res://systems/bt/actions/FrameEvent.gd" id="3_fchst"]
+[ext_resource type="Script" uid="uid://j3pj4beqbcci" path="res://enemies/boss/data/attackpattern.gd" id="4_a0x10"]
+
+[sub_resource type="Resource" id="Resource_jeun7"]
+script = ExtResource("2_kcbhj")
+anim_name = &"magma_dragoon_idle"
+exit = 1
+metadata/_custom_type_script = "uid://13j7x4cikp7v"
+
+[sub_resource type="Resource" id="Resource_5mif0"]
+script = ExtResource("1_lpk4i")
+phases = Array[ExtResource("2_kcbhj")]([SubResource("Resource_jeun7")])
+metadata/_custom_type_script = "uid://dbtctnct07w57"
+
+[resource]
+script = ExtResource("4_a0x10")
+pattern_id = "idle"
+attacks = Array[ExtResource("1_lpk4i")]([SubResource("Resource_5mif0")])
+weight = 2.0
+cooldown = 5.0
+metadata/_custom_type_script = "uid://j3pj4beqbcci"

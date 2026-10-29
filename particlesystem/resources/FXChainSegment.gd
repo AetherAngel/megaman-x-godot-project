@@ -1,3 +1,4 @@
+
 class_name FXChainSegment
 extends Node2D
 
@@ -37,6 +38,17 @@ var _behavior: FXChainSegmentBehavior = null  # gatilho de criação do próximo
 var _sprite:   AnimatedSprite2D       = null
 var _history:  Array                  = []  # [{t: float, pos: Vector2}, ...] posições do leader ao longo do tempo
 var _elapsed:  float                  = 0.0
+# Histórico da posição real deste segmento, para os próximos segmentos
+# conseguirem reconstruir sua trajetória mesmo após serem criados.
+var _position_history: Array[Dictionary] = []
+
+# Tempo de referência usado para sincronizar o histórico da cadeia.
+var _chain_time_offset: float = 0.0
+
+var _spawn_from_origin: bool = false
+var _origin_position: Vector2 = Vector2.ZERO
+var _segment_birth_time: float = 0.0
+
 
 var _loop_elapsed: float = 0.0  # tempo acumulado desde a criação — driva o loop_frames visual, o toggle de visibilidade E o gatilho de criação do próximo
 
@@ -57,10 +69,14 @@ func setup(
 	def:                FXChainSegmentDef,
 	p_leader:           Node2D,
 	p_delay:            float,
-	visual:             FXChainSegmentVisual = null,
-	p_body_offset:      Vector2 = Vector2.ZERO,
-	behavior:           FXChainSegmentBehavior = null,
-	p_spawn_next_delay: float = 0.1
+	visual:              FXChainSegmentVisual = null,
+	p_body_offset:       Vector2 = Vector2.ZERO,
+	behavior:            FXChainSegmentBehavior = null,
+	p_spawn_next_delay: float = 0.1,
+	p_spawn_from_origin: bool = false,
+	p_origin_position:   Vector2 = Vector2.ZERO,
+	p_chain_time:        float = 0.0,
+	p_leader_history:    Array[Dictionary] = []
 ) -> void:
 	_def         = def
 	_visual      = visual
@@ -73,6 +89,21 @@ func setup(
 	_loop_elapsed  = 0.0
 	_spawned_next  = false
 	_history.clear()
+
+	_spawn_from_origin = p_spawn_from_origin
+	_origin_position = p_origin_position
+	_segment_birth_time = p_chain_time
+	_position_history.clear()
+
+	if _spawn_from_origin:
+		for entry in p_leader_history:
+			_history.append(entry.duplicate(true))
+
+		if _history.is_empty():
+			_history.append({
+				"t": p_chain_time,
+				"pos": _origin_position
+			})
 
 	if _visual:
 		z_index = _visual.z_index
@@ -103,6 +134,13 @@ func setup(
 
 	visible = _behavior.start_visible if _behavior else true
 
+	if _spawn_from_origin:
+		global_position = _origin_position + _get_final_offset()
+		_position_history.append({
+			"t": _segment_birth_time,
+			"pos": global_position
+		})
+
 
 func _process(delta: float) -> void:
 	_update_loop_frame(delta)
@@ -130,6 +168,8 @@ func _process(delta: float) -> void:
 		# original: o segmento congela e aguarda a regra de destruição
 		# existente, como o dominó ou max_lifetime.
 		if not (_behavior and _behavior.continue_moving_after_leader_disappears):
+			if _spawn_from_origin:
+				_record_position_history(_get_chain_time(), global_position)
 			return
 
 		# A transição acontece uma única vez. A posição atual do segmento
@@ -139,13 +179,49 @@ func _process(delta: float) -> void:
 
 		# Sem velocidade observável, não inventamos movimento.
 		if _last_leader_velocity.length_squared() <= 0.0001:
+			if _spawn_from_origin:
+				_record_position_history(_get_chain_time(), global_position)
 			return
 
 		# Continua a trajetória usando a última velocidade não nula
 		# registrada enquanto o leader ainda existia.
 		global_position += _last_leader_velocity * delta
+
+		if _spawn_from_origin:
+			_record_position_history(_get_chain_time(), global_position)
 		return
 
+	if _spawn_from_origin:
+		var chain_time := _get_chain_time()
+
+		# Registra a posição do líder usando o relógio compartilhado.
+		# Evita entradas duplicadas quando os nós processam no mesmo frame.
+		if _history.is_empty() or chain_time > float(_history[-1]["t"]) + 0.0001:
+			_history.append({
+				"t": chain_time,
+				"pos": leader.global_position
+			})
+
+		_update_last_leader_velocity()
+
+		# Não aparar o histórico neste modo: os próximos elos
+		# precisam dele para reconstruir a trajetória.
+		if not visible and not (_behavior and _behavior.toggle_visibility):
+			if _elapsed >= delay:
+				visible = true
+
+		# Impede que o segmento salte para uma posição histórica
+		# anterior ao instante em que nasceu.
+		var target_time := chain_time - delay
+		if target_time <= _segment_birth_time:
+			global_position = _origin_position + _get_final_offset()
+		else:
+			global_position = _sample_position(target_time) + _get_final_offset()
+
+		_record_position_history(chain_time, global_position)
+		return
+
+	# Comportamento original, preservado quando spawn_from_origin = false.
 	_history.append({"t": _elapsed, "pos": leader.global_position})
 	_update_last_leader_velocity()
 	_trim_history()
@@ -162,11 +238,7 @@ func _process(delta: float) -> void:
 	# offset.x/body_offset.x são medidos na orientação NATIVA (o sprite
 	# desenhado olhando pra um lado só) — espelha quando a cabeça diverge
 	# disso, mesma lógica que Boss._spawn_object() já usa pro offset dela.
-	var offset := _visual.offset if _visual else Vector2.ZERO
-	var final_offset := body_offset + offset
-	if _facing_mirrored:
-		final_offset.x = -final_offset.x
-	global_position = _sample_position(_elapsed - delay) + final_offset
+	global_position = _sample_position(_elapsed - delay) + _get_final_offset()
 
 
 ## Decide QUANDO este segmento manda criar o próximo elo da cadeia.
@@ -224,6 +296,16 @@ func _update_visibility_toggle() -> void:
 	if crossed:
 		visible = not visible
 		_toggled_once = true
+
+
+func _get_final_offset() -> Vector2:
+	var offset := _visual.offset if _visual else Vector2.ZERO
+	var final_offset := body_offset + offset
+
+	if _facing_mirrored:
+		final_offset.x = -final_offset.x
+
+	return final_offset
 
 
 func _trim_history() -> void:
@@ -322,8 +404,6 @@ func remove_segment() -> void:
 	queue_free()
 
 
-
-
 func _update_last_leader_velocity() -> void:
 	if _history.size() < 2:
 		return
@@ -341,3 +421,41 @@ func _update_last_leader_velocity() -> void:
 	# Se o leader parar, preservamos a última velocidade não nula.
 	if displacement.length_squared() > 0.0001:
 		_last_leader_velocity = displacement / elapsed_time
+
+
+func _get_chain_time() -> float:
+	var controller := get_parent() as FXChainController
+
+	if controller:
+		return controller.get_chain_elapsed()
+
+	return _elapsed
+
+
+func _record_position_history(chain_time: float, position: Vector2) -> void:
+	if not _spawn_from_origin:
+		return
+
+	if _position_history.is_empty():
+		_position_history.append({
+			"t": chain_time,
+			"pos": position
+		})
+		return
+
+	var last_index := _position_history.size() - 1
+	var last_time: float = _position_history[last_index]["t"]
+
+	if chain_time > last_time + 0.0001:
+		_position_history.append({
+			"t": chain_time,
+			"pos": position
+		})
+	elif chain_time >= last_time:
+		# Se o relógio não avançou, atualiza a amostra atual
+		# em vez de criar duas entradas com o mesmo timestamp.
+		_position_history[last_index]["pos"] = position
+
+
+func get_position_history() -> Array[Dictionary]:
+	return _position_history

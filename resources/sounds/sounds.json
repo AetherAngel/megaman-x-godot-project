@@ -21,7 +21,7 @@
 	"snd_player_success": { "file": "snd_player_success.wav", "volume_db": 0.0, "pitch": 1.0 },
 	"snd_ready":          { "file": "snd_ready.wav",          "volume_db": -8.0, "pitch": 1.0 },
 	"snd_saber":          { "file": "snd_saber.wav",          "volume_db": -5.0, "pitch": 1.0 },
-	"snd_pause":		  { "file": "snd_pause.wav",		  "volume_db": -15.0, "pitch": 1.0},
+	"snd_pause":		  { "file": "snd_pause.wav",		  "volume_db": -20.0, "pitch": 1.0},
 	"charging_shot":        { "file": "charging_shot.wav",		  "volume_db": -15.0, "pitch": 1.0},
 	"charged_shot1":        { "file": "charged_shot.wav",		  "volume_db": -15.0, "pitch": 1.0},
 	"charged_shot2":        { "file": "charged_shot.wav",		  "volume_db": -25.0, "pitch": 0.7},

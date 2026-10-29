@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="VisualSequenceData" format=3 uid="uid://b4bguplq7v0xe"]
+
+[ext_resource type="Script" uid="uid://b1djsw3q6bify" path="res://player/states/data/VisualSequenceData.gd" id="1_duyjw"]
+[ext_resource type="Script" uid="uid://c2cfexudcd52x" path="res://player/states/data/VisualSequenceStepData.gd" id="2_ku5rc"]
+[ext_resource type="Script" uid="uid://b1711obvqqdr8" path="res://player/states/data/StateArmorVisualData.gd" id="3_duyjw"]
+[ext_resource type="Resource" uid="uid://csygdieyosn4l" path="res://player/states/data/beam_in_base_vsdata.tres" id="4_ku5rc"]
+
+[sub_resource type="Resource" id="Resource_6s5iw"]
+script = ExtResource("3_duyjw")
+main_action = "equip"
+main_file = "equip"
+main_anim = "default"
+is_loop = false
+metadata/_custom_type_script = "uid://b1711obvqqdr8"
+
+[sub_resource type="Resource" id="Resource_hdabj"]
+script = ExtResource("2_ku5rc")
+base_visual = ExtResource("4_ku5rc")
+armor_visual = SubResource("Resource_6s5iw")
+wait_for_completion = false
+metadata/_custom_type_script = "uid://c2cfexudcd52x"
+
+[resource]
+script = ExtResource("1_duyjw")
+sequence_name = "beam_in"
+steps = Array[ExtResource("2_ku5rc")]([SubResource("Resource_hdabj")])
+metadata/_custom_type_script = "uid://b1djsw3q6bify"

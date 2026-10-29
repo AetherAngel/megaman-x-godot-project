@@ -375,6 +375,9 @@ func prepare_recovery(move_def: PhysicalMoveDef) -> bool:
 	for right in [prefer_right, not prefer_right]:
 		var flip := 1 if right == native_right else -1
 		var r := predict_physical_move(move_def, flip)
+		print("[REC] pos=%s right=%s flip=%d | landed=%s blocked=%s end=%s t=%.2f collider=%s safe=%s" % [
+		global_position.round(), right, flip, r.landed, r.blocked,
+		r.position.round(), r.time, r.floor_collider, _is_safe_ground(r.floor_collider)])
 		if r.landed and _is_safe_ground(r.floor_collider):
 			set_facing(right)
 			return true

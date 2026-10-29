@@ -16,6 +16,10 @@ enum ExitOn { TIMER, APEX, LANDING }
 ## Se true, reaplica phase.velocity todo frame enquanto a fase estiver ativa.
 ## A fase ainda sai pelo ExitOn ou pelo stop_physical_move (timer chefe).
 @export var continuous: bool = false
+## Se true (e set_velocity = true), reaplica SÓ o X de `velocity` todo frame.
+## Recupera a velocidade horizontal perdida em colisão com parede, sem mexer
+## no Y — a gravidade e a queda continuam normais (diferente de `continuous`).
+@export var hold_horizontal: bool = false
 @export var velocity: Vector2 = Vector2.ZERO
 ## Se true, o X de `velocity` é espelhado quando o ator está virado para o lado OPOSTO ao da
 ## orientação nativa da arte (Actor.get_facing_flip()). Autore a velocidade na orientação

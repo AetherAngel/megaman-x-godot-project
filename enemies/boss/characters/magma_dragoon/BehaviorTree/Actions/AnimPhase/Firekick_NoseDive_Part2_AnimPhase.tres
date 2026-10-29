@@ -8,6 +8,7 @@
 [sub_resource type="Resource" id="Resource_gwmkm"]
 script = ExtResource("2_rrex8")
 set_velocity = true
+hold_horizontal = true
 velocity = Vector2(-180, -380)
 mirror_with_facing = true
 exit = 1
