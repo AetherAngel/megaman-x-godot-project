@@ -1,0 +1,52 @@
+[gd_resource type="Resource" script_class="BossAction" format=3 uid="uid://c2wcnkst01gsf"]
+
+[ext_resource type="Script" uid="uid://13j7x4cikp7v" path="res://systems/bt/actions/AnimPhase.gd" id="1_cofl6"]
+[ext_resource type="Resource" uid="uid://c7fasijgc8fcr" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/AnimPhase/Firekick_NoseDive_alt_Part1_AnimPhase.tres" id="2_l1tvn"]
+[ext_resource type="Resource" uid="uid://dkf2p4coeti06" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/AnimPhase/Firekick_NoseDive_Part2_AnimPhase.tres" id="3_l1tvn"]
+[ext_resource type="Resource" uid="uid://latu328jftxc" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/AnimPhase/Firekick_NoseDive_Part3_AnimPhase.tres" id="4_vfobg"]
+[ext_resource type="Resource" uid="uid://dv5pe6w4md10t" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/AnimPhase/Firekick_NoseDive_Part4_AnimPhase.tres" id="5_3h7r6"]
+[ext_resource type="Script" uid="uid://ouu8ril4nkjk" path="res://systems/bt/actions/FrameEvent.gd" id="6_6y3fy"]
+[ext_resource type="Script" uid="uid://dbtctnct07w57" path="res://systems/bt/actions/BossAction.gd" id="7_hryjl"]
+[ext_resource type="Script" uid="uid://ivpx7ytxrnkj" path="res://resources/PhysicalMovePhase.gd" id="7_l1tvn"]
+[ext_resource type="Script" uid="uid://dis8iifq507di" path="res://resources/PhysicalMoveDef.gd" id="8_vfobg"]
+
+[sub_resource type="Resource" id="Resource_vfobg"]
+script = ExtResource("7_l1tvn")
+set_velocity = true
+velocity = Vector2(-62, 50)
+mirror_with_facing = true
+exit = 2
+metadata/_custom_type_script = "uid://ivpx7ytxrnkj"
+
+[sub_resource type="Resource" id="Resource_cofl6"]
+script = ExtResource("7_l1tvn")
+set_velocity = true
+exit = 2
+duration = 0.1
+metadata/_custom_type_script = "uid://ivpx7ytxrnkj"
+
+[sub_resource type="Resource" id="Resource_hmufa"]
+script = ExtResource("8_vfobg")
+phases = Array[ExtResource("7_l1tvn")]([SubResource("Resource_vfobg"), SubResource("Resource_cofl6")])
+metadata/_custom_type_script = "uid://dis8iifq507di"
+
+[sub_resource type="Resource" id="Resource_l1tvn"]
+script = ExtResource("1_cofl6")
+anim_name = &""
+exit = 3
+physical_move = SubResource("Resource_hmufa")
+metadata/_custom_type_script = "uid://13j7x4cikp7v"
+
+[sub_resource type="Resource" id="Resource_bswmn"]
+script = ExtResource("1_cofl6")
+anim_name = &"magma_dragoon_idle"
+exit = 1
+exit_timer = 0.2
+signal_timeout = 0.3
+metadata/_custom_type_script = "uid://13j7x4cikp7v"
+
+[resource]
+script = ExtResource("7_hryjl")
+phases = Array[ExtResource("1_cofl6")]([ExtResource("2_l1tvn"), ExtResource("3_l1tvn"), SubResource("Resource_l1tvn")])
+recovery_phases = Array[ExtResource("1_cofl6")]([SubResource("Resource_bswmn"), ExtResource("2_l1tvn"), ExtResource("3_l1tvn"), ExtResource("4_vfobg"), ExtResource("5_3h7r6")])
+metadata/_custom_type_script = "uid://dbtctnct07w57"

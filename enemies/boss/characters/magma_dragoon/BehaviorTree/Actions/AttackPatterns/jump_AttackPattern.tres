@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="AttackPattern" format=3 uid="uid://cmdapqp6xphcx"]
+
+[ext_resource type="Script" uid="uid://dbtctnct07w57" path="res://systems/bt/actions/BossAction.gd" id="1_wp68m"]
+[ext_resource type="Script" uid="uid://j3pj4beqbcci" path="res://enemies/boss/data/attackpattern.gd" id="2_dx7j8"]
+[ext_resource type="Resource" uid="uid://c2wcnkst01gsf" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/BossAction_Jump.tres" id="2_turnp"]
+
+[resource]
+script = ExtResource("2_dx7j8")
+pattern_id = "jump"
+attacks = Array[ExtResource("1_wp68m")]([ExtResource("2_turnp")])
+cooldown = 0.5
+metadata/_custom_type_script = "uid://j3pj4beqbcci"

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AttackPattern" format=3 uid="uid://ckwswbplkfsr2"]
+
+[ext_resource type="Script" uid="uid://dbtctnct07w57" path="res://systems/bt/actions/BossAction.gd" id="1_xl5f2"]
+[ext_resource type="Resource" uid="uid://d12twny0tebnc" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/BossAction_Shoryuken.tres" id="2_yoq71"]
+[ext_resource type="Script" uid="uid://j3pj4beqbcci" path="res://enemies/boss/data/attackpattern.gd" id="7_p74xo"]
+
+[resource]
+script = ExtResource("7_p74xo")
+pattern_id = "shoryuken"
+attacks = Array[ExtResource("1_xl5f2")]([ExtResource("2_yoq71")])
+metadata/_custom_type_script = "uid://j3pj4beqbcci"

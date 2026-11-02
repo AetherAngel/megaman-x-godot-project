@@ -1,0 +1,81 @@
+[gd_resource type="Resource" script_class="BossAction" format=3 uid="uid://d12twny0tebnc"]
+
+[ext_resource type="Script" uid="uid://13j7x4cikp7v" path="res://systems/bt/actions/AnimPhase.gd" id="1_ssxe3"]
+[ext_resource type="Script" uid="uid://ouu8ril4nkjk" path="res://systems/bt/actions/FrameEvent.gd" id="2_xus66"]
+[ext_resource type="Script" uid="uid://ivpx7ytxrnkj" path="res://resources/PhysicalMovePhase.gd" id="3_dpa2u"]
+[ext_resource type="Script" uid="uid://b7fn0x34lsjyv" path="res://resources/ShapedPhysicalMovePhase.gd" id="4_8lkap"]
+[ext_resource type="Script" uid="uid://dis8iifq507di" path="res://resources/PhysicalMoveDef.gd" id="5_g2fc2"]
+[ext_resource type="Resource" uid="uid://c814sym5p3g3e" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/AnimPhase/Firekick_NoseDive_Part1_AnimPhase.tres" id="6_g2fc2"]
+[ext_resource type="Script" uid="uid://dbtctnct07w57" path="res://systems/bt/actions/BossAction.gd" id="6_vub2c"]
+[ext_resource type="Resource" uid="uid://dkf2p4coeti06" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/AnimPhase/Firekick_NoseDive_Part2_AnimPhase.tres" id="7_vub2c"]
+[ext_resource type="Resource" uid="uid://latu328jftxc" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/AnimPhase/Firekick_NoseDive_Part3_AnimPhase.tres" id="8_juff2"]
+[ext_resource type="Resource" uid="uid://dv5pe6w4md10t" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/AnimPhase/Firekick_NoseDive_Part4_AnimPhase.tres" id="9_veul3"]
+
+[sub_resource type="Curve" id="Curve_cni6s"]
+_data = [Vector2(0, 0.099999994), 0.0, 0.0, 0, 0, Vector2(0.14999999, 0.29999998), 0.0, 0.0, 0, 0, Vector2(0.38, 1), 0.0, 0.0, 0, 0, Vector2(0.59999996, 0.9), 0.0, 0.0, 0, 0, Vector2(1, 0.099999994), 0.0, 0.0, 0, 0]
+point_count = 5
+metadata/_snap_enabled = true
+metadata/_snap_count = 100
+
+[sub_resource type="Resource" id="Resource_mv11j"]
+script = ExtResource("4_8lkap")
+velocity_end = Vector2(-72, -80)
+speed_curve = SubResource("Curve_cni6s")
+set_velocity = true
+velocity = Vector2(-220, -150)
+mirror_with_facing = true
+duration = 1.0
+metadata/_custom_type_script = "uid://b7fn0x34lsjyv"
+
+[sub_resource type="Resource" id="Resource_nx1og"]
+script = ExtResource("3_dpa2u")
+set_velocity = true
+duration = 0.1
+metadata/_custom_type_script = "uid://ivpx7ytxrnkj"
+
+[sub_resource type="Resource" id="Resource_xrdth"]
+script = ExtResource("5_g2fc2")
+phases = Array[ExtResource("3_dpa2u")]([SubResource("Resource_mv11j"), SubResource("Resource_nx1og")])
+metadata/_custom_type_script = "uid://dis8iifq507di"
+
+[sub_resource type="Resource" id="Resource_o64aw"]
+script = ExtResource("1_ssxe3")
+anim_name = &"magma_dragoon_shoryuken_uprising"
+exit = 1
+exit_timer = 0.1
+physical_move = SubResource("Resource_xrdth")
+metadata/_custom_type_script = "uid://13j7x4cikp7v"
+
+[sub_resource type="Resource" id="Resource_cni6s"]
+script = ExtResource("2_xus66")
+type = 3
+value = &"snd_dg_shoryuken"
+metadata/_custom_type_script = "uid://ouu8ril4nkjk"
+
+[sub_resource type="Resource" id="Resource_vh7dk"]
+script = ExtResource("1_ssxe3")
+anim_name = &"magma_dragoon_shoryuken_in_air"
+exit = 3
+frame_events = Array[ExtResource("2_xus66")]([SubResource("Resource_cni6s")])
+metadata/_custom_type_script = "uid://13j7x4cikp7v"
+
+[sub_resource type="Resource" id="Resource_x8c2q"]
+script = ExtResource("1_ssxe3")
+anim_name = &"magma_dragoon_falling"
+exit = 1
+exit_timer = 0.8
+check_landing = true
+metadata/_custom_type_script = "uid://13j7x4cikp7v"
+
+[sub_resource type="Resource" id="Resource_6s2ts"]
+script = ExtResource("1_ssxe3")
+anim_name = &"magma_dragoon_idle"
+exit = 1
+exit_timer = 0.2
+metadata/_custom_type_script = "uid://13j7x4cikp7v"
+
+[resource]
+script = ExtResource("6_vub2c")
+phases = Array[ExtResource("1_ssxe3")]([SubResource("Resource_o64aw"), SubResource("Resource_vh7dk"), SubResource("Resource_x8c2q")])
+recovery_phases = Array[ExtResource("1_ssxe3")]([SubResource("Resource_6s2ts"), ExtResource("6_g2fc2"), ExtResource("7_vub2c"), ExtResource("8_juff2"), ExtResource("9_veul3")])
+metadata/_custom_type_script = "uid://dbtctnct07w57"

@@ -259,9 +259,14 @@ func _process_physical_move(_delta: float) -> void:
 	if velocity.y < 0.0:
 		_apex_was_rising = true
 
+	# ── SHAPED ─────────────────────────────────────────────
+	# Fase com velocity_at(elapsed, flip) (ex: ShapedPhysicalMovePhase) dita a velocity
+	# todo frame, como CONTINUOUS, mas com direção/ritmo variando no tempo da fase.
+	if phase.has_method(&"velocity_at"):
+		velocity = _phase_velocity(phase, get_facing_flip(), _physical_move_timer)
 	# ── CONTINUOUS ─────────────────────────────────────────
 	# Mantém a velocity da fase todo frame até ExitOn / stop.
-	if phase.continuous and phase.set_velocity:
+	elif phase.continuous and phase.set_velocity:
 		velocity = _phase_velocity(phase, get_facing_flip())
 	# ───────────────────────────────────────────────────────
 	elif phase.hold_horizontal and phase.set_velocity:
@@ -285,7 +290,11 @@ func _physical_exit_reached(phase: PhysicalMovePhase, timer: float, apex_rising:
 
 
 ## Velocidade de uma fase, com o X espelhado se phase.mirror_with_facing (flip = +1 / -1).
-func _phase_velocity(phase: PhysicalMovePhase, flip: int) -> Vector2:
+func _phase_velocity(phase: PhysicalMovePhase, flip: int, elapsed: float = 0.0) -> Vector2:
+	## `elapsed` (opcional) só importa para fases com velocity_at(), que variam no tempo.
+	if phase.has_method(&"velocity_at"):
+		return phase.call(&"velocity_at", elapsed, flip)
+	## Espelhando eixo X
 	if phase.mirror_with_facing:
 		return Vector2(phase.velocity.x * flip, phase.velocity.y)
 	return phase.velocity
@@ -359,7 +368,9 @@ func predict_physical_move(move_def: PhysicalMoveDef, flip: int = 1, max_time: f
 			timer += dt
 			if vel.y < 0.0:
 				apex_rising = true
-			if phase.continuous and phase.set_velocity:
+			if phase.has_method(&"velocity_at"):
+				vel = _phase_velocity(phase, flip, timer)
+			elif phase.continuous and phase.set_velocity:
 				vel = _phase_velocity(phase, flip)
 			elif phase.hold_horizontal and phase.set_velocity:
 				vel.x = _phase_velocity(phase, flip).x

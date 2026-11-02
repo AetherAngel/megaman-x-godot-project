@@ -28,6 +28,7 @@
 	"snd_dooropen": 		{ "file": "snd_dooropen.wav",		  "volume_db": -10.0, "pitch": 0.7},
 	"snd_landing": 		{ "file": "dg_chakuchi.wav",		  "volume_db": -10.0, "pitch": 0.7},
 	"snd_dg_hadouken": 		{ "file": "dg_hadouken.wav",		  "volume_db": -20.0, "pitch": 1.0},
+	"snd_dg_shoryuken": 		{ "file": "dg_rising.wav",		  "volume_db": -20.0, "pitch": 1.0},
 	"snd_dg_fireblast": 		{ "file": "dg_firebullet.wav",		  "volume_db": -20.0, "pitch": 1.0},
 	"snd_dg_firebullet": 		{ "file": "dg_firebullet.wav",		  "volume_db": -20.0, "pitch": 0.9},
 	"snd_dg_fire_sfx": 		{ "file": "dg_fire_sfx.wav",		  "volume_db": -20.0, "pitch": 1.0},

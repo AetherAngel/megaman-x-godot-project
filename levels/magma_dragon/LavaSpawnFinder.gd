@@ -44,13 +44,15 @@ func _init(space: PhysicsDirectSpaceState2D, footprint: Vector2, lava_group: Str
 
 
 ## Posição da BASE do pilar (ponto na superfície da lava) ou null.
-func find_base(point: Vector2, max_distance: float, step: float) -> Variant:
+## `accept` (opcional): Callable(base: Vector2) -> bool para o chamador vetar candidatas por um
+## critério que o finder não conhece (ex: espaço já ocupado por outro pilar).
+func find_base(point: Vector2, max_distance: float, step: float, accept: Callable = Callable()) -> Variant:
 	var s := maxf(step, 0.5)
 	var rings := int(floorf(maxf(max_distance, 0.0) / s))
 	for i in range(rings + 1):
 		for side in ([0.0] if i == 0 else [1.0, -1.0]):   # empate de distância: direita primeiro
 			var base = _surface_at(point.x + side * i * s, point.y)
-			if base != null and _has_room(base):
+			if base != null and _has_room(base) and (not accept.is_valid() or accept.call(base)):
 				return base
 	return null
 

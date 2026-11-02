@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="AttackPattern" format=3 uid="uid://cj50oh7a70i4t"]
+
+[ext_resource type="Script" uid="uid://dbtctnct07w57" path="res://systems/bt/actions/BossAction.gd" id="1_kx0vd"]
+[ext_resource type="Resource" uid="uid://cp5s8sdda0f3i" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/BossAction_FireBall.tres" id="2_6jros"]
+[ext_resource type="Resource" uid="uid://d12twny0tebnc" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/BossAction_Shoryuken.tres" id="3_5ag5l"]
+[ext_resource type="Script" uid="uid://j3pj4beqbcci" path="res://enemies/boss/data/attackpattern.gd" id="4_t3r0o"]
+
+[resource]
+script = ExtResource("4_t3r0o")
+pattern_id = "FireBallPhase2"
+attacks = Array[ExtResource("1_kx0vd")]([ExtResource("2_6jros"), ExtResource("3_5ag5l"), ExtResource("3_5ag5l")])
+metadata/_custom_type_script = "uid://j3pj4beqbcci"

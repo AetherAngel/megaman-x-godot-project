@@ -14,6 +14,8 @@ extends Resource
 @export var description: String = ""
 
 ## Nó raiz da árvore. Normalmente um BTSelector ou BTSequence.
+## Atenção, Boss inicia a tomada decisão por aqui, não é necessário
+## preencher mais de 1 node, e precisa ser do tipo ataque!
 @export var root: BTNode
 
 

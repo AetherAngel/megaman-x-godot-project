@@ -14,7 +14,6 @@ sprite_frames = ExtResource("3_olp8e")
 animations = Array[String](["death_orb"])
 burst_count = 8
 spawn_delay = 0.5
-repeat_interval = 1.0
 lifetime = 2.0
 base_direction = Vector2(0, 0)
 spread_angle = 360.0

@@ -24,6 +24,10 @@ extends Area2D
 ## _apply_height() lê esse valor e atualiza máscara, Top e hitbox JUNTOS. Não existe
 ## cálculo paralelo, então a hitbox nunca passa do que a máscara já revelou.
 ##
+## ESPAÇO RESERVADO: get_reserved_rect() devolve a área do ciclo inteiro (com pillar_scale) e
+## occupies_space() diz se ela está reservada. O grupo `pillar_hazard` lista os pilares vivos.
+## request_restart() faz um pilar perto do fim recomeçar no lugar, em vez de ser liberado.
+##
 ## UNIDADES: `_altura` está em px ORIGINAIS (tamanho da arte). pillar_scale é aplicado
 ## uma única vez, em _apply_height(), na conversão para o mundo.
 
@@ -43,6 +47,10 @@ enum CycleState {
 ## Abaixo disso (px de mundo) a hitbox fica desligada: um retângulo de ~0px é inútil
 ## e instável para a física.
 const _MIN_HITBOX_HEIGHT := 1.0
+
+## Todo pilar em funcionamento entra neste grupo. Quem precisa saber o que já está ocupado
+## (ex: LavaReactor) consulta o grupo e usa get_reserved_rect() — sem lista própria.
+const GROUP := &"pillar_hazard"
 
 ## O Resource deste pilar. Arraste aqui o .tres (como se faz com CharacterData).
 @export var config: PillarHazardDef
@@ -68,6 +76,7 @@ var _body_size: Vector2 = Vector2.ZERO
 var _rise_speed: float = 1.0
 var _fall_speed: float = 1.0
 var _hitbox_enabled: bool = false
+var _restart_pending: bool = false
 
 var _visual: Node2D = null
 var _body_mask: Control = null
@@ -93,6 +102,7 @@ func _ready() -> void:
 	_setup_physics()
 	_build_visual()
 	_apply_height()
+	add_to_group(GROUP)
 
 	if auto_start:
 		start()
@@ -118,9 +128,59 @@ func stop() -> void:
 	if _visual == null:
 		return
 	_altura = 0.0
+	_restart_pending = false
 	_state = CycleState.IDLE
 	set_physics_process(false)
 	_apply_height.call_deferred()
+
+
+## O pilar está vivo no ciclo (espera, subida, sustentação, descida ou repouso)? É isso que
+## reserva espaço: pilar parado (IDLE) ou já terminado (DONE / marcado para liberar) não reserva.
+func occupies_space() -> bool:
+	return _visual != null and _state != CycleState.IDLE and _state != CycleState.DONE \
+			and not is_queued_for_deletion()
+
+
+## Área (coordenadas globais) que esta estrutura reserva: largura da arte mais larga × altura
+## efetiva máxima, ambas JÁ com pillar_scale. É a área do ciclo INTEIRO — não encolhe quando a
+## coluna ainda está baixa ou já desceu: o espaço fica reservado até o pilar ser destruído.
+func get_reserved_rect() -> Rect2:
+	if config == null:
+		return Rect2()
+	var size := config.get_footprint_size()
+	var top := global_position.y
+	if config.growth_direction != PillarHazardDef.GrowthDirection.DOWN:
+		top -= size.y
+	return Rect2(global_position.x - size.x * 0.5, top, size.x, size.y)
+
+
+## Segundos até o fim do ciclo one-shot (fim da descida). INF se for loop ou ainda não começou.
+func get_remaining_time() -> float:
+	if _visual == null or loop or _state == CycleState.IDLE:
+		return INF
+	var hold := maxf(config.hold_time, 0.0)
+	var fall_full := _max_altura / _fall_speed
+	match _state:
+		CycleState.WAITING:
+			return _timer + _max_altura / _rise_speed + hold + fall_full
+		CycleState.RISING:
+			return (_max_altura - _altura) / _rise_speed + hold + fall_full
+		CycleState.HOLDING:
+			return _timer + fall_full
+		CycleState.FALLING:
+			return _altura / _fall_speed
+	return 0.0
+
+
+## Pede para o pilar REINICIAR em vez de acabar: ao terminar a descida deste ciclo ele não se
+## libera — espera `start_delay` (só o Top espiando, sem hitbox) e faz outro ciclo completo, no
+## mesmo lugar, na mesma instância. Vários pedidos antes do fim valem como um só.
+## false se não faz sentido (loop, parado ou já terminado).
+func request_restart() -> bool:
+	if _visual == null or loop or _state == CycleState.IDLE or _state == CycleState.DONE:
+		return false
+	_restart_pending = true
+	return true
 
 
 # ── Ciclo ────────────────────────────────────────────────────
@@ -166,6 +226,17 @@ func _finish_cycle() -> void:
 	if loop:
 		if rest_time > 0.0:
 			_enter(CycleState.RESTING, rest_time)
+		else:
+			_enter(CycleState.RISING)
+		_apply_height()
+		cycle_finished.emit()
+		return
+
+	# Reinício pedido (ex: nova Fireball no mesmo lugar): o MESMO pilar recomeça, sem ser liberado.
+	if _restart_pending:
+		_restart_pending = false
+		if start_delay > 0.0:
+			_enter(CycleState.WAITING, start_delay)
 		else:
 			_enter(CycleState.RISING)
 		_apply_height()

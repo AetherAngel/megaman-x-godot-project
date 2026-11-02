@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AttackPattern" format=3 uid="uid://cvai5vq42jgb5"]
+
+[ext_resource type="Script" uid="uid://dbtctnct07w57" path="res://systems/bt/actions/BossAction.gd" id="1_k2q8w"]
+[ext_resource type="Resource" uid="uid://c14dw7fcajiwn" path="res://enemies/boss/characters/magma_dragoon/actions/MagmaDragoonHadouken.tres" id="2_jhd1w"]
+[ext_resource type="Resource" uid="uid://e3p3l33u6pts" path="res://enemies/boss/characters/magma_dragoon/actions/MagmaDragoonHadouken2.tres" id="3_xe4h2"]
+[ext_resource type="Resource" uid="uid://d12twny0tebnc" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/BossAction_Shoryuken.tres" id="4_88dkd"]
+[ext_resource type="Script" uid="uid://j3pj4beqbcci" path="res://enemies/boss/data/attackpattern.gd" id="5_llvqp"]
+
+[resource]
+script = ExtResource("5_llvqp")
+pattern_id = "hadoukenphase2alt"
+attacks = Array[ExtResource("1_k2q8w")]([ExtResource("2_jhd1w"), ExtResource("3_xe4h2"), ExtResource("2_jhd1w"), ExtResource("4_88dkd")])
+metadata/_custom_type_script = "uid://j3pj4beqbcci"

@@ -12,6 +12,6 @@ metadata/_custom_type_script = "uid://du64qth7qn5qt"
 
 [resource]
 script = ExtResource("1_f4qyk")
-description = "Arvore de ações do boss Magma Dragoon"
+description = "Arvore de ações do boss. Atenção, Boss inicia a tomada decisão por aqui, não é necessário preencher mais de 1 node, e precisa ser do tipo ataque! Magma Dragoon"
 root = SubResource("Resource_ijyfy")
 metadata/_custom_type_script = "uid://dvoobhd4oipck"
