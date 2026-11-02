@@ -244,7 +244,6 @@ func _begin_recovery(actor: Node) -> bool:
 
 
 func _apply_failsafe(actor: Node) -> void:
-	print("[BA] t=%d FAILSAFE tent=%d/%d fases_rec=%d" % [Time.get_ticks_msec(), _recovery_attempts, max_recovery_attempts, recovery_phases.size()])
 	if actor.has_method("recovery_failsafe"):
 		actor.recovery_failsafe()
 
@@ -289,6 +288,14 @@ func _dispatch_event(actor: Node, event: FrameEvent) -> void:
 				_last_spawned_object = actor.spawn_object(event.spawn_object)
 			elif not event.spawn_object:
 				push_warning("[BossAction] FrameEvent SPAWN_OBJECT sem spawn_object configurado.")
+		
+		FrameEvent.Type.RELEASE_OBJECT:
+			# O contrato é só um método release(): cada objeto decide o que "soltar" significa
+			# (ex: BallisticProjectile captura o alvo e começa o arco). Atua no último SPAWN_OBJECT.
+			if is_instance_valid(_last_spawned_object) and _last_spawned_object.has_method("release"):
+				_last_spawned_object.release()
+			else:
+				push_warning("[BossAction] RELEASE_OBJECT sem objeto spawnado (ou sem release()) — falta um SPAWN_OBJECT antes na sequência.")
 
 
 ## Resolve um FrameEvent.SPAWN_FX: usa `fx_resource` (genérico) se estiver

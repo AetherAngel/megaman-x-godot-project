@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://cp6jexstbwkn2"]
+
+[ext_resource type="Script" uid="uid://byitcjmqknqhc" path="res://systems/projectile/BallisticProjectile.gd" id="1"]
+[ext_resource type="Resource" uid="uid://dpkfcon5uo753" path="res://enemies/boss/characters/magma_dragoon/Projectiles/FireballProjectileDef.tres" id="2"]
+[ext_resource type="Script" uid="uid://b5hlcaqkwh84f" path="res://systems/hit/HitComponent.gd" id="3"]
+
+[node name="FireballProjectile" type="Area2D" unique_id=729393275]
+collision_layer = 136
+collision_mask = 36
+monitoring = false
+monitorable = false
+script = ExtResource("1")
+config = ExtResource("2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=862896804]
+
+[node name="HitComponent" type="Node" parent="." unique_id=589783376]
+script = ExtResource("3")
+damage = 5.0
+damage_type_id = &"fire"
+damage_tag = "fire"
+auto_report = true

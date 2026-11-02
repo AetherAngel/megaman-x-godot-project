@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="AttackPattern" format=3 uid="uid://b2pi7b5kabfux"]
+
+[ext_resource type="Script" uid="uid://dbtctnct07w57" path="res://systems/bt/actions/BossAction.gd" id="1_tav77"]
+[ext_resource type="Resource" uid="uid://cp5s8sdda0f3i" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/BossAction_FireBall.tres" id="2_44wav"]
+[ext_resource type="Script" uid="uid://j3pj4beqbcci" path="res://enemies/boss/data/attackpattern.gd" id="5_p2lgf"]
+
+[resource]
+script = ExtResource("5_p2lgf")
+pattern_id = "FireBall"
+attacks = Array[ExtResource("1_tav77")]([ExtResource("2_44wav")])
+weight = 1.2
+metadata/_custom_type_script = "uid://j3pj4beqbcci"

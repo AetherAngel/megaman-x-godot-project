@@ -5,10 +5,11 @@
 [ext_resource type="Script" uid="uid://cytcncmfat5pu" path="res://enemies/boss/data/bossphasedata.gd" id="2_f3syo"]
 [ext_resource type="Resource" uid="uid://cns0l5hudxpu" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/AttackPatterns/FlameAttack_AttackPattern.tres" id="3_ubbiw"]
 [ext_resource type="Resource" uid="uid://bc4bce3ow1b3l" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/AttackPatterns/Idle_AttackPattern.tres" id="4_cbckm"]
+[ext_resource type="Resource" uid="uid://b2pi7b5kabfux" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/AttackPatterns/FireBall_AttackPattern.tres" id="5_n3yjr"]
 
 [resource]
 script = ExtResource("2_f3syo")
-patterns = Array[ExtResource("1_uf7pp")]([ExtResource("2_2infp"), ExtResource("3_ubbiw"), ExtResource("4_cbckm")])
+patterns = Array[ExtResource("1_uf7pp")]([ExtResource("2_2infp"), ExtResource("3_ubbiw"), ExtResource("4_cbckm"), ExtResource("5_n3yjr")])
 entry_state = ""
 animation_set = "spr_magma_dragoon"
 phase_music = "boss_fight"

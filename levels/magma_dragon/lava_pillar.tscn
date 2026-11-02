@@ -1,0 +1,21 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://systems/hazard/PillarHazard.gd" id="1"]
+[ext_resource type="Resource" path="res://levels/magma_dragon/lava_pillar/lava_pillar_config.tres" id="2"]
+[ext_resource type="Script" uid="uid://b5hlcaqkwh84f" path="res://systems/hit/HitComponent.gd" id="3"]
+
+[node name="LavaPillar" type="Area2D"]
+collision_layer = 0
+collision_mask = 36
+monitorable = false
+script = ExtResource("1")
+config = ExtResource("2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+disabled = true
+
+[node name="HitComponent" type="Node" parent="."]
+script = ExtResource("3")
+auto_report = true
+report_mode = 1
+recheck_interval = 0.1

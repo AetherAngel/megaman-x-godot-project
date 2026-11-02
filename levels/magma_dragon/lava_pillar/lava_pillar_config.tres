@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PillarHazardDef" format=3 uid="uid://niethoh7cnho"]
+
+[ext_resource type="Script" uid="uid://dufo0judnuw0h" path="res://systems/hazard/PillarHazardDef.gd" id="1"]
+[ext_resource type="SpriteFrames" uid="uid://bur0768e7vvkc" path="res://levels/magma_dragon/lava_pillar/lava_top_frames.tres" id="2"]
+[ext_resource type="SpriteFrames" uid="uid://bn65b7ulynvr3" path="res://levels/magma_dragon/lava_pillar/lava_body_frames.tres" id="3"]
+
+[resource]
+script = ExtResource("1")
+top_frames = ExtResource("2")
+top_animation = &"flowing"
+body_frames = ExtResource("3")
+body_animation = &"flowing"
+flip_art_when_down = false
+max_body_segments = 7
+max_height = 168.0
+rise_speed = 150.0
+hold_time = 3.0
+peek_height = 6.0

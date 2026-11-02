@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="BallisticProjectileDef" format=3 uid="uid://dpkfcon5uo753"]
+
+[ext_resource type="Script" uid="uid://ouxry5kvepfk" path="res://systems/projectile/BallisticProjectileDef.gd" id="1"]
+[ext_resource type="SpriteFrames" uid="uid://bpo8t5pdcxi8b" path="res://resources/animations/spr_magma_dragoon_shot3.tres" id="2_ds2pb"]
+
+[resource]
+script = ExtResource("1")
+sprite_frames = ExtResource("2_ds2pb")
+radius = 8.0

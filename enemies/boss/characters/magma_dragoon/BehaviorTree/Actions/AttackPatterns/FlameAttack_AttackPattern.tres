@@ -53,12 +53,6 @@ type = 2
 fx_resource = SubResource("Resource_2n5e1")
 metadata/_custom_type_script = "uid://ouu8ril4nkjk"
 
-[sub_resource type="Resource" id="Resource_12a6x"]
-script = ExtResource("3_12a6x")
-type = 3
-value = &"snd_dg_fireblast"
-metadata/_custom_type_script = "uid://ouu8ril4nkjk"
-
 [sub_resource type="Resource" id="Resource_bhxrs"]
 script = ExtResource("3_12a6x")
 frame = 3
@@ -71,7 +65,7 @@ script = ExtResource("2_px0pm")
 anim_name = &"magma_dragoon_flamethrower"
 exit = 1
 exit_timer = 5.0
-frame_events = Array[ExtResource("3_12a6x")]([SubResource("Resource_rpriy"), SubResource("Resource_glbh0"), SubResource("Resource_12a6x"), SubResource("Resource_bhxrs")])
+frame_events = Array[ExtResource("3_12a6x")]([SubResource("Resource_rpriy"), SubResource("Resource_glbh0"), SubResource("Resource_bhxrs")])
 metadata/_custom_type_script = "uid://13j7x4cikp7v"
 
 [sub_resource type="Resource" id="Resource_vehhp"]

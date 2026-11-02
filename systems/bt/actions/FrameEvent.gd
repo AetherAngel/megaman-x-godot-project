@@ -21,6 +21,7 @@ enum Type {
 	SPAWN_FX,      ## spawna o efeito referenciado em `fx_resource` (preferencial) ou `particle_def` (legado)
 	PLAY_SFX,      ## toca SFX identificado por `value`
 	SPAWN_OBJECT,  ## spawna um objeto de gameplay (bola de fogo, meteoro) — usa `spawn_object`, não `value`
+	RELEASE_OBJECT,  ## solta o ÚLTIMO objeto criado por um SPAWN_OBJECT desta ação: chama release() nele
 }
 
 ## Frame da animação em que este evento dispara. Base 0.

@@ -1,0 +1,48 @@
+[gd_resource type="Resource" script_class="BossAction" format=3 uid="uid://cp5s8sdda0f3i"]
+
+[ext_resource type="Script" uid="uid://13j7x4cikp7v" path="res://systems/bt/actions/AnimPhase.gd" id="1_5yv4p"]
+[ext_resource type="Script" uid="uid://ouu8ril4nkjk" path="res://systems/bt/actions/FrameEvent.gd" id="2_o26jm"]
+[ext_resource type="Resource" uid="uid://cd1tj1na8hrxo" path="res://enemies/boss/characters/magma_dragoon/Projectiles/FireballProjectile_SpanObject.tres" id="3_oys5y"]
+[ext_resource type="Script" uid="uid://dbtctnct07w57" path="res://systems/bt/actions/BossAction.gd" id="4_18dy7"]
+
+[sub_resource type="Resource" id="Resource_5mif0"]
+script = ExtResource("2_o26jm")
+type = 3
+value = &"snd_dg_fireblast"
+metadata/_custom_type_script = "uid://ouu8ril4nkjk"
+
+[sub_resource type="Resource" id="Resource_dyer0"]
+script = ExtResource("2_o26jm")
+frame = 1
+type = 4
+spawn_object = ExtResource("3_oys5y")
+metadata/_custom_type_script = "uid://ouu8ril4nkjk"
+
+[sub_resource type="Resource" id="Resource_y0oaf"]
+script = ExtResource("2_o26jm")
+frame = 11
+type = 5
+metadata/_custom_type_script = "uid://ouu8ril4nkjk"
+
+[sub_resource type="Resource" id="Resource_gwmkm"]
+script = ExtResource("1_5yv4p")
+anim_name = &"magma_dragoon_fireball_spawning"
+exit = 1
+frame_events = Array[ExtResource("2_o26jm")]([SubResource("Resource_5mif0"), SubResource("Resource_dyer0"), SubResource("Resource_y0oaf")])
+metadata/_custom_type_script = "uid://13j7x4cikp7v"
+
+[sub_resource type="Resource" id="Resource_44l5n"]
+script = ExtResource("1_5yv4p")
+anim_name = &"magma_dragoon_fireball_launch"
+metadata/_custom_type_script = "uid://13j7x4cikp7v"
+
+[sub_resource type="Resource" id="Resource_jeun7"]
+script = ExtResource("1_5yv4p")
+anim_name = &"magma_dragoon_idle"
+exit = 1
+metadata/_custom_type_script = "uid://13j7x4cikp7v"
+
+[resource]
+script = ExtResource("4_18dy7")
+phases = Array[ExtResource("1_5yv4p")]([SubResource("Resource_gwmkm"), SubResource("Resource_44l5n"), SubResource("Resource_jeun7")])
+metadata/_custom_type_script = "uid://dbtctnct07w57"

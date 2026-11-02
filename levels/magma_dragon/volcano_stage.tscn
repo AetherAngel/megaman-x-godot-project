@@ -13,6 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://bhjajw71wy3vx" path="res://sprites/spr_tile_lava/e37fe1c3-e3f0-4a6a-a97e-8ab4b9752ed2.png" id="7_vfp21"]
 [ext_resource type="PackedScene" uid="uid://d23d7eh5lomec" path="res://interactable/objects/common/ArenaFloorTrigger.tscn" id="8_tih7h"]
 [ext_resource type="Script" uid="uid://iki7pt3iw1r3" path="res://levels/magma_dragon/sound.gd" id="9_jpex8"]
+[ext_resource type="PackedScene" path="res://levels/magma_dragon/lava_pillar.tscn" id="14_k7rqg"]
+[ext_resource type="Resource" uid="uid://1glghq82y5x0" path="res://levels/magma_dragon/lava_pillar/lava_pillar_short_config.tres" id="15_apir7"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_vfp21"]
 animations = [{
@@ -226,3 +228,33 @@ animation = &"flowing"
 autoplay = "flowing"
 frame_progress = 0.32359207
 centered = false
+
+[node name="LavaPillar" parent="." index="14" unique_id=315933494 instance=ExtResource("14_k7rqg")]
+position = Vector2(961, 256)
+loop = true
+
+[node name="LavaPillar2" parent="." index="15" unique_id=395043973 instance=ExtResource("14_k7rqg")]
+position = Vector2(1124, 256)
+config = ExtResource("15_apir7")
+loop = true
+
+[node name="LavaPillar3" parent="." index="16" unique_id=1238946381 instance=ExtResource("14_k7rqg")]
+position = Vector2(1255, 256)
+config = ExtResource("15_apir7")
+loop = true
+
+[node name="LavaPillar4" parent="." index="17" unique_id=651585344 instance=ExtResource("14_k7rqg")]
+position = Vector2(1386, 254)
+loop = true
+
+[node name="LavaPillar5" parent="." index="18" unique_id=1722637629 instance=ExtResource("14_k7rqg")]
+position = Vector2(1515, 256)
+loop = true
+
+[node name="LavaPillar6" parent="." index="19" unique_id=1769382498 instance=ExtResource("14_k7rqg")]
+position = Vector2(1632, 256)
+loop = true
+
+[node name="LavaPillar7" parent="." index="20" unique_id=1578044786 instance=ExtResource("14_k7rqg")]
+position = Vector2(1751, 256)
+loop = true

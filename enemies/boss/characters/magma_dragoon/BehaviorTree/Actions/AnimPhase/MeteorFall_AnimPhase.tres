@@ -37,7 +37,7 @@ metadata/_custom_type_script = "uid://buejktiiqgsik"
 
 [sub_resource type="Resource" id="Resource_plwj0"]
 script = ExtResource("1_oh80w")
-frame = 2
+frame = 3
 type = 2
 fx_resource = SubResource("Resource_bar01")
 metadata/_custom_type_script = "uid://ouu8ril4nkjk"
@@ -45,7 +45,7 @@ metadata/_custom_type_script = "uid://ouu8ril4nkjk"
 [sub_resource type="Resource" id="Resource_lq08u"]
 script = ExtResource("1_oh80w")
 type = 3
-value = &"snd_dg_fireblast"
+value = &"snd_dg_firebullet"
 metadata/_custom_type_script = "uid://ouu8ril4nkjk"
 
 [resource]

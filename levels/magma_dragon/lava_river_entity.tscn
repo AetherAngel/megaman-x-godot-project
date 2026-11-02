@@ -5,6 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://bhjajw71wy3vx" path="res://sprites/spr_tile_lava/e37fe1c3-e3f0-4a6a-a97e-8ab4b9752ed2.png" id="3_n41t6"]
 [ext_resource type="Script" uid="uid://dc8w3a6m0cpfr" path="res://resources/TiledTexturerect.gd" id="4_ks8k4"]
 [ext_resource type="Script" uid="uid://b5hlcaqkwh84f" path="res://systems/hit/HitComponent.gd" id="5_ltei0"]
+[ext_resource type="Script" uid="uid://bwodli5ypvjbq" path="res://levels/magma_dragon/LavaReactor.gd" id="6_ks8k4"]
+[ext_resource type="PackedScene" path="res://levels/magma_dragon/lava_pillar.tscn" id="7_pn0r6"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_apir7"]
 animations = [{
@@ -55,9 +57,15 @@ shape = SubResource("RectangleShape2D_n41t6")
 
 [node name="HitComponent" type="Node" parent="LavaHitBox" unique_id=1786961917]
 script = ExtResource("5_ltei0")
+damage = 3.0
 damage_type_id = &"fire"
 damage_tag = "fire"
 auto_report = true
 report_mode = 1
 recheck_interval = 0.1
 metadata/_custom_type_script = "uid://b5hlcaqkwh84f"
+
+[node name="LavaReactor" type="Node" parent="." unique_id=2114179551]
+script = ExtResource("6_ks8k4")
+pillar_scene = ExtResource("7_pn0r6")
+max_search_distance = 48.0
