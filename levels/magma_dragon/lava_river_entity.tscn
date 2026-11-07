@@ -68,4 +68,5 @@ metadata/_custom_type_script = "uid://b5hlcaqkwh84f"
 [node name="LavaReactor" type="Node" parent="." unique_id=2114179551]
 script = ExtResource("6_ks8k4")
 pillar_scene = ExtResource("7_pn0r6")
-max_search_distance = 48.0
+max_search_distance = 124.0
+search_step = 4.0

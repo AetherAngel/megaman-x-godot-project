@@ -6,4 +6,4 @@
 [resource]
 script = ExtResource("1")
 sprite_frames = ExtResource("2_ds2pb")
-radius = 64.0
+radius = 16.0

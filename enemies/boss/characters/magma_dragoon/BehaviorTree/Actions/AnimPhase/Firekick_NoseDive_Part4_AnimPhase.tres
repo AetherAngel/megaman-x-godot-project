@@ -2,8 +2,30 @@
 
 [ext_resource type="Script" uid="uid://ouu8ril4nkjk" path="res://systems/bt/actions/FrameEvent.gd" id="1_6pbde"]
 [ext_resource type="Script" uid="uid://ivpx7ytxrnkj" path="res://resources/PhysicalMovePhase.gd" id="2_1668e"]
+[ext_resource type="Script" uid="uid://sev6biwlyfqi" path="res://particlesystem/resources/SpawnedParticleDef.gd" id="2_c5nkx"]
+[ext_resource type="SpriteFrames" uid="uid://dk4216cg7sixm" path="res://resources/animations/spr_magma_dragoon_fire_fx.tres" id="3_4xvan"]
 [ext_resource type="Script" uid="uid://dis8iifq507di" path="res://resources/PhysicalMoveDef.gd" id="3_c5nkx"]
 [ext_resource type="Script" uid="uid://13j7x4cikp7v" path="res://systems/bt/actions/AnimPhase.gd" id="4_4xvan"]
+
+[sub_resource type="Resource" id="Resource_q50fh"]
+script = ExtResource("2_c5nkx")
+sprite_frames = ExtResource("3_4xvan")
+animations = Array[String](["Fire"])
+follow_marker = true
+mirror_marker_with_facing = true
+offset = Vector2(-21, 30)
+lifetime = 1.5
+base_direction = Vector2(0, 0)
+z_index = 15
+sprite_rotation_degrees = 130.0
+rotate_to_direction = true
+metadata/_custom_type_script = "uid://sev6biwlyfqi"
+
+[sub_resource type="Resource" id="Resource_pc3ux"]
+script = ExtResource("1_6pbde")
+type = 2
+particle_def = SubResource("Resource_q50fh")
+metadata/_custom_type_script = "uid://ouu8ril4nkjk"
 
 [sub_resource type="Resource" id="Resource_1668e"]
 script = ExtResource("2_1668e")
@@ -30,4 +52,5 @@ exit = 3
 exit_timer = 3.0
 physical_move = SubResource("Resource_gt5nu")
 check_landing = true
+frame_events = Array[ExtResource("1_6pbde")]([SubResource("Resource_pc3ux")])
 metadata/_custom_type_script = "uid://13j7x4cikp7v"

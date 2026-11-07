@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ouu8ril4nkjk" path="res://systems/bt/actions/FrameEvent.gd" id="1_o0nej"]
 [ext_resource type="Script" uid="uid://ivpx7ytxrnkj" path="res://resources/PhysicalMovePhase.gd" id="2_7x1ow"]
+[ext_resource type="Resource" uid="uid://bn3j7kmrrtg38" path="res://enemies/boss/characters/magma_dragoon/fx/Firekick_FX.tres" id="2_mig00"]
 [ext_resource type="Script" uid="uid://dis8iifq507di" path="res://resources/PhysicalMoveDef.gd" id="3_mig00"]
 [ext_resource type="Script" uid="uid://13j7x4cikp7v" path="res://systems/bt/actions/AnimPhase.gd" id="4_ahv87"]
 
@@ -10,6 +11,12 @@ script = ExtResource("1_o0nej")
 frame = 1
 type = 3
 value = &"snd_dg_nosedive_falling"
+metadata/_custom_type_script = "uid://ouu8ril4nkjk"
+
+[sub_resource type="Resource" id="Resource_7x1ow"]
+script = ExtResource("1_o0nej")
+type = 2
+particle_def = ExtResource("2_mig00")
 metadata/_custom_type_script = "uid://ouu8ril4nkjk"
 
 [sub_resource type="Resource" id="Resource_v240m"]
@@ -28,5 +35,5 @@ metadata/_custom_type_script = "uid://dis8iifq507di"
 script = ExtResource("4_ahv87")
 anim_name = &"magma_dragoon_firekick_apextokick"
 physical_move = SubResource("Resource_sn58l")
-frame_events = Array[ExtResource("1_o0nej")]([SubResource("Resource_o0nej")])
+frame_events = Array[ExtResource("1_o0nej")]([SubResource("Resource_o0nej"), SubResource("Resource_7x1ow")])
 metadata/_custom_type_script = "uid://13j7x4cikp7v"

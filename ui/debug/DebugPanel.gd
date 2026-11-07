@@ -92,6 +92,8 @@ func _build_sidebar_buttons() -> void:
 	var active_data := CharacterManagement.get_active_data()
 	var is_x := active_data != null and active_data.character_id == &"X"
 
+
+## Adicionando os botões ao painel debug
 	for slot in ["head", "body", "arms", "legs"]:
 		_add_btn(
 			slot.to_upper(),
@@ -99,10 +101,13 @@ func _build_sidebar_buttons() -> void:
 			not is_x
 		)
 
+	_add_btn("RESET LAYERS", _on_reset_layers)
+	
+	_add_separator()
 	_add_btn("SPAWN",        _open_popup)
 	
 	_add_btn("MAGMA DRAGON", _on_next_map)
-	_add_btn("RESET LAYERS", _on_reset_layers)
+	_add_btn("testing stage", _test_next_map)
 	
 	_add_separator()
 	_add_btn("Flip Boss Facing", _flip_boss)
@@ -268,6 +273,12 @@ func _on_next_map() -> void:
 	GameManager.set_input_mode(_previous_input_mode)
 	# Pelo start_stage: define current_stage_id e toca a música da fase (MD).
 	GameManager.start_stage(load("res://levels/stage_data/stage_magma_dragon.tres") as StageData)
+	
+func _test_next_map() -> void:
+	get_tree().paused = false
+	GameManager.set_input_mode(_previous_input_mode)
+	# Pelo start_stage: define current_stage_id e toca a música da fase (MD).
+	GameManager.start_stage(load("res://levels/stage_data/test.tres") as StageData)
 	
 
 

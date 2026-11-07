@@ -1,0 +1,63 @@
+[gd_resource type="Resource" script_class="SpawnedParticleDef" format=3 uid="uid://bn3j7kmrrtg38"]
+
+[ext_resource type="Script" uid="uid://sev6biwlyfqi" path="res://particlesystem/resources/SpawnedParticleDef.gd" id="1_fvpe3"]
+[ext_resource type="Texture2D" uid="uid://d37nfjla4v16e" path="res://sprites/spr_magma_dragoon_fire_up/d6e7b988-c141-4866-bcd7-36e94ca2205c.png" id="2_p0krn"]
+[ext_resource type="Texture2D" uid="uid://5qikyo5oqbqv" path="res://sprites/spr_magma_dragoon_fire_up/d9a69cfc-13c8-4730-bf58-b7559c3581c6.png" id="3_g1pfn"]
+[ext_resource type="Texture2D" uid="uid://dp5uv7sd1mkmv" path="res://sprites/spr_magma_dragoon_fire_up/3cba982d-d97f-4727-bb77-285f71c760ec.png" id="4_etsrk"]
+[ext_resource type="Texture2D" uid="uid://uyxsfu4yxfu0" path="res://sprites/spr_magma_dragoon_fire_up/e757b5e8-2e4d-47d8-b93d-f54555332a1f.png" id="5_t4yhy"]
+[ext_resource type="Texture2D" uid="uid://b6xavkxqo0dvm" path="res://sprites/spr_magma_dragoon_fire_up/efbefe58-7744-4ff4-a71d-43b96093f242.png" id="6_he5rm"]
+[ext_resource type="Texture2D" uid="uid://bvbr3ih4rkhg7" path="res://sprites/spr_magma_dragoon_fire_up/1b234bb7-2730-49a0-98eb-9ca6a0af857e.png" id="7_jn5vn"]
+[ext_resource type="Texture2D" uid="uid://pjmjdaugflkh" path="res://sprites/spr_magma_dragoon_fire_up/71d972b5-3a3e-4c75-95bc-94b6762b0634.png" id="8_3ebaq"]
+[ext_resource type="Texture2D" uid="uid://cxihxhm3hprqd" path="res://sprites/spr_magma_dragoon_fire_up/c9e68ce9-f5ec-49d9-bc62-0e13ee4c971b.png" id="9_u21cj"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eij44"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_p0krn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_g1pfn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_etsrk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_t4yhy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_he5rm")
+}],
+"loop": true,
+"name": &"Fire",
+"speed": 16.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_jn5vn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_3ebaq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_u21cj")
+}],
+"loop": false,
+"name": &"FireSpawning",
+"speed": 16.0
+}]
+
+[resource]
+script = ExtResource("1_fvpe3")
+sprite_frames = SubResource("SpriteFrames_eij44")
+animations = Array[String](["FireSpawning", "Fire"])
+follow_marker = true
+mirror_marker_with_facing = true
+offset = Vector2(-21, 30)
+lifetime = 2.0
+lifetime_variance = 0.0
+base_direction = Vector2(0, 0)
+z_index = 15
+sprite_rotation_degrees = 130.0
+rotate_to_direction = true
+metadata/_custom_type_script = "uid://sev6biwlyfqi"

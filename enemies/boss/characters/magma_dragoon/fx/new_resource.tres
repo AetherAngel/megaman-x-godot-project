@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DynamicParticleDef" format=3 uid="uid://dt45u53ggaa5g"]
+
+[ext_resource type="Script" uid="uid://ds8wibpfs1epi" path="res://particlesystem/resources/DynamicPhase.gd" id="1_pbcac"]
+[ext_resource type="Script" uid="uid://db2rrbnjuqqn3" path="res://particlesystem/resources/DynamicParticleDef.gd" id="2_atyxi"]
+
+[sub_resource type="Resource" id="Resource_pbcac"]
+script = ExtResource("1_pbcac")
+metadata/_custom_type_script = "uid://ds8wibpfs1epi"
+
+[resource]
+script = ExtResource("2_atyxi")
+phases = Array[ExtResource("1_pbcac")]([SubResource("Resource_pbcac")])
+metadata/_custom_type_script = "uid://db2rrbnjuqqn3"
