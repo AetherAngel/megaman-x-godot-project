@@ -1,7 +1,7 @@
 # autoload/GameManager.gd
 extends Node
 
-var GameVersion: String = "0.1.4"
+var GameVersion: String = "0.2.1"
 
 enum GameState {
 	BOOT,

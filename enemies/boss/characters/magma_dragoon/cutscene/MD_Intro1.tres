@@ -15,6 +15,6 @@ script = ExtResource("1_pxf5r")
 target_group = "sprite_boss"
 animation = "magma_dragoon_intro_appering"
 wait_to_finish = false
-step_total_duration = 5.0
+step_total_duration = 4.0
 physical_move = SubResource("Resource_5gau2")
 metadata/_custom_type_script = "uid://dn13wwlso37we"

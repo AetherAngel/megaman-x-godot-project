@@ -4,19 +4,45 @@
 [ext_resource type="Script" uid="uid://cbnu10kg40vow" path="res://Cutscene and Talk system/CutsceneStep.gd" id="2_atrh0"]
 [ext_resource type="Script" uid="uid://bbrkie5yvjxim" path="res://Cutscene and Talk system/steps/StepMusic.gd" id="3_kat8h"]
 [ext_resource type="Resource" uid="uid://5ow5el5xfos0" path="res://enemies/boss/characters/magma_dragoon/cutscene/MD_Intro1.tres" id="3_orbm7"]
+[ext_resource type="Script" uid="uid://sev6biwlyfqi" path="res://particlesystem/resources/SpawnedParticleDef.gd" id="4_8f25m"]
 [ext_resource type="Resource" uid="uid://cji7x7sd7byfw" path="res://enemies/boss/characters/magma_dragoon/cutscene/MD_InteractionToPlayer_Battle.tres" id="4_uxom7"]
 [ext_resource type="Script" uid="uid://ivpx7ytxrnkj" path="res://resources/PhysicalMovePhase.gd" id="4_w048k"]
 [ext_resource type="Resource" uid="uid://b8b4a4b6a6l2m" path="res://enemies/boss/characters/magma_dragoon/cutscene/MD_Intro2.tres" id="5_16s3x"]
 [ext_resource type="Script" uid="uid://bh6m6cpgdsuoe" path="res://Cutscene and Talk system/CutsceneEffects.gd" id="5_fifrr"]
 [ext_resource type="Script" uid="uid://dis8iifq507di" path="res://resources/PhysicalMoveDef.gd" id="5_kat8h"]
+[ext_resource type="SpriteFrames" uid="uid://clyjyfovhg2ye" path="res://resources/animations/spr_magma_dragoon_ball.tres" id="5_r2l5a"]
 [ext_resource type="Script" uid="uid://bfv7qiwsjmeyl" path="res://Cutscene and Talk system/steps/StepPhysicalMove.gd" id="6_fifrr"]
 [ext_resource type="Script" uid="uid://dn13wwlso37we" path="res://Cutscene and Talk system/steps/StepAnimation.gd" id="7_inukb"]
 [ext_resource type="Script" uid="uid://dy6rjhdvcg1s7" path="res://Cutscene and Talk system/steps/StepEffects.gd" id="10_inukb"]
+[ext_resource type="SpriteFrames" uid="uid://b5y3yrnu3t3st" path="res://resources/animations/spr_magma_dragoon_landfire.tres" id="13_0yys5"]
+[ext_resource type="SpriteFrames" uid="uid://ceuka2jt285e5" path="res://resources/animations/spr_magma_dragoon_landfire2.tres" id="14_kkywm"]
 
 [sub_resource type="Resource" id="Resource_fifrr"]
 script = ExtResource("3_kat8h")
 music_id = "boss_intro"
 metadata/_custom_type_script = "uid://bbrkie5yvjxim"
+
+[sub_resource type="Resource" id="Resource_a1awh"]
+script = ExtResource("4_8f25m")
+sprite_frames = ExtResource("5_r2l5a")
+animations = Array[String](["fireshield"])
+follow_marker = true
+mirror_marker_with_facing = true
+lifetime = 4.1
+lifetime_variance = 0.0
+metadata/_custom_type_script = "uid://sev6biwlyfqi"
+
+[sub_resource type="Resource" id="Resource_hb545"]
+script = ExtResource("5_fifrr")
+fx = SubResource("Resource_a1awh")
+fx_target_group = "sprite_boss"
+metadata/_custom_type_script = "uid://bh6m6cpgdsuoe"
+
+[sub_resource type="Resource" id="Resource_yvdq1"]
+script = ExtResource("10_inukb")
+effects = SubResource("Resource_hb545")
+duration = 0.1
+metadata/_custom_type_script = "uid://dy6rjhdvcg1s7"
 
 [sub_resource type="Resource" id="Resource_jlshy"]
 script = ExtResource("4_w048k")
@@ -47,6 +73,47 @@ step_total_duration = 0.4
 physical_move = SubResource("Resource_r2l5a")
 metadata/_custom_type_script = "uid://dn13wwlso37we"
 
+[sub_resource type="Resource" id="Resource_c3cxv"]
+script = ExtResource("4_8f25m")
+sprite_frames = ExtResource("13_0yys5")
+animations = Array[String](["landfire"])
+follow_marker = true
+mirror_marker_with_facing = true
+offset = Vector2(0, 35)
+base_direction = Vector2(0, 0)
+z_index = 16
+metadata/_custom_type_script = "uid://sev6biwlyfqi"
+
+[sub_resource type="Resource" id="Resource_ftxqk"]
+script = ExtResource("5_fifrr")
+fx = SubResource("Resource_c3cxv")
+fx_target_group = "sprite_boss"
+metadata/_custom_type_script = "uid://bh6m6cpgdsuoe"
+
+[sub_resource type="Resource" id="Resource_uafd4"]
+script = ExtResource("10_inukb")
+effects = SubResource("Resource_ftxqk")
+metadata/_custom_type_script = "uid://dy6rjhdvcg1s7"
+
+[sub_resource type="Resource" id="Resource_b78xk"]
+script = ExtResource("4_8f25m")
+sprite_frames = ExtResource("14_kkywm")
+animations = Array[String](["landfire2", "landfire3"])
+base_direction = Vector2(0, 0)
+metadata/_custom_type_script = "uid://sev6biwlyfqi"
+
+[sub_resource type="Resource" id="Resource_epi3n"]
+script = ExtResource("5_fifrr")
+fx = SubResource("Resource_b78xk")
+fx_target_group = "sprite_boss"
+fx_offset = Vector2(0, 25)
+metadata/_custom_type_script = "uid://bh6m6cpgdsuoe"
+
+[sub_resource type="Resource" id="Resource_ytska"]
+script = ExtResource("10_inukb")
+effects = SubResource("Resource_epi3n")
+metadata/_custom_type_script = "uid://dy6rjhdvcg1s7"
+
 [sub_resource type="Resource" id="Resource_kkywm"]
 script = ExtResource("5_fifrr")
 sfx_id = "snd_landing"
@@ -55,7 +122,7 @@ metadata/_custom_type_script = "uid://bh6m6cpgdsuoe"
 [sub_resource type="Resource" id="Resource_edmh2"]
 script = ExtResource("10_inukb")
 effects = SubResource("Resource_kkywm")
-duration = 0.1
+duration = 0.05
 metadata/_custom_type_script = "uid://dy6rjhdvcg1s7"
 
 [sub_resource type="Resource" id="Resource_w048k"]
@@ -66,6 +133,6 @@ metadata/_custom_type_script = "uid://dn13wwlso37we"
 
 [resource]
 script = ExtResource("1_c5jfb")
-steps = Array[ExtResource("2_atrh0")]([SubResource("Resource_fifrr"), ExtResource("3_orbm7"), SubResource("Resource_0yys5"), SubResource("Resource_edmh2"), SubResource("Resource_w048k"), ExtResource("4_uxom7"), ExtResource("5_16s3x")])
+steps = Array[ExtResource("2_atrh0")]([SubResource("Resource_fifrr"), SubResource("Resource_yvdq1"), ExtResource("3_orbm7"), SubResource("Resource_0yys5"), SubResource("Resource_uafd4"), SubResource("Resource_ytska"), SubResource("Resource_edmh2"), SubResource("Resource_w048k"), ExtResource("4_uxom7"), ExtResource("5_16s3x")])
 can_skip = false
 metadata/_custom_type_script = "uid://bm6eb134mii7m"

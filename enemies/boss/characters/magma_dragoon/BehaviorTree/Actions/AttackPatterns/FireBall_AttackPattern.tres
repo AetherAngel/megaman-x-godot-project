@@ -9,4 +9,5 @@ script = ExtResource("5_p2lgf")
 pattern_id = "FireBall"
 attacks = Array[ExtResource("1_tav77")]([ExtResource("2_44wav")])
 weight = 1.2
+cooldown = 3.0
 metadata/_custom_type_script = "uid://j3pj4beqbcci"

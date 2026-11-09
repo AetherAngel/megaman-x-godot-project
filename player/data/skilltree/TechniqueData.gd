@@ -38,3 +38,7 @@ extends Resource
 @export var sfx_name: String = ""
 @export var sfx_volume: float = 0.0
 @export var sfx_pitch: float = 1.0
+
+## Informações sobre a técnica
+@export_group("Info")
+@export var Tech_ID: String = ""

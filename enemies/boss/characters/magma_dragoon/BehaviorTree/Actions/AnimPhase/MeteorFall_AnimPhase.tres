@@ -1,11 +1,18 @@
 [gd_resource type="Resource" script_class="AnimPhase" format=3 uid="uid://c1uu2hojagklj"]
 
 [ext_resource type="Script" uid="uid://ouu8ril4nkjk" path="res://systems/bt/actions/FrameEvent.gd" id="1_oh80w"]
+[ext_resource type="Resource" uid="uid://b7182mdplqv45" path="res://enemies/boss/characters/magma_dragoon/fx/MD_FireShield_FX.tres" id="2_ahykd"]
 [ext_resource type="Script" uid="uid://sev6biwlyfqi" path="res://particlesystem/resources/SpawnedParticleDef.gd" id="2_lq08u"]
 [ext_resource type="SpriteFrames" uid="uid://crd2vxirucipb" path="res://resources/animations/spr_magma_dragoon_shot1.tres" id="3_ahykd"]
 [ext_resource type="Script" uid="uid://13j7x4cikp7v" path="res://systems/bt/actions/AnimPhase.gd" id="5_lpm1p"]
 [ext_resource type="Script" uid="uid://buejktiiqgsik" path="res://systems/barrage/BarrageDef.gd" id="6_barr"]
 [ext_resource type="Resource" uid="uid://b1cm03m5ymyil" path="res://enemies/boss/characters/magma_dragoon/Projectiles/FireBlastSpawnObject.tres" id="7_fbso"]
+
+[sub_resource type="Resource" id="Resource_a3s1r"]
+script = ExtResource("1_oh80w")
+type = 2
+particle_def = ExtResource("2_ahykd")
+metadata/_custom_type_script = "uid://ouu8ril4nkjk"
 
 [sub_resource type="Resource" id="Resource_4khg1"]
 script = ExtResource("2_lq08u")
@@ -54,5 +61,5 @@ anim_name = &"magma_dragoon_fireshielding"
 exit = 2
 signal_timeout = 16.0
 invulnerable = true
-frame_events = Array[ExtResource("1_oh80w")]([SubResource("Resource_plwj0"), SubResource("Resource_lq08u")])
+frame_events = Array[ExtResource("1_oh80w")]([SubResource("Resource_a3s1r"), SubResource("Resource_plwj0"), SubResource("Resource_lq08u")])
 metadata/_custom_type_script = "uid://13j7x4cikp7v"

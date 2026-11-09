@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SpawnedParticleDef" format=3 uid="uid://b7182mdplqv45"]
+
+[ext_resource type="Script" uid="uid://sev6biwlyfqi" path="res://particlesystem/resources/SpawnedParticleDef.gd" id="1_o0gn8"]
+[ext_resource type="SpriteFrames" uid="uid://clyjyfovhg2ye" path="res://resources/animations/spr_magma_dragoon_ball.tres" id="2_qweqp"]
+
+[resource]
+script = ExtResource("1_o0gn8")
+sprite_frames = ExtResource("2_qweqp")
+animations = Array[String](["fireshield"])
+follow_marker = true
+mirror_marker_with_facing = true
+lifetime = 16.0
+lifetime_variance = 0.0
+base_direction = Vector2(0, 0)
+z_index = 15
+metadata/_custom_type_script = "uid://sev6biwlyfqi"

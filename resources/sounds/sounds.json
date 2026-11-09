@@ -30,7 +30,7 @@
 	"snd_dg_hadouken": 		{ "file": "dg_hadouken.wav",		  "volume_db": -20.0, "pitch": 1.0},
 	"snd_dg_shoryuken": 		{ "file": "dg_rising.wav",		  "volume_db": -20.0, "pitch": 1.0},
 	"snd_dg_fireblast": 		{ "file": "dg_firebullet.wav",		  "volume_db": -20.0, "pitch": 1.0},
-	"snd_dg_firebullet": 		{ "file": "dg_firebullet.wav",		  "volume_db": -20.0, "pitch": 0.9},
+	"snd_dg_firebullet": 		{ "file": "dg_firebullet.wav",		  "volume_db": -20.0, "pitch": 0.98},
 	"snd_dg_fire_sfx": 		{ "file": "dg_fire_sfx.wav",		  "volume_db": -20.0, "pitch": 1.0},
 	"snd_dg_nosedive_jumping": 		{ "file": "dg_nosedive_jumping.wav",		  "volume_db": -20.0, "pitch": 1.0},
 	"snd_dg_nosedive_falling": 		{ "file": "dg_nosedive_falling.wav",		  "volume_db": -20.0, "pitch": 1.1},

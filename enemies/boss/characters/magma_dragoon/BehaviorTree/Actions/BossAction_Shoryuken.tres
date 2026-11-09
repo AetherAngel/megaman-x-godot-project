@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://b7fn0x34lsjyv" path="res://resources/ShapedPhysicalMovePhase.gd" id="4_8lkap"]
 [ext_resource type="Script" uid="uid://dis8iifq507di" path="res://resources/PhysicalMoveDef.gd" id="5_g2fc2"]
 [ext_resource type="Resource" uid="uid://c814sym5p3g3e" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/AnimPhase/Firekick_NoseDive_Part1_AnimPhase.tres" id="6_g2fc2"]
+[ext_resource type="Resource" uid="uid://bliebjunv7oeo" path="res://enemies/boss/characters/magma_dragoon/fx/MD_Shoryuken_FX.tres" id="6_juff2"]
 [ext_resource type="Script" uid="uid://dbtctnct07w57" path="res://systems/bt/actions/BossAction.gd" id="6_vub2c"]
 [ext_resource type="Resource" uid="uid://dkf2p4coeti06" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/AnimPhase/Firekick_NoseDive_Part2_AnimPhase.tres" id="7_vub2c"]
 [ext_resource type="Resource" uid="uid://latu328jftxc" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/AnimPhase/Firekick_NoseDive_Part3_AnimPhase.tres" id="8_juff2"]
@@ -52,18 +53,42 @@ type = 3
 value = &"snd_dg_shoryuken"
 metadata/_custom_type_script = "uid://ouu8ril4nkjk"
 
+[sub_resource type="Resource" id="Resource_2y20a"]
+script = ExtResource("2_xus66")
+type = 2
+particle_def = ExtResource("6_juff2")
+metadata/_custom_type_script = "uid://ouu8ril4nkjk"
+
+[sub_resource type="Resource" id="Resource_veul3"]
+script = ExtResource("2_xus66")
+frame = 1
+type = 3
+value = &"snd_dg_fire_sfx"
+metadata/_custom_type_script = "uid://ouu8ril4nkjk"
+
 [sub_resource type="Resource" id="Resource_vh7dk"]
 script = ExtResource("1_ssxe3")
 anim_name = &"magma_dragoon_shoryuken_in_air"
 exit = 3
-frame_events = Array[ExtResource("2_xus66")]([SubResource("Resource_cni6s")])
+frame_events = Array[ExtResource("2_xus66")]([SubResource("Resource_cni6s"), SubResource("Resource_2y20a"), SubResource("Resource_veul3")])
 metadata/_custom_type_script = "uid://13j7x4cikp7v"
+
+[sub_resource type="Resource" id="Resource_vub2c"]
+script = ExtResource("3_dpa2u")
+exit = 2
+metadata/_custom_type_script = "uid://ivpx7ytxrnkj"
+
+[sub_resource type="Resource" id="Resource_juff2"]
+script = ExtResource("5_g2fc2")
+phases = Array[ExtResource("3_dpa2u")]([SubResource("Resource_vub2c")])
+metadata/_custom_type_script = "uid://dis8iifq507di"
 
 [sub_resource type="Resource" id="Resource_x8c2q"]
 script = ExtResource("1_ssxe3")
 anim_name = &"magma_dragoon_falling"
-exit = 1
+exit = 3
 exit_timer = 0.8
+physical_move = SubResource("Resource_juff2")
 check_landing = true
 metadata/_custom_type_script = "uid://13j7x4cikp7v"
 

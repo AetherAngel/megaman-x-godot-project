@@ -25,6 +25,7 @@ func update(_delta: float) -> void:
 		return
 	if player.current_character.default_weapon == "saber":
 		if _check_techniques(player.current_armor.ground_techniques):
+			player.state_machine.change_state("Raijingeki")
 			return
 	if InputManager.is_action_just_pressed("shoot") and GameManager.current_player == "Zero":
 		player.combo_count = 1

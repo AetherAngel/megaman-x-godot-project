@@ -8,4 +8,5 @@
 script = ExtResource("7_p74xo")
 pattern_id = "shoryuken"
 attacks = Array[ExtResource("1_xl5f2")]([ExtResource("2_yoq71")])
+cooldown = 3.5
 metadata/_custom_type_script = "uid://j3pj4beqbcci"

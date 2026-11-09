@@ -3,22 +3,26 @@
 [ext_resource type="Script" uid="uid://ouu8ril4nkjk" path="res://systems/bt/actions/FrameEvent.gd" id="1_6pbde"]
 [ext_resource type="Script" uid="uid://ivpx7ytxrnkj" path="res://resources/PhysicalMovePhase.gd" id="2_1668e"]
 [ext_resource type="Script" uid="uid://sev6biwlyfqi" path="res://particlesystem/resources/SpawnedParticleDef.gd" id="2_c5nkx"]
-[ext_resource type="SpriteFrames" uid="uid://dk4216cg7sixm" path="res://resources/animations/spr_magma_dragoon_fire_fx.tres" id="3_4xvan"]
+[ext_resource type="SpriteFrames" uid="uid://06otabi61lfs" path="res://resources/animations/spr_magma_dragoon_kick.tres" id="3_4xvan"]
 [ext_resource type="Script" uid="uid://dis8iifq507di" path="res://resources/PhysicalMoveDef.gd" id="3_c5nkx"]
 [ext_resource type="Script" uid="uid://13j7x4cikp7v" path="res://systems/bt/actions/AnimPhase.gd" id="4_4xvan"]
 
 [sub_resource type="Resource" id="Resource_q50fh"]
 script = ExtResource("2_c5nkx")
 sprite_frames = ExtResource("3_4xvan")
-animations = Array[String](["Fire"])
+animations = Array[String](["fire"])
 follow_marker = true
+follow_updates_facing = true
 mirror_marker_with_facing = true
 offset = Vector2(-21, 30)
-lifetime = 1.5
+lifetime = 0.45
+lifetime_variance = 0.0
 base_direction = Vector2(0, 0)
+inherit_facing = true
+scale_start = Vector2(1.5, 1.5)
+scale_end = Vector2(1.5, 1.5)
 z_index = 15
-sprite_rotation_degrees = 130.0
-rotate_to_direction = true
+mirror_rotation_with_facing = true
 metadata/_custom_type_script = "uid://sev6biwlyfqi"
 
 [sub_resource type="Resource" id="Resource_pc3ux"]
@@ -37,6 +41,7 @@ metadata/_custom_type_script = "uid://ivpx7ytxrnkj"
 [sub_resource type="Resource" id="Resource_6pbde"]
 script = ExtResource("2_1668e")
 set_velocity = true
+exit = 2
 duration = 0.1
 metadata/_custom_type_script = "uid://ivpx7ytxrnkj"
 

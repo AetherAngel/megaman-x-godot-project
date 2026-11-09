@@ -43,6 +43,9 @@ enum SelectionMode {
 @export var entry_sfx: String = ""
 ## Música tocada durante esta fase. Vazio = mantém a atual.
 @export var phase_music: String = ""
+## Repetir música durante esta fase a partir de certos segudos, 0 segundos
+## repete a música toda.
+@export var loop_sec: float = 0
 
 @export_group("Immunities")
 ## Tags de dano que o boss ignora nesta fase.

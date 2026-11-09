@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="SpawnedParticleDef" format=3 uid="uid://bliebjunv7oeo"]
+
+[ext_resource type="Script" uid="uid://sev6biwlyfqi" path="res://particlesystem/resources/SpawnedParticleDef.gd" id="1_0dv7b"]
+[ext_resource type="SpriteFrames" uid="uid://couyj57h0qu3c" path="res://resources/animations/spr_magma_dragoon_shoryuken.tres" id="2_41wbn"]
+
+[resource]
+script = ExtResource("1_0dv7b")
+sprite_frames = ExtResource("2_41wbn")
+animations = Array[String](["shoryuken"])
+follow_marker = true
+mirror_marker_with_facing = true
+offset = Vector2(-24, -37)
+lifetime = 1.1
+scale_start = Vector2(0.8, 0.8)
+scale_end = Vector2(0.8, 0.8)
+z_index = 15
+metadata/_custom_type_script = "uid://sev6biwlyfqi"

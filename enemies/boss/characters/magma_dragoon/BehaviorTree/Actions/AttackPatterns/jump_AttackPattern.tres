@@ -8,5 +8,5 @@
 script = ExtResource("2_dx7j8")
 pattern_id = "jump"
 attacks = Array[ExtResource("1_wp68m")]([ExtResource("2_turnp")])
-cooldown = 0.5
+cooldown = 1.0
 metadata/_custom_type_script = "uid://j3pj4beqbcci"

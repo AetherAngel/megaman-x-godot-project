@@ -14,6 +14,11 @@ var _follow_has_marker: bool      = false
 var _follow_marker:     Node2D    = null
 var _follow_delta:      Vector2   = Vector2.ZERO  # em relação à referência, orientação NATIVA do dono
 
+# Facing da arte (inherit_facing): arte desenhada para a DIREITA; espelha quando o dono olha p/ a esquerda.
+var _facing_aware:      bool      = false  # inherit_facing ligado e dono com facing_right
+var _last_facing_right: bool      = true
+var _rot_right:         float     = 0.0    # rotação (rad, sentido do Godot) para o dono olhando p/ a DIREITA
+
 
 func setup(def: SpawnedParticleDef, direction: Vector2, speed: float, owner: Node2D = null) -> void:
 	_def   = def
@@ -43,11 +48,21 @@ func setup(def: SpawnedParticleDef, direction: Vector2, speed: float, owner: Nod
 		sprite_angle += direction.angle()
 	_sprite.rotation = sprite_angle
 
+	_facing_aware = def.inherit_facing and owner and owner.get("facing_right") != null
+	if _facing_aware and def.mirror_rotation_with_facing:
+		# A direção que chega aqui já veio espelhada em X quando o dono olha para a esquerda
+		# (ParticleFX._resolve_direction). Desfaz isso para obter a rotação "voltado para a direita"
+		# — o espelhamento é aplicado por _apply_facing, invertendo o ângulo junto com o flip_h.
+		var dir_right := Vector2(-direction.x, direction.y) if not owner.facing_right else direction
+		_rot_right = -deg_to_rad(def.sprite_rotation_degrees)
+		if def.rotate_to_direction and direction != Vector2.ZERO:
+			_rot_right += dir_right.angle()
+
 	if def.sprite_frames:
 		_sprite.sprite_frames = def.sprite_frames
-			# Espelha o sprite se inherit_facing estiver ativo
-		if def.inherit_facing and owner and owner.get("facing_right") != null:
-			_sprite.flip_h = not owner.facing_right
+		# Espelha o sprite se inherit_facing estiver ativo
+		if _facing_aware:
+			_apply_facing(owner.facing_right)
 		if not def.animations.is_empty():
 			var anim: String = def.animations[randi() % def.animations.size()]
 			if _sprite.sprite_frames.has_animation(anim):
@@ -65,6 +80,19 @@ func _update_follow() -> void:
 		return
 	var reference := ParticleFX.follow_reference(_def, _owner, _follow_marker)
 	global_position = ParticleFX.follow_point(_def, _owner, reference, _follow_delta)
+	# Opcional: o dono virou com o FX vivo -> re-espelha a arte (e a rotação, se pedido).
+	if _def.follow_updates_facing and _facing_aware and _owner.facing_right != _last_facing_right:
+		_apply_facing(_owner.facing_right)
+
+
+## Aplica o facing à arte: flip_h quando o dono olha para a esquerda (arte desenhada para a
+## DIREITA) e, com mirror_rotation_with_facing, inverte o ângulo junto — a imagem espelhada
+## exata. Sem o flag, a rotação não é tocada (ficou como o setup() a definiu).
+func _apply_facing(facing_right: bool) -> void:
+	_last_facing_right = facing_right
+	_sprite.flip_h = not facing_right
+	if _def.mirror_rotation_with_facing:
+		_sprite.rotation = _rot_right if facing_right else -_rot_right
 
 
 ## Substitui a vida sorteada no setup() por uma exata (ParticleFX.spawn_exact).

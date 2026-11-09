@@ -95,7 +95,10 @@ func on_presentation_complete() -> void:
 	if _boss and _boss.data and _boss.data.phases.size() > 0:
 		var phase0 := _boss.data.phases[0]
 		if not phase0.phase_music.is_empty():
-			SoundManager.play_music(phase0.phase_music)
+			SoundManager.stop_all_loops()
+			SoundManager.stop_all_sfx()
+			SoundManager.stop_music()
+			SoundManager.play_then_loop(phase0.phase_music, -15, 1, phase0.loop_sec)
 
 	if _boss and _boss.bt_runner:
 		_boss.bt_runner.enabled = true

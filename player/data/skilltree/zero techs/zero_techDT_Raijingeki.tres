@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="TechniqueData" format=3 uid="uid://dipo7qxkve62f"]
+
+[ext_resource type="Resource" uid="uid://beq1wxd8khc3d" path="res://player/data/skilltree/zero techs/zero_tech_raijingeki.tres" id="1_fxmef"]
+[ext_resource type="Script" uid="uid://d3hn4h6f71qhs" path="res://player/data/skilltree/TechniqueData.gd" id="2_o2706"]
+
+[resource]
+script = ExtResource("2_o2706")
+input = ExtResource("1_fxmef")
+unlocked = true
+Tech_ID = "raijingeki"
+metadata/_custom_type_script = "uid://d3hn4h6f71qhs"

@@ -303,6 +303,20 @@ func _run_all() -> void:
 	await _scenario("NEW_follow_ignores_own_velocity", "NEW", _new_follow_ignores_velocity, 0.1)
 	await _scenario("NEW_follow_false_still_moves_by_velocity", "NEW", _new_follow_false_moves, 0.1)
 
+	# ---------------- RECURSO NOVO: rotação espelhada com o facing + follow_updates_facing ----------------
+	await _scenario("NEW_rot_flags_off_unchanged", "NEW", _new_rot_flags_off, 0.1)
+	await _scenario("NEW_rot_mirror_fixed", "NEW", _new_rot_mirror_fixed, 0.1)
+	await _scenario("NEW_rot_mirror_is_exact_reflection", "NEW", _new_rot_exact_reflection, 0.1)
+	await _scenario("NEW_rot_mirror_needs_inherit_facing", "NEW", _new_rot_needs_inherit, 0.1)
+	await _scenario("NEW_rot_owner_without_facing_right", "NEW", _new_rot_owner_without_facing, 0.1)
+	await _scenario("NEW_rot_follow_turn_remirrors", "NEW", _new_rot_follow_turn, 0.1)
+	await _scenario("NEW_rot_follow_turn_flag_off_decided_at_birth", "NEW", _new_rot_follow_flag_off, 0.1)
+	await _scenario("NEW_rot_follow_updates_art_only", "NEW", _new_rot_follow_art_only, 0.1)
+	await _scenario("NEW_rot_follow_updates_needs_follow", "NEW", _new_rot_updates_needs_follow, 0.1)
+	await _scenario("NEW_rot_follow_updates_needs_inherit_facing", "NEW", _new_rot_updates_needs_inherit, 0.1)
+	await _scenario("NEW_rot_follow_owner_freed_no_error", "NEW", _new_rot_follow_owner_freed, 0.1)
+	await _scenario("NEW_rot_firekick_like", "NEW", _new_rot_firekick_like, 0.1)
+
 
 # ---------------- REG ----------------
 
@@ -787,6 +801,193 @@ func _new_follow_false_moves() -> void:
 	var inst: Node2D = _spawns.back()["node"]
 	await _wait(0.3)
 	_expect(_sid + "/moved_right", inst.global_position.x > 55.0, "x=%.2f" % inst.global_position.x)
+
+
+# ---------------- NEW: rotação espelhada + follow_updates_facing ----------------
+
+func _rot_def(props: Dictionary) -> SpawnedParticleDef:
+	var base := {"base_direction": Vector2(0.6, -0.8), "spread_angle": 0.0, "lifetime": 3.0}
+	for k in props:
+		base[k] = props[k]
+	return _sdef("rot", base)
+
+
+func _spawn_rot(props: Dictionary, facing_right: bool) -> Array:
+	var b := _mk_boss(Vector2(100, 100), false, facing_right)
+	ParticleFX.spawn_at(_rot_def(props), b.global_position, Vector2.ZERO, b)
+	return [b, _spawns.back()["node"]]
+
+
+func _spr(inst: Node2D) -> AnimatedSprite2D:
+	return inst.get("_sprite")
+
+
+## Rotação do sprite em graus ANTI-HORÁRIOS a partir da arte (como sprite_rotation_degrees os lê).
+func _ccw(inst: Node2D) -> float:
+	return fposmod(-_spr(inst).rotation_degrees + 180.0, 360.0) - 180.0
+
+
+func _ang_eq(a: float, b: float) -> bool:
+	return absf(fposmod(a - b + 180.0, 360.0) - 180.0) <= 0.01
+
+
+func _state_is(inst: Node2D, want_flip: bool, want_ccw: float) -> bool:
+	return _spr(inst).flip_h == want_flip and _ang_eq(_ccw(inst), want_ccw)
+
+
+func _state_str(inst: Node2D) -> String:
+	return "flip=%s ccw=%.2f" % [str(_spr(inst).flip_h), _ccw(inst)]
+
+
+## Contrato inalterado: com os flags desligados, a rotação NÃO muda com o lado (só o flip_h).
+func _new_rot_flags_off() -> void:
+	var props := {"sprite_rotation_degrees": 130.0, "inherit_facing": true}
+	var r: Array = _spawn_rot(props, true)
+	var l: Array = _spawn_rot(props, false)
+	_expect(_sid + "/right", _state_is(r[1], false, 130.0), _state_str(r[1]))
+	_expect(_sid + "/left_only_flips_art", _state_is(l[1], true, 130.0), _state_str(l[1]))
+
+
+func _new_rot_mirror_fixed() -> void:
+	var props := {"sprite_rotation_degrees": 130.0, "inherit_facing": true, "mirror_rotation_with_facing": true}
+	var r: Array = _spawn_rot(props, true)
+	var l: Array = _spawn_rot(props, false)
+	_expect(_sid + "/right", _state_is(r[1], false, 130.0), _state_str(r[1]))
+	_expect(_sid + "/left_mirrored", _state_is(l[1], true, -130.0), _state_str(l[1]))
+
+
+func _xf(inst: Node2D, v: Vector2) -> Vector2:
+	var s := _spr(inst)
+	return Transform2D(s.rotation, Vector2.ZERO) * Vector2(-v.x if s.flip_h else v.x, v.y)
+
+
+## Prova numérica sobre instâncias reais: o lado esquerdo é a reflexão EXATA do lado direito
+## (arte + rotação), para vários ângulos fixos e direções, com e sem rotate_to_direction.
+func _new_rot_exact_reflection() -> void:
+	var worst := 0.0
+	var combos := 0
+	for fixed in [0.0, 40.0, 130.0, 230.0]:
+		for rtd in [false, true]:
+			for dir in [Vector2(0.6, -0.8), Vector2(1, 0), Vector2(0, -1), Vector2(0.9, 0.3)]:
+				var props := {"sprite_rotation_degrees": fixed, "rotate_to_direction": rtd, "base_direction": dir,
+					"inherit_facing": true, "mirror_rotation_with_facing": true}
+				var r: Array = _spawn_rot(props, true)
+				var l: Array = _spawn_rot(props, false)
+				for v in [Vector2(1, 0), Vector2(0, -1), Vector2(0.6, -0.8), Vector2(-0.3, 0.9)]:
+					var pr: Vector2 = _xf(r[1], v)
+					var want := Vector2(-pr.x, pr.y)
+					worst = maxf(worst, _xf(l[1], v).distance_to(want))
+				combos += 1
+	_expect(_sid + "/exact_reflection", worst <= 0.0001, "erro_max=%.6f em %d combinações" % [worst, combos])
+
+
+## O flag só "escuta" o inherit_facing: sem ele, nada espelha.
+func _new_rot_needs_inherit() -> void:
+	var props := {"sprite_rotation_degrees": 130.0, "inherit_facing": false, "mirror_rotation_with_facing": true}
+	var r: Array = _spawn_rot(props, true)
+	var l: Array = _spawn_rot(props, false)
+	_expect(_sid + "/right", _state_is(r[1], false, 130.0), _state_str(r[1]))
+	_expect(_sid + "/left_unchanged", _state_is(l[1], false, 130.0), _state_str(l[1]))
+
+
+## Dono sem facing_right (nó comum): não espelha e não dá erro.
+func _new_rot_owner_without_facing() -> void:
+	var o := _mk_plain(Vector2(100, 100))
+	var props := {"sprite_rotation_degrees": 130.0, "inherit_facing": true, "mirror_rotation_with_facing": true}
+	ParticleFX.spawn_at(_rot_def(props), o.global_position, Vector2.ZERO, o)
+	var inst: Node2D = _spawns.back()["node"]
+	_expect(_sid + "/no_mirror", _state_is(inst, false, 130.0), _state_str(inst))
+
+
+func _follow_props(extra: Dictionary) -> Dictionary:
+	var p := {"sprite_rotation_degrees": 130.0, "inherit_facing": true, "follow_marker": true}
+	for k in extra:
+		p[k] = extra[k]
+	return p
+
+
+## Virada do dono com o FX vivo: arte e rotação re-espelhadas no mesmo frame, nos dois sentidos.
+func _new_rot_follow_turn() -> void:
+	var r: Array = _spawn_rot(_follow_props({"mirror_rotation_with_facing": true, "follow_updates_facing": true}), true)
+	var b: FakeBoss = r[0]
+	var inst: Node2D = r[1]
+	_expect(_sid + "/born_right", _state_is(inst, false, 130.0), _state_str(inst))
+	b.facing_right = false
+	await _two_frames()
+	_expect(_sid + "/turned_left", _state_is(inst, true, -130.0), _state_str(inst))
+	b.facing_right = true
+	await _two_frames()
+	_expect(_sid + "/turned_back", _state_is(inst, false, 130.0), _state_str(inst))
+
+
+## Sem follow_updates_facing: arte e rotação continuam decididas só no nascimento (como na A1).
+func _new_rot_follow_flag_off() -> void:
+	var r: Array = _spawn_rot(_follow_props({"mirror_rotation_with_facing": true, "follow_updates_facing": false}), true)
+	var b: FakeBoss = r[0]
+	var inst: Node2D = r[1]
+	b.facing_right = false
+	await _two_frames()
+	_expect(_sid + "/unchanged_after_turn", _state_is(inst, false, 130.0), _state_str(inst))
+
+
+## Só a arte re-espelha quando mirror_rotation_with_facing está desligado.
+func _new_rot_follow_art_only() -> void:
+	var r: Array = _spawn_rot(_follow_props({"mirror_rotation_with_facing": false, "follow_updates_facing": true}), true)
+	var b: FakeBoss = r[0]
+	var inst: Node2D = r[1]
+	b.facing_right = false
+	await _two_frames()
+	_expect(_sid + "/art_flips_rotation_kept", _state_is(inst, true, 130.0), _state_str(inst))
+
+
+## O flag só vale enquanto o FX está em follow.
+func _new_rot_updates_needs_follow() -> void:
+	var r: Array = _spawn_rot(_follow_props({"follow_marker": false, "mirror_rotation_with_facing": true, "follow_updates_facing": true}), true)
+	var b: FakeBoss = r[0]
+	var inst: Node2D = r[1]
+	b.facing_right = false
+	await _two_frames()
+	_expect(_sid + "/no_effect_without_follow", _state_is(inst, false, 130.0), _state_str(inst))
+
+
+## E só faz sentido com inherit_facing ligado.
+func _new_rot_updates_needs_inherit() -> void:
+	var r: Array = _spawn_rot(_follow_props({"inherit_facing": false, "mirror_rotation_with_facing": true, "follow_updates_facing": true}), true)
+	var b: FakeBoss = r[0]
+	var inst: Node2D = r[1]
+	b.facing_right = false
+	await _two_frames()
+	_expect(_sid + "/no_effect_without_inherit", _state_is(inst, false, 130.0), _state_str(inst))
+
+
+func _new_rot_follow_owner_freed() -> void:
+	var r: Array = _spawn_rot(_follow_props({"mirror_rotation_with_facing": true, "follow_updates_facing": true}), true)
+	var b: FakeBoss = r[0]
+	var inst: Node2D = r[1]
+	await _two_frames()
+	b.free()
+	_actors.erase(b)
+	await _wait(0.2)
+	_expect(_sid + "/still_alive", is_instance_valid(inst), "")
+	if is_instance_valid(inst):
+		_expect(_sid + "/unchanged", _state_is(inst, false, 130.0), _state_str(inst))
+
+
+## Configuração parecida com a do FireKick: posição na orientação NATIVA do Boss (arte à
+## esquerda), arte/rotação na convenção do inherit_facing (autoradas para a DIREITA).
+func _new_rot_firekick_like() -> void:
+	var props := {"follow_marker": true, "mirror_marker_with_facing": true, "offset": Vector2(-21, 30),
+		"sprite_rotation_degrees": 130.0, "rotate_to_direction": false, "inherit_facing": true,
+		"mirror_rotation_with_facing": true, "follow_updates_facing": true, "base_direction": Vector2.ZERO}
+	var b := _mk_boss(Vector2(100, 100), false, false)   # nativo à esquerda, olhando para a ESQUERDA (nativo)
+	ParticleFX.spawn_at(_sdef("firekick_like", props), b.global_position, Vector2.ZERO, b)
+	var inst: Node2D = _spawns.back()["node"]
+	_expect_pos(_sid + "/pos_native_left", inst.global_position, Vector2(79, 130))
+	_expect(_sid + "/art_native_left", _state_is(inst, true, -130.0), _state_str(inst))
+	b.facing_right = true
+	await _two_frames()
+	_expect_pos(_sid + "/pos_after_turn_right", inst.global_position, Vector2(121, 130))
+	_expect(_sid + "/art_after_turn_right", _state_is(inst, false, 130.0), _state_str(inst))
 
 
 # ============================================================

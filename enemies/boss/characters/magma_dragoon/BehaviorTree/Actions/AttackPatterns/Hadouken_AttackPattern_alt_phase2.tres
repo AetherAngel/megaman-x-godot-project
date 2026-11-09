@@ -10,4 +10,6 @@
 script = ExtResource("5_llvqp")
 pattern_id = "hadoukenphase2alt"
 attacks = Array[ExtResource("1_k2q8w")]([ExtResource("2_jhd1w"), ExtResource("3_xe4h2"), ExtResource("2_jhd1w"), ExtResource("4_88dkd")])
+weight = 1.5
+cooldown = 8.0
 metadata/_custom_type_script = "uid://j3pj4beqbcci"

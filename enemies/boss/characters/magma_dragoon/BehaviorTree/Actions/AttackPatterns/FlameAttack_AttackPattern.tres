@@ -77,5 +77,5 @@ metadata/_custom_type_script = "uid://dbtctnct07w57"
 script = ExtResource("9_kachw")
 pattern_id = "Flame Attack"
 attacks = Array[ExtResource("1_23fh0")]([SubResource("Resource_vehhp")])
-cooldown = 3.0
+cooldown = 6.0
 metadata/_custom_type_script = "uid://j3pj4beqbcci"

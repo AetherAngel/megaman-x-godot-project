@@ -45,9 +45,15 @@ extends Resource
 ## re-espelha o deslocamento no mesmo frame (se mirror_marker_with_facing estiver ligado).
 ## Enquanto segue, o FX não tem movimento próprio (velocity e gravity são ignoradas). Se o dono
 ## ou o marker forem liberados, para de seguir e termina normalmente (fade e lifetime).
-## A arte (inherit_facing) é decidida só no nascimento. Não vale para Wave: ondas nascem
-## sempre do ponto original. Desligado = o FX nasce relativo ao dono e fica independente.
+## A arte e a rotação (inherit_facing) são decididas só no nascimento, a menos que
+## follow_updates_facing esteja ligado. Não vale para Wave: ondas nascem sempre do ponto
+## original. Desligado = o FX nasce relativo ao dono e fica independente.
 @export var follow_marker: bool = false
+## Só vale com follow_marker e inherit_facing. Se true, quando o dono vira com o FX vivo, a arte
+## (flip_h) e, se mirror_rotation_with_facing estiver ligado, a rotação são re-espelhadas no
+## mesmo frame (e voltam se o dono virar de novo). Desligado = arte e rotação são decididas só
+## no nascimento, como sempre.
+@export var follow_updates_facing: bool = false
 ## Se true, espelha o X da POSIÇÃO (do marker, do offset e do deslocamento do follow) quando o
 ## dono está virado para o lado oposto ao da arte NATIVA dele. O dono precisa ter
 ## get_facing_flip() (ex: Boss), que devolve -1 nesse caso; cada personagem tem a sua orientação
@@ -82,8 +88,10 @@ extends Resource
 @export var inherit_normal: bool = false
 ## Se true, herda o facing_right do dono e espelha base_direction.x automaticamente.
 ## Evita hardcodar a direção no código para cada efeito. Também espelha a ARTE (flip_h): a arte
-## do FX deve ser desenhada voltada para a DIREITA. Decidido no nascimento. Não move a posição:
-## para isso existe mirror_marker_with_facing.
+## do FX deve ser desenhada voltada para a DIREITA. Decidido no nascimento (ou a cada virada do
+## dono, com follow_updates_facing). Não move a posição (para isso existe
+## mirror_marker_with_facing) e, sozinho, não espelha a rotação (veja
+## mirror_rotation_with_facing).
 @export var inherit_facing: bool = false
 ## Arco de dispersão em graus. 0 = todas na mesma dir, 360 = radial completo.
 @export_range(0, 360) var spread_angle: float = 30.0
@@ -102,13 +110,25 @@ extends Resource
 @export var scale_end: Vector2 = Vector2.ONE
 @export var z_index: int = 10
 ## Rotação FIXA do sprite, em graus, no sentido ANTI-HORÁRIO (positivo gira "para cima").
-## 0 = transform original da arte. Ex: arte desenhada para a DIREITA + 90 = aponta para cima.
-## (O Godot gira no sentido horário; aqui o sinal é invertido de propósito.)
+## 0 = transform original da arte. Ex: arte desenhada para a DIREITA + 90 = aponta para cima;
+## arte desenhada para CIMA + 90 = aponta para a esquerda, + 180 = para baixo, + 230 = para a
+## direita e um pouco abaixo. (O Godot gira no sentido horário; aqui o sinal é invertido de
+## propósito.) Para um ângulo fixo, deixe rotate_to_direction DESLIGADO.
+## Com mirror_rotation_with_facing, digite o ângulo para o lado em que a arte "olha" (direita).
 @export var sprite_rotation_degrees: float = 0.0
 ## Se true, o sprite também gira para apontar na direção do movimento de cada partícula
 ## (soma-se à rotação fixa acima). Use sprite_rotation_degrees para compensar para onde a
 ## arte ORIGINAL aponta: desenhada para a esquerda = 180; para a direita = 0.
+## Atenção: com base_direction vazio, a direção padrão é PARA CIMA (soma ~90° à rotação), e o
+## spread_angle (padrão 30) sorteia ±15° por instância. Para um ângulo fixo, deixe DESLIGADO.
 @export var rotate_to_direction: bool = false
+## Só vale com inherit_facing. Se true, a ROTAÇÃO é espelhada junto com a arte: quando o dono
+## está virado para o lado oposto ao da arte (esquerda, pois a arte é desenhada para a DIREITA),
+## o sprite espelha (flip_h) e o ângulo de sprite_rotation_degrees / rotate_to_direction é
+## invertido, dando a imagem espelhada exata da versão voltada para a direita. Sem este flag,
+## o inherit_facing espelha só a arte (flip_h) e a rotação fica igual nos dois lados.
+## Decidido no nascimento (e a cada virada do dono, se follow_updates_facing estiver ligado).
+@export var mirror_rotation_with_facing: bool = false
 
 @export_group("Color")
 @export var modulate_start: Color = Color.WHITE
