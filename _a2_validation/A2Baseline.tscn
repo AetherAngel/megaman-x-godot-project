@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cttohnq4g484m"]
+
+[ext_resource type="Script" uid="uid://bjlgjutlx64qu" path="res://_a2_validation/A2Baseline.gd" id="1_a2"]
+
+[node name="A2Baseline" type="Node2D" unique_id=1457804997]
+script = ExtResource("1_a2")
+label = "a2.1"

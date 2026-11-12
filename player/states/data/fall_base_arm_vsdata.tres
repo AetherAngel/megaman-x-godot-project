@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_pawk4")
-main_file = "_fall_arms"
-main_anim = "fall"
+main_file = "_fall"
+main_anim = "arms"
 metadata/_custom_type_script = "uid://cenvwn3nqdr5c"

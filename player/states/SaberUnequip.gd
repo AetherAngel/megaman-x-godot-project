@@ -7,6 +7,8 @@ func enter() -> void:
 		player.set_meta("came_from_attack", false)
 		player.state_machine.change_state("Idle")
 		return
+	if not player.is_on_floor():
+		return
 
 	InputManager.consume_shoot_buffer()
 	
@@ -31,7 +33,6 @@ func enter() -> void:
 	print("⚔️ Iniciando animação de unequip: %s" % unequip_anim)
 
 func update(_delta: float) -> void:
-	player.damp_horizontal(0.85)
 
 	# Se apertar ataque durante unequip, reinicia o combo
 	if InputManager.consume_shoot_buffer():

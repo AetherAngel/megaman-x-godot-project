@@ -19,6 +19,7 @@ func update(_delta: float) -> void:
 	# Apertar a direção = full speed imediato.
 	player.set_horizontal_speed(dir * player.speed * player.current_armor.dash_speed_multiplier)
 
+
 	if dir != 0:
 		player.set_facing(dir > 0)
 

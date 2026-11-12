@@ -4,4 +4,6 @@
 
 [resource]
 script = ExtResource("1_b1pni")
+main_file = "_jump_shoot"
+main_anim = "shoot_to_air"
 metadata/_custom_type_script = "uid://cko0c8nu77gnw"

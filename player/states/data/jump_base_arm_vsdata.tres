@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_ludax")
-main_file = "_arm_jump"
-main_anim = "jump"
+main_file = "_jump"
+main_anim = "arms"
 is_loop = false
 metadata/_custom_type_script = "uid://cenvwn3nqdr5c"

@@ -11,7 +11,7 @@ extends Node
 ##
 ## Fluxo:
 ##   HitComponent.report(target) → HitBus.dispatch(hit, target)
-##       → target.take_damage(hit.damage, hit)
+##       → target.take_damage(hit.get_damage(), hit)
 
 
 ## Recebe um hit e o encaminha ao alvo.
@@ -33,4 +33,5 @@ func dispatch(hit: HitComponent, target: Node) -> void:
 	if not target.has_method("take_damage"):
 		return
 
-	target.take_damage(hit.damage, hit)
+	# get_damage() = o dano EM VIGOR (override temporário, se houver; senão a base).
+	target.take_damage(hit.get_damage(), hit)

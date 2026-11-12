@@ -8,6 +8,13 @@ func enter() -> void:
 	print("falling")
 
 func update(delta: float) -> void:
+	# A aterrissagem tem prioridade sobre qualquer input.
+	if player.is_on_floor():
+		player.wall_slide_cooldown = 0.0
+		player.reset_momentum()
+		player.state_machine.change_state("Land")
+		return
+
 	var dir = InputManager.get_move_axis()
 
 	# Reseta cancel ao pressionar direção
@@ -60,16 +67,3 @@ func update(delta: float) -> void:
 		if player.current_armor.has_air_dash and player.can_air_dash:
 			player.state_machine.change_state("AirDash")
 			return
-
-	if player.current_character.default_weapon == "saber":
-		if _check_techniques(player.current_armor.ground_techniques):
-			return
-		if InputManager.is_action_just_pressed("shoot"):
-			player.combo_count = 1
-			player.state_machine.change_state("SaberAttack")
-			return
-
-	if player.is_on_floor():
-		player.wall_slide_cooldown = 0.0
-		player.reset_momentum()
-		player.state_machine.change_state("Land")

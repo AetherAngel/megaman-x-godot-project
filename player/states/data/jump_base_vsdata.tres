@@ -7,4 +7,6 @@ script = ExtResource("1_a8pwy")
 main_file = "_jump"
 main_anim = "jump"
 is_loop = false
+shoot_file = "_jump"
+shoot_main_anim = "jump_shooting"
 metadata/_custom_type_script = "uid://0v8irxqn21kk"

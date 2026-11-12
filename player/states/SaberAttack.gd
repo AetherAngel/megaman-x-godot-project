@@ -1,3 +1,4 @@
+
 extends State
 
 var can_cancel := false
@@ -6,19 +7,27 @@ var hold_elapsed := 0.0
 var current_combo: int = 1
 var current_attack_data: AttackData
 
+
 func enter() -> void:
-	if has_method("is_on_floor"):
+	# A validação de chão acontece somente na entrada inicial.
+	if not player.is_on_floor():
+		player.state_machine.change_state(get_movement_state())
 		return
+
 	if GameManager.current_player != "Zero":
 		player.combo_count = 0
 		player.state_machine.change_state("Idle")
 		return
-		
+
 	if not player.current_character or not player.current_character.skill_tree:
 		push_error("❌ SkillTree está NULL!")
-		#player.state_machine.change_state("SaberUnequip")
 		return
 
+	player.set_meta("came_from_attack", true)
+	_start_attack()
+
+
+func _start_attack() -> void:
 	decision_locked = false
 	hold_elapsed = 0.0
 	can_cancel = false
@@ -32,30 +41,56 @@ func enter() -> void:
 		return
 
 	player.change_animation_set(current_attack_data.set_name)
-	player.set_meta("came_from_attack", true)
 
 	var anim := current_attack_data.animation_name
+
 	if player.sprite.sprite_frames and player.sprite.sprite_frames.has_animation(anim):
 		player.sprite.play(anim)
-		print("▶️ [combo %d] set=%s  anim=%s" % [current_combo, current_attack_data.set_name, anim])
-		# Toca o som do ataque
+		player.stop_all_movement()
+
+		print("▶️ [combo %d] set=%s  anim=%s" % [
+			current_combo,
+			current_attack_data.set_name,
+			anim
+		])
+
 		if not current_attack_data.sfx_name.is_empty():
-			SoundManager.play_sfx(current_attack_data.sfx_name, current_attack_data.sfx_volume, current_attack_data.sfx_pitch)
+			SoundManager.play_sfx(
+				current_attack_data.sfx_name,
+				current_attack_data.sfx_volume,
+				current_attack_data.sfx_pitch
+			)
 			print("▶️ tocando som SFX")
 	else:
-		push_warning("⚠️ Animação '%s' não encontrada em '%s'" % [anim, current_attack_data.set_name])
+		push_warning("⚠️ Animação '%s' não encontrada em '%s'" % [
+			anim,
+			current_attack_data.set_name
+		])
 		print("   Animações disponíveis: ", player.sprite.sprite_frames.get_animation_names())
 		player.state_machine.change_state("SaberUnequip")
 		return
 
 	InputManager.consume_shoot_buffer()
 
+
 func update(delta: float) -> void:
-	if decision_locked:
+	if decision_locked or not current_attack_data:
+		return
+
+	# Verifica se a animação atual ainda pertence ao ataque.
+	var attack_animation := current_attack_data.animation_name
+	var is_attack_animation := player.sprite.animation == attack_animation
+
+	# Se outro sistema substituiu a animação do ataque,
+	# ou se a própria animação terminou, encerra o combo.
+	if not is_attack_animation or not player.sprite.is_playing():
+		decision_locked = true
+		player.combo_count = 1
+		print("💀 [combo %d] ataque encerrado → SaberUnequip" % current_combo)
+		player.state_machine.change_state("SaberUnequip")
 		return
 
 	hold_elapsed += delta
-	player.stop_all_movement()
 
 	if not can_cancel and hold_elapsed >= current_attack_data.cancel_start:
 		can_cancel = true
@@ -64,7 +99,9 @@ func update(delta: float) -> void:
 
 	if can_cancel and InputManager.consume_shoot_buffer():
 		decision_locked = true
+
 		var next_state := player.current_character.skill_tree.get_next_combo_state(current_combo)
+
 		if next_state == "SaberUnequip":
 			player.combo_count = 1
 			print("🔥 [combo %d] → SaberUnequip" % current_combo)
@@ -72,21 +109,28 @@ func update(delta: float) -> void:
 		else:
 			player.combo_count += 1
 			print("🔥 [combo %d] → próximo ataque" % current_combo)
-			enter()
+			_start_attack()
+
 		return
 
-	if current_attack_data.is_final_combo:
-		if not player.sprite.is_playing():
-			decision_locked = true
-			player.combo_count = 1
-			print("💀 [combo %d] animação finalizada → SaberUnequip" % current_combo)
-			player.state_machine.change_state("SaberUnequip")
-	else:
-		if not player.sprite.is_playing() or hold_elapsed >= current_attack_data.hold_duration:
+	# Combos não finais também possuem limite de duração.
+	if not current_attack_data.is_final_combo:
+		if hold_elapsed >= current_attack_data.hold_duration:
 			decision_locked = true
 			player.combo_count = 1
 			print("💀 [combo %d] → SaberUnequip (timeout)" % current_combo)
 			player.state_machine.change_state("SaberUnequip")
+
+
+func get_movement_state() -> String:
+	if not player.is_on_floor():
+		return "Fall" if player.velocity.y > 0 else "Jump"
+
+	if InputManager.get_movement_direction().x != 0:
+		return "Run"
+
+	return "Idle"
+
 
 func exit() -> void:
 	decision_locked = true

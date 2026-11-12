@@ -25,7 +25,16 @@ func update(_delta: float) -> void:
 
 	var dir = InputManager.get_move_axis()
 
+	print(
+		"[LAND] dir=", dir,
+		" | velocity=", player.velocity,
+		" | floor=", player.is_on_floor(),
+		" | shoot_buffer=", InputManager.consume_shoot_buffer()
+	)
+
 	if dir != 0:
+		print("[LAND] TRANSITION → RUN")
 		player.state_machine.change_state("Run")
 	elif abs(player.velocity.x) < 1:
+		print("[LAND] TRANSITION → IDLE")
 		player.state_machine.change_state("Idle")

@@ -4,6 +4,13 @@
 [ext_resource type="Resource" uid="uid://coptpkcj4wbdv" path="res://player/states/data/fall_armor_vsdata.tres" id="1_hhe1r"]
 [ext_resource type="Resource" uid="uid://d34vt85c3ht8s" path="res://player/states/data/fall_base_vsdata.tres" id="2_ipcu6"]
 [ext_resource type="Resource" uid="uid://dnonj13hml748" path="res://player/states/data/fall_base_arm_vsdata.tres" id="3_563ff"]
+[ext_resource type="Script" uid="uid://cko0c8nu77gnw" path="res://player/states/data/StateBusterVisualData.gd" id="4_ipcu6"]
+
+[sub_resource type="Resource" id="Resource_563ff"]
+script = ExtResource("4_ipcu6")
+main_file = "_jump_shoot"
+main_anim = "shoot_to_fall"
+metadata/_custom_type_script = "uid://cko0c8nu77gnw"
 
 [resource]
 script = ExtResource("1_fvhka")
@@ -11,4 +18,5 @@ state_name = "fall"
 base = ExtResource("2_ipcu6")
 base_arm = ExtResource("3_563ff")
 armor = ExtResource("1_hhe1r")
+buster = SubResource("Resource_563ff")
 metadata/_custom_type_script = "uid://bvkmba36hvcet"

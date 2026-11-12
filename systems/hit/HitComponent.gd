@@ -30,6 +30,9 @@ enum ReportMode { ON_ENTER, CONTINUOUS }
 ## Dano bruto (raw). Quem recebe decide o que fazer com ele:
 ##   alvo SEM DamageResistanceTable (Player, inimigo comum) → vira unidades de dano.
 ##   alvo COM tabela (Boss)                                 → a tabela decide pelo tipo.
+## Este e os dois campos abaixo são a BASE: quem spawna o objeto escreve aqui. Um override
+## temporário (push_override) nunca os altera — para ler o valor em vigor use get_damage(),
+## get_damage_type_id() e get_damage_tag().
 @export var damage: float = 0.0
 
 ## Tipo do dano. Use as constantes de DamageType (BUSTER, FIRE, CONTACT...).
@@ -62,6 +65,9 @@ var attacker: Node = null
 var source: Node = null
 
 var _area: Area2D = null
+## Overrides temporários, do mais antigo ao mais recente; o último vale. Cada entrada:
+## {"token": Object, "profile": DamageProfile}. Ver push_override().
+var _overrides: Array = []
 ## Corpos dentro da área (modo CONTINUOUS). Sem tipo de propósito: um corpo
 ## liberado da memória não pode ser atribuído a uma variável tipada.
 var _inside: Array = []
@@ -124,13 +130,69 @@ func get_attacker() -> Node:
 	return attacker if is_instance_valid(attacker) else source
 
 
-## Lidos por Player.take_damage() e Boss.take_damage() através do inflicter.
+## Valor EM VIGOR do dano, tipo e tag: o do override mais recente, ou a base se não houver.
+## O HitBus lê get_damage(); Player.take_damage() e Boss.take_damage() leem tipo e tag através
+## do inflicter. Quem precisar do dano de um hit deve usar estes getters, não os campos.
+func get_damage() -> float:
+	var p := _top_override()
+	return p.damage if p else damage
+
+
 func get_damage_type_id() -> StringName:
-	return damage_type_id
+	var p := _top_override()
+	return p.damage_type_id if p else damage_type_id
 
 
 func get_damage_tag() -> String:
-	return damage_tag
+	var p := _top_override()
+	return p.damage_tag if p else damage_tag
+
+
+# ─────────────────────────────────────────────────────────────
+# OVERRIDE TEMPORÁRIO
+# ─────────────────────────────────────────────────────────────
+# Troca o dano, o tipo e a tag em vigor SEM mexer na base: restaurar é só remover a entrada,
+# não há valor para "devolver". É o mesmo raciocínio de toggleable_invulnerabilities: cada
+# quem pediu o override é identificado por um token (ex.: a BossAction em execução).
+
+## Faz `profile` valer no lugar da base (os três campos, inclusive os que ele deixa no padrão)
+## até pop_override(token). Se houver mais de um, o último a entrar vale. Chamar de novo com o
+## mesmo token substitui a entrada dele, sem empilhar. Perfil nulo é ignorado.
+func push_override(token: Object, profile: DamageProfile) -> void:
+	if token == null or profile == null:
+		push_warning("[HitComponent] push_override ignorado: token ou perfil nulo (%s)" % name)
+		return
+	pop_override(token)
+	_overrides.append({"token": token, "profile": profile})
+
+
+## Remove o override do token. Seguro de chamar qualquer número de vezes, com token que
+## nunca entrou ou com a pilha vazia.
+func pop_override(token: Object) -> void:
+	for i in range(_overrides.size() - 1, -1, -1):
+		if _overrides[i]["token"] == token:
+			_overrides.remove_at(i)
+
+
+## Remove todos os overrides (defesa em profundidade: morte, retry).
+func clear_overrides() -> void:
+	_overrides.clear()
+
+
+## True se há algum override em vigor.
+func has_override() -> bool:
+	return _top_override() != null
+
+
+## O perfil em vigor (o mais recente) ou null. Entradas cujo token já foi liberado da memória
+## são descartadas aqui, então um override nunca fica preso por causa de um token que sumiu.
+func _top_override() -> DamageProfile:
+	for i in range(_overrides.size() - 1, -1, -1):
+		var e: Dictionary = _overrides[i]
+		if is_instance_valid(e["token"]):
+			return e["profile"]
+		_overrides.remove_at(i)
+	return null
 
 
 # ─────────────────────────────────────────────────────────────
