@@ -7,6 +7,9 @@ class_name Boss
 extends Actor
 
 @export var data: BossData
+## Caminho (relativo ao Boss) do HitComponent de contato. Outros chefes com outra estrutura de
+## cena apontam para o deles. Ver push_contact_override().
+@export var contact_hit_path: NodePath = ^"Area2D/HitComponent"
 
 @onready var state_machine:   StateMachine   = $StateMachine
 @onready var visual_library:  VisualLibrary  = $VisualLibrary
@@ -17,6 +20,9 @@ extends Actor
 ## BTRunner — filho direto do Boss em Boss.tscn.
 ## Configurar: arraste o BT_<Boss>.tres no campo `tree` do BTRunner.
 @onready var bt_runner:       BTRunner       = $BTRunner
+
+## HitComponent de contato (contact_hit_path), resolvido na primeira vez que alguém pede.
+var _contact_hit: HitComponent = null
 
 var current_phase:  int  = 0
 var _phase_cooldown: float = 0.0
@@ -122,6 +128,7 @@ func reset_for_retry() -> void:
 	if bt_runner:
 		bt_runner.stop()
 	is_acting = false
+	clear_contact_overrides()  # rede de segurança, como o .clear() das invulnerabilidades abaixo
 
 	# Limpa o que a luta deixou na fase.
 	_clear_spawned_objects()
@@ -279,6 +286,8 @@ func _on_defeated() -> void:
 	# Para a BT imediatamente — limpa is_acting e qualquer ação em curso.
 	if bt_runner:
 		bt_runner.stop()
+	# Rede de segurança: o dano de contato volta ao normal mesmo se a ação não terminou.
+	clear_contact_overrides()
 	# Objetos da luta somem; o boss em si fica vivo até a cutscene de derrota.
 	_clear_spawned_objects()
 	boss_defeated.emit(data.has_final_dialogue if data else false)
@@ -557,6 +566,43 @@ func _spawn_object(obj: SpawnableObject) -> Node2D:
 	if obj.spawn_fx:
 		ParticleFX.spawn_at(obj.spawn_fx, spawn_pos)
 	return instance
+
+
+# ============================================================
+# DANO DE CONTATO TEMPORÁRIO
+# Uma ação (BossAction.contact_override) pode trocar o dano de contato do Boss enquanto roda.
+# O token identifica quem pediu (a própria ação); o HitComponent guarda a pilha e nunca altera
+# o dano base (ver HitComponent.push_override). Sem o nó de contato, só push avisa.
+# ============================================================
+
+## O HitComponent de contato do Boss, ou null se contact_hit_path não aponta para um.
+func get_contact_hit() -> HitComponent:
+	if not is_instance_valid(_contact_hit):
+		_contact_hit = get_node_or_null(contact_hit_path) as HitComponent
+	return _contact_hit
+
+
+## Faz `profile` valer como dano de contato até pop_contact_override(token).
+func push_contact_override(token: Object, profile: DamageProfile) -> void:
+	var hit := get_contact_hit()
+	if hit:
+		hit.push_override(token, profile)
+	else:
+		push_warning("[Boss] '%s': HitComponent de contato não encontrado em '%s'; override ignorado." % [name, contact_hit_path])
+
+
+## Remove o override do token (seguro de chamar sempre, com ou sem override ativo).
+func pop_contact_override(token: Object) -> void:
+	var hit := get_contact_hit()
+	if hit:
+		hit.pop_override(token)
+
+
+## Remove todos os overrides de contato (morte e retry).
+func clear_contact_overrides() -> void:
+	var hit := get_contact_hit()
+	if hit:
+		hit.clear_overrides()
 
 
 ## Liga um objeto recém-instanciado ao sistema de hit (se `obj` for passado e o objeto tiver

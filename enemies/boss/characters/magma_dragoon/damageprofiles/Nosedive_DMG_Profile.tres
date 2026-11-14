@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DamageProfile" format=3 uid="uid://5fi6gfh3xi5t"]
+
+[ext_resource type="Script" uid="uid://dlnumd7sjmamq" path="res://systems/damage/DamageProfile.gd" id="1_tc1ks"]
+
+[resource]
+script = ExtResource("1_tc1ks")
+damage = 6.0
+damage_type_id = &"fire"
+damage_tag = "fire"
+metadata/_custom_type_script = "uid://dlnumd7sjmamq"

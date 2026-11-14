@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="BossAction" format=3 uid="uid://d12twny0tebnc"]
 
+[ext_resource type="Resource" uid="uid://38kbuwik88fp" path="res://enemies/boss/characters/magma_dragoon/damageprofiles/Shoryuken_DMG_Profile.tres" id="1_juff2"]
 [ext_resource type="Script" uid="uid://13j7x4cikp7v" path="res://systems/bt/actions/AnimPhase.gd" id="1_ssxe3"]
 [ext_resource type="Script" uid="uid://ouu8ril4nkjk" path="res://systems/bt/actions/FrameEvent.gd" id="2_xus66"]
 [ext_resource type="Script" uid="uid://ivpx7ytxrnkj" path="res://resources/PhysicalMovePhase.gd" id="3_dpa2u"]
@@ -102,5 +103,6 @@ metadata/_custom_type_script = "uid://13j7x4cikp7v"
 [resource]
 script = ExtResource("6_vub2c")
 phases = Array[ExtResource("1_ssxe3")]([SubResource("Resource_o64aw"), SubResource("Resource_vh7dk"), SubResource("Resource_x8c2q")])
+contact_override = ExtResource("1_juff2")
 recovery_phases = Array[ExtResource("1_ssxe3")]([SubResource("Resource_6s2ts"), ExtResource("6_g2fc2"), ExtResource("7_vub2c"), ExtResource("8_juff2"), ExtResource("9_veul3")])
 metadata/_custom_type_script = "uid://dbtctnct07w57"

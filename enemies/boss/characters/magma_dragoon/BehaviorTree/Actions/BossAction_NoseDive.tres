@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="BossAction" format=3 uid="uid://vnd0ie4tvylx"]
 
+[ext_resource type="Resource" uid="uid://5fi6gfh3xi5t" path="res://enemies/boss/characters/magma_dragoon/damageprofiles/Nosedive_DMG_Profile.tres" id="1_bjxw8"]
 [ext_resource type="Script" uid="uid://13j7x4cikp7v" path="res://systems/bt/actions/AnimPhase.gd" id="1_tyhqn"]
 [ext_resource type="Resource" uid="uid://c814sym5p3g3e" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/AnimPhase/Firekick_NoseDive_Part1_AnimPhase.tres" id="2_fhlc3"]
 [ext_resource type="Resource" uid="uid://dkf2p4coeti06" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/Actions/AnimPhase/Firekick_NoseDive_Part2_AnimPhase.tres" id="3_lp4jm"]
@@ -20,5 +21,6 @@ metadata/_custom_type_script = "uid://13j7x4cikp7v"
 [resource]
 script = ExtResource("5_bjxw8")
 phases = Array[ExtResource("1_tyhqn")]([ExtResource("2_fhlc3"), ExtResource("3_lp4jm"), ExtResource("4_bswmn"), ExtResource("5_pakii")])
+contact_override = ExtResource("1_bjxw8")
 recovery_phases = Array[ExtResource("1_tyhqn")]([SubResource("Resource_bswmn"), ExtResource("7_bswmn"), ExtResource("3_lp4jm"), ExtResource("4_bswmn"), ExtResource("5_pakii")])
 metadata/_custom_type_script = "uid://dbtctnct07w57"

@@ -20,6 +20,13 @@ extends Resource
 
 @export var phases: Array[AnimPhase] = []
 
+@export_group("Contact")
+## Dano de contato do Boss enquanto esta ação roda: o HitComponent de contato passa a usar este
+## perfil (dano, tipo e tag) do start() ao finish(), e volta ao normal em QUALQUER encerramento
+## (fim, interrupção, morte, retry). Vazio = o contato não muda. Um perfil com dano 0 torna o
+## contato inofensivo durante a ação. Serve a ataques em que o corpo do Boss é a arma.
+@export var contact_override: DamageProfile
+
 @export_group("Recovery")
 ## Fases executadas quando uma fase com check_landing termina com o boss em chão INSEGURO
 ## (ex: fosso de lava). A primeira fase que tiver physical_move define o pulo de volta; o
@@ -53,6 +60,7 @@ var _recovery_attempts: int  = 0
 
 func start(actor: Node) -> void:
 	_set_invulnerable(actor, false)  # nunca herda trava de uma execução anterior
+	_set_contact_override(actor)
 	_phase_index      = 0
 	_phase_timer      = 0.0
 	_signal_triggered = false
@@ -90,11 +98,26 @@ func update(actor: Node, delta: float) -> bool:
 
 func finish(actor: Node) -> void:
 	_set_invulnerable(actor, false)
+	_clear_contact_override(actor)
 	# Ação encerrada (ou interrompida): nenhum movimento físico dela pode continuar.
 	if actor.has_method("stop_physical_move"):
 		actor.stop_physical_move()
 	actor.is_acting = false
 	on_finish(actor)
+
+
+## Dano de contato desta ação. Sempre desfaz primeiro o que sobrou DESTA mesma ação (reinício,
+## ou perfil removido) e, se há perfil, aplica. O token é a própria ação, então não há estado
+## novo aqui. Duck typing, como mark_recovery_anchor: atores sem contato simplesmente ignoram.
+func _set_contact_override(actor: Node) -> void:
+	_clear_contact_override(actor)
+	if contact_override and actor.has_method("push_contact_override"):
+		actor.push_contact_override(self, contact_override)
+
+
+func _clear_contact_override(actor: Node) -> void:
+	if actor.has_method("pop_contact_override"):
+		actor.pop_contact_override(self)
 
 
 # ─────────────────────────────────────────────────────────────
