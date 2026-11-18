@@ -108,6 +108,12 @@ func _load_db() -> void:
 # MÚSICA
 # ============================================================
 
+## Toca uma música do JSON (seção "music") no music_player, sempre do começo.
+## Campos opcionais da entrada no JSON:
+##   "loop": true            → ao chegar no fim, volta e repete (padrão: false).
+##   "loop_begin_sec": 12.5  → ponto para onde volta ao repetir (padrão: 0.0 = início).
+##                             A intro toca uma vez; só o trecho depois desse ponto repete.
+## Loop só é suportado em WAV. Outro formato com loop: true toca sem loop e avisa.
 func play_music(id: String, volume_override: float = INF) -> void:
 	if not _db["music"].has(id):
 		push_error("⚠️ Música não registrada no JSON: " + id)
@@ -123,7 +129,18 @@ func play_music(id: String, volume_override: float = INF) -> void:
 			push_error("⚠️ Arquivo de música não encontrado: " + path)
 			return
 
-	music_player.stream    = sound_cache[path]
+	var stream: AudioStream = sound_cache[path]
+
+	# Loop é dado do JSON ("loop" / "loop_begin_sec"), não do código.
+	# Ausente = false: a faixa toca uma vez, como antes.
+	if entry.get("loop", false):
+		if stream is AudioStreamWAV:
+			# duplicate(): nunca altera o stream do cache (compartilhado com outros usos).
+			stream = _configure_wav_loop(stream.duplicate(), entry.get("loop_begin_sec", 0.0))
+		else:
+			push_warning("⚠️ play_music: '%s' pede loop, mas o arquivo não é WAV — tocando sem loop." % id)
+
+	music_player.stream    = stream
 	music_player.volume_db = volume
 	music_player.play()
 
