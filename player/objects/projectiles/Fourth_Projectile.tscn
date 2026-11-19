@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://tix1lr4uyapx"]
 
 [ext_resource type="Script" uid="uid://cncaxcewukotj" path="res://player/objects/projectiles/FourthProjectile.gd" id="1_ubua4"]
-[ext_resource type="Script" uid="uid://b5hlcaqkwh84f" path="res://systems/hit/HitComponent.gd" id="2_teq67"]
+[ext_resource type="Script" uid="uid://b5hlcaqkwh84f" path="res://systems/hitbus/HitComponent.gd" id="2_teq67"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4lb82"]
 

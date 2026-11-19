@@ -42,7 +42,7 @@
 [ext_resource type="Script" uid="uid://scowvixd6kuv" path="res://particlesystem/resources/FXAttachment.gd" id="36_pnw6m"]
 [ext_resource type="Resource" uid="uid://d2g34614xfava" path="res://particlesystem/resources/FX/hover_effect.tres" id="37_1so5t"]
 [ext_resource type="Resource" uid="uid://0518au536wnp" path="res://systems/hp/data/x_hp.tres" id="37_pnw6m"]
-[ext_resource type="Script" uid="uid://b5hlcaqkwh84f" path="res://systems/hit/HitComponent.gd" id="39_55jnj"]
+[ext_resource type="Script" uid="uid://b5hlcaqkwh84f" path="res://systems/hitbus/HitComponent.gd" id="39_55jnj"]
 [ext_resource type="Script" uid="uid://db640w6e7h8nu" path="res://systems/hp/DamageHandler.gd" id="40_dx5ib"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sh265"]

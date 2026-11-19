@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="HitboxDef" format=3 uid="uid://bi0n1f0clhbs2"]
+
+[ext_resource type="Resource" uid="uid://5fi6gfh3xi5t" path="res://enemies/boss/characters/magma_dragoon/damageprofiles/Nosedive_DMG_Profile.tres" id="1_e56ix"]
+[ext_resource type="Script" uid="uid://dyutx7vtwg61t" path="res://systems/hitbox/HitboxDef.gd" id="2_ny3k3"]
+
+[resource]
+script = ExtResource("2_ny3k3")
+id = &"FK_HB"
+size = Vector2(45, 48)
+offset = Vector2(-21, 30)
+duration_frames = 0
+profile = ExtResource("1_e56ix")
+priority = 1
+metadata/_custom_type_script = "uid://dyutx7vtwg61t"

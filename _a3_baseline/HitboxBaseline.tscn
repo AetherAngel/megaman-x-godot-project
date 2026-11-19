@@ -4,3 +4,4 @@
 
 [node name="HitboxBaseline" type="Node2D" unique_id=1086974990]
 script = ExtResource("1_hb0")
+label = "b1"

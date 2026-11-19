@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="HitboxDef" format=3 uid="uid://cgqted3wv7uva"]
+
+[ext_resource type="Resource" uid="uid://38kbuwik88fp" path="res://enemies/boss/characters/magma_dragoon/damageprofiles/Shoryuken_DMG_Profile.tres" id="1_1tgr2"]
+[ext_resource type="Script" uid="uid://dyutx7vtwg61t" path="res://systems/hitbox/HitboxDef.gd" id="2_5o4wd"]
+
+[resource]
+script = ExtResource("2_5o4wd")
+id = &"SH_HB"
+size = Vector2(50, 72)
+offset = Vector2(-22, 0)
+duration_frames = 0
+profile = ExtResource("1_1tgr2")
+priority = 1
+metadata/_custom_type_script = "uid://dyutx7vtwg61t"

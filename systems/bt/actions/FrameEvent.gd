@@ -52,3 +52,9 @@ enum Type {
 ## Objeto de gameplay a instanciar (com dano, lifetime, hitbox próprios).
 ## Usado apenas quando type = SPAWN_OBJECT.
 @export var spawn_object: SpawnableObject
+
+## Hitbox de ataque a criar (HITBOX_ON): forma, posição, duração e dano ficam na própria
+## HitboxDef, então o evento não precisa de mais nada. HITBOX_OFF não usa este campo: usa
+## `value` (o `id` da HitboxDef) para desligar antes da hora; `value` vazio desliga todas as
+## hitboxes desta ação. Sem HITBOX_OFF, a hitbox some sozinha pela `duration_frames` dela.
+@export var hitbox: HitboxDef

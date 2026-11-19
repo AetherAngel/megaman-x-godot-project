@@ -13,7 +13,7 @@
 [ext_resource type="Script" uid="uid://rg6q1i13pr2e" path="res://systems/hp/HealHandler.gd" id="10_hbm5q"]
 [ext_resource type="Script" uid="uid://bhop81oa8825s" path="res://systems/bt/BTRunner.gd" id="11_5xrn2"]
 [ext_resource type="Resource" uid="uid://c81n7wtouww34" path="res://enemies/boss/characters/magma_dragoon/BehaviorTree/BT_MagmaDragoon.tres" id="13_q2uox"]
-[ext_resource type="Script" uid="uid://b5hlcaqkwh84f" path="res://systems/hit/HitComponent.gd" id="14_x7lyi"]
+[ext_resource type="Script" uid="uid://b5hlcaqkwh84f" path="res://systems/hitbus/HitComponent.gd" id="14_x7lyi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iqyqf"]
 size = Vector2(26, 51)

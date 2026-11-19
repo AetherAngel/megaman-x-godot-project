@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://tw6fdn2vx0f7" path="res://sprites/spr_tile_lava/530da608-2985-4ab0-acda-f0b264a53bb5.png" id="2_ltei0"]
 [ext_resource type="Texture2D" uid="uid://bhjajw71wy3vx" path="res://sprites/spr_tile_lava/e37fe1c3-e3f0-4a6a-a97e-8ab4b9752ed2.png" id="3_n41t6"]
 [ext_resource type="Script" uid="uid://dc8w3a6m0cpfr" path="res://resources/TiledTexturerect.gd" id="4_ks8k4"]
-[ext_resource type="Script" uid="uid://b5hlcaqkwh84f" path="res://systems/hit/HitComponent.gd" id="5_ltei0"]
+[ext_resource type="Script" uid="uid://b5hlcaqkwh84f" path="res://systems/hitbus/HitComponent.gd" id="5_ltei0"]
 [ext_resource type="Script" uid="uid://bwodli5ypvjbq" path="res://levels/magma_dragon/LavaReactor.gd" id="6_ks8k4"]
 [ext_resource type="PackedScene" path="res://levels/magma_dragon/lava_pillar.tscn" id="7_pn0r6"]
 

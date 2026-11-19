@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cmsv3qgflybp7"]
+
+[ext_resource type="Script" uid="uid://dfk4pwvges4bg" path="res://_a3_baseline/_hitbox_validation/HitboxCore.gd" id="1_mkn4q"]
+
+[node name="HitboxCore" type="Node2D" unique_id=1433274706]
+script = ExtResource("1_mkn4q")

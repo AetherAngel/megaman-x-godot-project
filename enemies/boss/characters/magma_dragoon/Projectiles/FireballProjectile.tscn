@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://byitcjmqknqhc" path="res://systems/projectile/BallisticProjectile.gd" id="1"]
 [ext_resource type="Resource" uid="uid://dpkfcon5uo753" path="res://enemies/boss/characters/magma_dragoon/Projectiles/FireballProjectileDef.tres" id="2"]
-[ext_resource type="Script" uid="uid://b5hlcaqkwh84f" path="res://systems/hit/HitComponent.gd" id="3"]
+[ext_resource type="Script" uid="uid://b5hlcaqkwh84f" path="res://systems/hitbus/HitComponent.gd" id="3"]
 
 [node name="FireballProjectile" type="Area2D" unique_id=729393275]
 collision_layer = 136

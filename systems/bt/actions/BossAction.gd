@@ -99,6 +99,7 @@ func update(actor: Node, delta: float) -> bool:
 func finish(actor: Node) -> void:
 	_set_invulnerable(actor, false)
 	_clear_contact_override(actor)
+	_clear_hitboxes(actor)
 	# Ação encerrada (ou interrompida): nenhum movimento físico dela pode continuar.
 	if actor.has_method("stop_physical_move"):
 		actor.stop_physical_move()
@@ -120,6 +121,13 @@ func _clear_contact_override(actor: Node) -> void:
 		actor.pop_contact_override(self)
 
 
+## Remove as hitboxes que ESTA ação criou neste ator (o token é a própria ação, como no
+## contato). Idempotente: sem hitboxes, não faz nada. Cobre fim normal, interrupção, morte
+## e retry, porque todos eles passam por finish().
+func _clear_hitboxes(actor: Node) -> void:
+	HitboxArea.clear(actor, self)
+
+
 # ─────────────────────────────────────────────────────────────
 # HOOKS — override em subclasses para lógica específica do boss
 # ─────────────────────────────────────────────────────────────
@@ -134,12 +142,21 @@ func on_finish(_actor: Node) -> void:
 	pass
 
 
-## Chamado quando um FrameEvent do tipo HITBOX_ON ou HITBOX_OFF dispara.
-## Override para conectar ao sistema de hitbox quando ele for implementado.
-## event.value = nome do hitbox.
-func _on_hitbox_event(_actor: Node, _event: FrameEvent) -> void:
-	# TODO: conectar ao sistema de hitbox quando implementado.
-	pass
+## Chamado quando um FrameEvent do tipo HITBOX_ON ou HITBOX_OFF dispara. Liga o evento ao
+## sistema de hitboxes (HitboxArea): esta ação é o token e o "Sprite" do ator é o relógio de
+## frames. Override em subclasses para lógica específica de um boss.
+##   HITBOX_ON  → cria event.hitbox (HitboxDef) como filha do ator.
+##   HITBOX_OFF → remove as hitboxes desta ação com id = event.value (vazio = todas).
+func _on_hitbox_event(actor: Node, event: FrameEvent) -> void:
+	if event.type == FrameEvent.Type.HITBOX_OFF:
+		HitboxArea.clear(actor, self, event.value)
+		return
+	if event.hitbox == null:
+		push_warning("[BossAction] FrameEvent HITBOX_ON sem `hitbox` configurado.")
+		return
+	if not actor is Node2D:
+		return
+	HitboxArea.spawn(event.hitbox, actor as Node2D, self, actor.get_node_or_null("Sprite") as AnimatedSprite2D)
 
 
 # ─────────────────────────────────────────────────────────────

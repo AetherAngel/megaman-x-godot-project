@@ -2,7 +2,7 @@
 
 [ext_resource type="SpriteFrames" uid="uid://bokn6gng2iokf" path="res://resources/animations/spr_magma_dragoon_hadouken.tres" id="1_d05np"]
 [ext_resource type="Script" uid="uid://ch3cctecpma5q" path="res://enemies/boss/characters/magma_dragoon/actions/HadoukenProjectile.gd" id="1_shmlr"]
-[ext_resource type="Script" uid="uid://b5hlcaqkwh84f" path="res://systems/hit/HitComponent.gd" id="3_2m36m"]
+[ext_resource type="Script" uid="uid://b5hlcaqkwh84f" path="res://systems/hitbus/HitComponent.gd" id="3_2m36m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_shmlr"]
 size = Vector2(18, 23)
