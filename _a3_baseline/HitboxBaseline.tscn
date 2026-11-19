@@ -1,7 +1,0 @@
-[gd_scene format=3 uid="uid://d0g5p2phc51tu"]
-
-[ext_resource type="Script" uid="uid://1om674bqyrtv" path="res://_a3_baseline/HitboxBaseline.gd" id="1_hb0"]
-
-[node name="HitboxBaseline" type="Node2D" unique_id=1086974990]
-script = ExtResource("1_hb0")
-label = "b1"
