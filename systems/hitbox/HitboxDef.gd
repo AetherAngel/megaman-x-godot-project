@@ -49,6 +49,7 @@ extends Resource
 @export_flags_2d_physics var target_mask: int = 4
 
 @export_group("Priority")
-## RESERVADO para a regra de prioridade (A4): ainda não é lido por nada. Maior = ganha a
-## disputa quando dois hits chegam ao mesmo alvo no mesmo tick. 0 = o contato comum.
-@export var priority: int = 0
+## Disputa simultânea: quando golpes do MESMO dono pegam o MESMO alvo no mesmo tick, o de maior
+## prioridade vale e os outros cedem (ex.: o soco ganha do corpo do Boss). 0 = contato comum,
+## 10 = golpe de ataque (padrão). Quem já bateu antes segue valendo: os i-frames bloqueiam o resto.
+@export var priority: int = 10

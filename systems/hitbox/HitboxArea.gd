@@ -101,6 +101,22 @@ static func count_active(owner: Node, token: Object = null) -> int:
 	return n
 
 
+## Esta hitbox está VIVA, é do dono `of_owner` e tem prioridade MAIOR que `other_priority`?
+## (Primeira pergunta do HitComponent: "preciso esperar o fim do passo para decidir?")
+func ranks_above(of_owner: Node, other_priority: int) -> bool:
+	return not _expired and owner_node == of_owner and def.priority > other_priority
+
+
+## ...e além disso JÁ está sobrepondo `target`? Só então ela ganha a disputa. Perguntado no
+## fim do passo de física, quando as sobreposições de todas as áreas estão consistentes: é
+## isso que torna a disputa simultânea e independente da ordem dos sinais.
+## Chamado pelo HitComponent (duck typing, pelo grupo "hitbox_area").
+func outranks(of_owner: Node, other_priority: int, target: Node) -> bool:
+	if not ranks_above(of_owner, other_priority) or not monitoring:
+		return false
+	return is_instance_valid(target) and overlaps_body(target)
+
+
 # ─────────────────────────────────────────────────────────────
 # INTERNO
 # ─────────────────────────────────────────────────────────────
@@ -116,7 +132,7 @@ func _setup(hitbox_def: HitboxDef, owner: Node2D, token: Object, frame_source: A
 
 	name = "HitboxArea"
 	add_to_group("hitbox_area")
-	set_meta("hitbox_priority", def.priority)   # reservado (A4)
+	set_meta("hitbox_priority", def.priority)
 
 	# Só detecta: não é detectada por ninguém.
 	collision_layer = 0
@@ -139,6 +155,7 @@ func _setup(hitbox_def: HitboxDef, owner: Node2D, token: Object, frame_source: A
 	_hit.auto_report = true
 	_hit.report_mode = HitComponent.ReportMode.ON_ENTER   # 1 hit por alvo por hitbox
 	_hit.attacker = owner
+	_hit.priority = def.priority
 	add_child(_hit)
 
 	_apply_shape()

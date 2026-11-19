@@ -57,6 +57,12 @@ enum ReportMode { ON_ENTER, CONTINUOUS }
 ## A cadência real do dano nunca é menor que os i-frames do alvo.
 @export_range(0.0, 1.0, 0.01, "suffix:s") var recheck_interval: float = 0.0
 
+## Prioridade deste golpe numa DISPUTA SIMULTÂNEA com outro golpe do MESMO dono sobre o MESMO
+## alvo (ex.: o corpo do Boss e o soco dele pegando o Player no mesmo tick): o de maior
+## prioridade vale e os demais cedem. 0 = contato comum; a HitboxArea usa 10 (golpe de ataque).
+## Quem já bateu antes segue valendo: os i-frames do alvo bloqueiam o resto.
+@export var priority: int = 0
+
 ## Quem causou o hit. Atribuído por quem spawna o objeto (ex: ChargeSystem, Boss).
 ## Se ninguém atribuir, get_attacker() devolve o próprio source.
 var attacker: Node = null
@@ -121,7 +127,26 @@ func _physics_process(delta: float) -> void:
 
 ## Notifica o HitBus de que este hit atingiu `target`.
 func report(target: Node) -> void:
+	if _has_higher_priority_hitbox():
+		# Disputa possível. A sobreposição das áreas só fica consistente DEPOIS que todas
+		# sinalizaram (quem sinaliza primeiro vê as outras desatualizadas), então a decisão
+		# vai para o fim deste passo de física. Sem hitbox de maior prioridade: imediato.
+		_settle_priority.call_deferred(target)
+		return
 	HitBus.dispatch(self, target)
+
+
+## O corpo (CharacterBody2D) que carrega este golpe. O contato do Boss fica numa Area2D filha
+## do corpo e não tem `attacker`; a HitboxArea tem (o próprio dono). Sobe até achar o corpo.
+## Sem corpo na cadeia, cai para o attacker/source: só não há disputa de prioridade.
+func get_owner_actor() -> Node:
+	var start: Node = get_attacker()
+	var n: Node = start
+	while n != null:
+		if n is CharacterBody2D:
+			return n
+		n = n.get_parent()
+	return start
 
 
 ## Quem causou o hit. Cai para o source se o attacker não foi atribuído
@@ -198,6 +223,49 @@ func _top_override() -> DamageProfile:
 # ─────────────────────────────────────────────────────────────
 # INTERNO
 # ─────────────────────────────────────────────────────────────
+
+## Existe uma hitbox VIVA do mesmo dono com prioridade maior que a minha? (ainda não diz se
+## ela está sobre o alvo). Duck typing sobre o grupo "hitbox_area" (HitboxArea.ranks_above):
+## este sistema não conhece a HitboxArea. Sem hitboxes vivas o grupo está vazio e nada muda.
+func _has_higher_priority_hitbox() -> bool:
+	if not is_inside_tree():
+		return false
+	var hitboxes: Array[Node] = get_tree().get_nodes_in_group("hitbox_area")
+	if hitboxes.is_empty():
+		return false
+	var me: Node = get_owner_actor()
+	for h in hitboxes:
+		if h.has_method("ranks_above") and h.ranks_above(me, priority):
+			return true
+	return false
+
+
+## Cede a vez se uma hitbox do MESMO dono, de prioridade MAIOR, já está sobre o alvo
+## (HitboxArea.outranks). Para CONTINUOUS ceder não descarta o alvo: ele continua em _inside
+## e é reavaliado no próximo tick.
+func _yields_to_higher_priority(target: Node) -> bool:
+	if not is_inside_tree() or not is_instance_valid(target):
+		return false
+	var hitboxes: Array[Node] = get_tree().get_nodes_in_group("hitbox_area")
+	if hitboxes.is_empty():
+		return false
+	var me: Node = get_owner_actor()
+	for h in hitboxes:
+		if h.has_method("outranks") and h.outranks(me, priority, target):
+			return true
+	return false
+
+
+## Fim do passo de física: agora todas as sobreposições estão atualizadas. Reporta, a menos
+## que um golpe de maior prioridade esteja sobre o alvo. (O alvo pode já ter levado o hit do
+## golpe maior: nesse caso os i-frames dele descartam este.)
+func _settle_priority(target: Node) -> void:
+	if not is_instance_valid(target):
+		return
+	if _yields_to_higher_priority(target):
+		return
+	HitBus.dispatch(self, target)
+
 
 func _on_auto_body_entered(body: Node2D) -> void:
 	if report_mode == ReportMode.ON_ENTER:
