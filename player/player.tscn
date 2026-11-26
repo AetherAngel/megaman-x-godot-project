@@ -251,13 +251,13 @@ position = Vector2(-28, 1)
 position = Vector2(-2, 5)
 
 [node name="HoverIdlePoint" type="Marker2D" parent="." unique_id=1252447321]
-position = Vector2(-1, 0)
+position = Vector2(-1, 1)
 
 [node name="HoverFrontPoint" type="Marker2D" parent="." unique_id=401797370]
 position = Vector2(0, -1)
 
 [node name="HoverBackPoint" type="Marker2D" parent="." unique_id=868796277]
-position = Vector2(-2, 0)
+position = Vector2(-2, -1)
 
 [node name="DashSpark" type="Marker2D" parent="." unique_id=579369140]
 position = Vector2(0, 7)

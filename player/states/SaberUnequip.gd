@@ -1,6 +1,12 @@
-extends State
+extends RecoveryState
 
-func enter() -> void:
+## Recuperação do combo de saber. NÃO é uma etapa obrigatória do combo: só executa quando não há
+## intenção de outra ação no fim do combo (ver SaberAttack._end_combo), e qualquer intenção durante
+## a animação a interrompe (RecoveryState). Um ataque durante a recuperação é uma intenção como as
+## outras: o contexto assume e o Idle inicia o ataque.
+
+
+func _on_recovery_enter() -> void:
 	# SaberUnequip é exclusivo de personagens com saber
 	if player.current_character.default_weapon != "saber":
 		player.combo_count = 0
@@ -10,9 +16,6 @@ func enter() -> void:
 	if not player.is_on_floor():
 		return
 
-	InputManager.consume_shoot_buffer()
-	
-	
 	# Pega o unequip do último AttackData usado
 	var unequip_anim := ""
 	if player.current_character and player.current_character.skill_tree:
@@ -31,15 +34,3 @@ func enter() -> void:
 
 	player.sprite.play(unequip_anim)
 	print("⚔️ Iniciando animação de unequip: %s" % unequip_anim)
-
-func update(_delta: float) -> void:
-
-	# Se apertar ataque durante unequip, reinicia o combo
-	if InputManager.consume_shoot_buffer():
-		if player.current_character.default_weapon == "saber":
-			player.combo_count = 1
-			player.state_machine.change_state("SaberAttack")
-			return
-
-	if not player.sprite.is_playing():
-		player.state_machine.change_state("Idle")

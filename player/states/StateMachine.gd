@@ -14,6 +14,7 @@ var player: Node2D:
 var current_state: Node        = null
 var current_state_name: String = ""
 var previous_state_name: String = ""
+var _change_serial: int = 0   # incrementa a cada troca de State (detecta troca aninhada no enter)
 
 var states: Dictionary = {}
 
@@ -83,8 +84,17 @@ func change_state(new_state_name: String) -> void:
 		if stance != null:
 			_host.apply_collision_stance(stance)
 
+	# Conta as trocas: detecta uma troca ANINHADA dentro do enter() (ex.: WallSlide -> WallKick).
+	_change_serial += 1
+	var my_serial: int = _change_serial
+
 	if current_state.has_method("enter"):
 		current_state.enter()
+
+	# Se o enter() trocou de State, a troca interna já fez o ciclo completo (inclusive o visual).
+	# Continuar aqui aplicaria o visual DE NOVO, agora com o nome do State novo.
+	if my_serial != _change_serial:
+		return
 
 	# Sequência visual especial (Intro, Equip...) — só se o nó existir.
 	if is_special_visual_state(current_state_name) and visual_sequence_player:
@@ -101,6 +111,25 @@ func is_special_visual_state(state_name: String) -> bool:
 # ============================================================
 # PROCESS
 # ============================================================
+
+## Resolve uma INTENÇÃO (ver Intents.gd) no State que a atende no contexto atual e troca para ele.
+## Quem pede não cita nenhum State; change_state continua sendo o único executor da troca.
+## Devolve true se houve troca. Sem candidato: push_warning e nada muda. Com mais de um:
+## push_warning e vence o primeiro na ordem da cena (sem sistema de prioridade por enquanto).
+func request(intent: StringName) -> bool:
+	var candidates: Array[String] = []
+	for state_name in states:
+		var state: Node = states[state_name]
+		if state.has_method("can_resolve") and state.can_resolve(intent):
+			candidates.append(String(state_name))
+	if candidates.is_empty():
+		push_warning("StateMachine.request: nenhum State atende a intenção '%s' no contexto atual." % intent)
+		return false
+	if candidates.size() > 1:
+		push_warning("StateMachine.request: %d States atendem '%s' (%s); usando o primeiro." % [candidates.size(), intent, ", ".join(candidates)])
+	change_state(candidates[0])
+	return true
+
 
 func process_state(delta: float) -> void:
 	if current_state and current_state.has_method("update"):

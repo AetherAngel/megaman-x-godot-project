@@ -14,6 +14,19 @@ func enter() -> void: pass
 func exit() -> void: pass
 func update(_delta: float) -> void: pass
 
+## Este State atende a `intent` NO CONTEXTO ATUAL? (ver StateMachine.request)
+## Padrão: não. Só os States que se declaram resolvíveis sobrescrevem.
+func can_resolve(_intent: StringName) -> bool: return false
+
+## Cede o controle ao contexto de movimento e deixa o novo State processar ESTE tick, para que o input
+## que motivou a cessão (um pulo, um dash, um ataque) não se perca: Idle e Run só agem em just_pressed.
+## Devolve true se houve troca.
+func hand_over_to_movement(delta: float) -> bool:
+	if player.state_machine.request(Intents.RESUME_MOVEMENT):
+		player.state_machine.current_state.update(delta)
+		return true
+	return false
+
 
 # =========================
 # TECHNIQUE CHECKER

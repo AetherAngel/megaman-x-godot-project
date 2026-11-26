@@ -1,6 +1,10 @@
-extends State
+extends RecoveryState
 
-func enter() -> void:
+## Aterrissagem: a animação toca inteira quando não há intenção; qualquer intenção a interrompe.
+## A mecânica de ceder e a trava de segurança (safety_timeout) vêm de RecoveryState.
+
+
+func _on_recovery_enter() -> void:
 	player.wall_slide_cooldown = 0.0
 	player.wall_slide_cancelled = false
 	player.change_animation_set("jump")
@@ -19,22 +23,6 @@ func enter() -> void:
 		player.sprite.play("land")
 
 
-func update(_delta: float) -> void:
+func _on_recovery_tick(_delta: float) -> void:
 	player.horizontal_momentum = 0
 	player.can_air_dash = true
-
-	var dir = InputManager.get_move_axis()
-
-	print(
-		"[LAND] dir=", dir,
-		" | velocity=", player.velocity,
-		" | floor=", player.is_on_floor(),
-		" | shoot_buffer=", InputManager.consume_shoot_buffer()
-	)
-
-	if dir != 0:
-		print("[LAND] TRANSITION → RUN")
-		player.state_machine.change_state("Run")
-	elif abs(player.velocity.x) < 1:
-		print("[LAND] TRANSITION → IDLE")
-		player.state_machine.change_state("Idle")

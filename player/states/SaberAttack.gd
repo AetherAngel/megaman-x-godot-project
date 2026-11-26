@@ -1,4 +1,3 @@
-
 extends State
 
 var can_cancel := false
@@ -84,10 +83,8 @@ func update(delta: float) -> void:
 	# Se outro sistema substituiu a animação do ataque,
 	# ou se a própria animação terminou, encerra o combo.
 	if not is_attack_animation or not player.sprite.is_playing():
-		decision_locked = true
-		player.combo_count = 1
-		print("💀 [combo %d] ataque encerrado → SaberUnequip" % current_combo)
-		player.state_machine.change_state("SaberUnequip")
+		print("💀 [combo %d] ataque encerrado" % current_combo)
+		_end_combo(delta)
 		return
 
 	hold_elapsed += delta
@@ -103,9 +100,8 @@ func update(delta: float) -> void:
 		var next_state := player.current_character.skill_tree.get_next_combo_state(current_combo)
 
 		if next_state == "SaberUnequip":
-			player.combo_count = 1
-			print("🔥 [combo %d] → SaberUnequip" % current_combo)
-			player.state_machine.change_state("SaberUnequip")
+			print("🔥 [combo %d] → fim do combo" % current_combo)
+			_end_combo(delta)
 		else:
 			player.combo_count += 1
 			print("🔥 [combo %d] → próximo ataque" % current_combo)
@@ -116,10 +112,22 @@ func update(delta: float) -> void:
 	# Combos não finais também possuem limite de duração.
 	if not current_attack_data.is_final_combo:
 		if hold_elapsed >= current_attack_data.hold_duration:
-			decision_locked = true
-			player.combo_count = 1
-			print("💀 [combo %d] → SaberUnequip (timeout)" % current_combo)
-			player.state_machine.change_state("SaberUnequip")
+			print("💀 [combo %d] fim do combo (timeout)" % current_combo)
+			_end_combo(delta)
+
+
+## O combo acabou. O SaberUnequip é a CONSEQUÊNCIA da ausência de intenção, nunca uma etapa obrigatória:
+## com qualquer intenção agora, o contexto de movimento assume já (e o SaberUnequip é ignorado);
+## sem intenção, a recuperação (SaberUnequip) toca e ela mesma cede a qualquer intenção que apareça.
+func _end_combo(delta: float) -> void:
+	decision_locked = true
+	if player.intent.has_intent():
+		player.combo_count = 0
+		player.set_meta("came_from_attack", false)
+		hand_over_to_movement(delta)
+		return
+	player.combo_count = 1
+	player.state_machine.change_state("SaberUnequip")
 
 
 func get_movement_state() -> String:

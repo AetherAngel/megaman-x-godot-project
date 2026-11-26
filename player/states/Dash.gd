@@ -1,6 +1,9 @@
 # player/states/Dash.gd
 extends State
 
+## Este State chama visual_library.play_state() no próprio enter(): o StateMachine não repete.
+var manages_own_visuals: bool = true
+
 var dash_timer: float = 0.0
 const DASH_DURATION := 0.45
 
@@ -45,6 +48,7 @@ func update(delta: float) -> void:
 	if InputManager.is_action_just_pressed("dash") and player.current_armor.has_air_dash and player.can_air_dash:
 		if not player.is_on_floor():
 			player.state_machine.change_state("AirDash")
+			return
 		else:
 			return
 
@@ -55,7 +59,7 @@ func update(delta: float) -> void:
 		if not player.is_on_floor():
 			player.gravity_enabled = true
 			player.set_vertical_speed(0)
-			player.state_machine.change_state("Fall")
+			player.state_machine.request(Intents.RESUME_MOVEMENT)
 			return
 
 		# Dash terminou no chão sem pulo: zera o momentum.
@@ -64,11 +68,7 @@ func update(delta: float) -> void:
 		player.dash_jump_eligible = false
 		player.set_horizontal_speed(0)
 
-		var dir = InputManager.get_move_axis()
-		if dir != 0:
-			player.state_machine.change_state("Run")
-		else:
-			player.state_machine.change_state("Idle")
+		player.state_machine.request(Intents.RESUME_MOVEMENT)
 		
 func exit() -> void:
 	if is_instance_valid(_smoke_spawner):

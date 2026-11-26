@@ -6,6 +6,10 @@ func enter() -> void:
 	if not player.get_meta("came_from_attack", false):
 		player.combo_count = 0
 
+## Atende "retomar a movimentação" quando está no chão e sem direção.
+func can_resolve(intent: StringName) -> bool:
+	return intent == Intents.RESUME_MOVEMENT and player.is_on_floor() and player.intent.move_direction() == 0.0
+
 func update(_delta: float) -> void:
 	if not player.is_on_floor():
 		player.state_machine.change_state("Fall")

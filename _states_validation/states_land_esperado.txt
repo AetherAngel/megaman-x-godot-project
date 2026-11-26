@@ -1,0 +1,987 @@
+=== REG_data_graph [REG] ===
+DAT|graph|src=intro|Equip:1
+DAT|graph|src=AirDash|Fall:2
+DAT|graph|src=Dash|AirDash:1,Jump:1
+DAT|graph|src=Equip|Idle:1
+DAT|graph|src=Fall|AirDash:1,Hover:1,Jump:1,Land:1,NovaStrike:1,WallSlide:1
+DAT|graph|src=ForcedMovement|
+DAT|graph|src=Hover|Fall:1,Land:1
+DAT|graph|src=Hurt|Idle:1
+DAT|graph|src=Idle|Dash:1,Fall:1,Jump:1,Raijingeki:1,Run:1,SaberAttack:1
+DAT|graph|src=Intents|
+DAT|graph|src=Jump|AirDash:1,Fall:1,Hover:1,Jump:1,Land:1,NovaStrike:1,SaberAttackAir:1,WallSlide:1
+DAT|graph|src=Land|
+DAT|graph|src=NovaStrike|Fall:1,Land:1
+DAT|graph|src=Run|Dash:1,Fall:1,Idle:1,Jump:1,SaberAttack:1
+DAT|graph|src=SaberAttack|Idle:1,SaberUnequip:5
+DAT|graph|src=SaberAttackAir|Fall:2,ZeroLand:1
+DAT|graph|src=SaberUnequip|Idle:3,SaberAttack:1
+DAT|graph|src=Shoot|Idle:1
+DAT|graph|src=StateBase|
+DAT|graph|src=StateMachine|
+DAT|graph|src=Victory|
+DAT|graph|src=WallKick|Fall:5,Land:1,WallSlide:1
+DAT|graph|src=WallSlide|AirDash:1,Fall:5,WallKick:2
+DAT|graph|src=ZeroAttack1|ZeroAttack2:1,ZeroUnequip:1
+DAT|graph|src=ZeroAttack2|ZeroAttack3:1,ZeroUnequip:1
+DAT|graph|src=ZeroAttack3|ZeroAttack1:1,ZeroUnequip:1
+DAT|graph|src=ZeroDenjin|Fall:1,Idle:1
+DAT|graph|src=ZeroGenmu|Idle:3
+DAT|graph|src=ZeroHyoretsuzan|Fall:2,Idle:1
+DAT|graph|src=ZeroLand|Idle:2
+DAT|graph|src=ZeroMessenko|Idle:2
+DAT|graph|src=ZeroMikazukizan|Fall:2,Idle:1
+DAT|graph|src=ZeroRaikousen|Fall:1,Idle:2
+DAT|graph|src=ZeroRaikousenAir|Fall:2
+DAT|graph|src=ZeroRyuenjin|Fall:1,Idle:1
+DAT|graph|src=ZeroShippuuga|Fall:1,Idle:2
+DAT|graph|src=ZeroUnequip|Idle:2
+DAT|graph|src=ZeroWallAttack|Fall:1,Idle:1,WallSlide:1
+DAT|special_visual_states|["Intro", "equip", "Death"]
+=== REG_idle_run_idle [REG] ===
+DAT|char=X|armor={  }|height=0.0|start=Idle|ticks=120
+ACT|t=0|sm.change_state|req=Idle|from=
+ACT|t=0|vl.play_state|name=Idle
+ACT|t=0|sm.done|req=Idle|cur=Idle
+EVT|t=0|state=Idle|prev=|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+ACT|t=5|sm.change_state|req=Run|from=Idle
+ACT|t=5|vl.play_state|name=Run
+ACT|t=5|sm.done|req=Run|cur=Run
+EVT|t=5|state=Run|prev=Idle|floor=true|px=0.00|py=178.00|vx=1.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=10|snap|state=Run|floor=true|px=15.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=20|snap|state=Run|floor=true|px=45.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=30|snap|state=Run|floor=true|px=75.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=40|snap|state=Run|floor=true|px=105.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+ACT|t=45|sm.change_state|req=Idle|from=Run
+ACT|t=45|vl.play_state|name=Idle
+ACT|t=45|sm.done|req=Idle|cur=Idle
+EVT|t=45|state=Idle|prev=Run|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=50|snap|state=Idle|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=60|snap|state=Idle|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=70|snap|state=Idle|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=80|snap|state=Idle|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=90|snap|state=Idle|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=100|snap|state=Idle|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=110|snap|state=Idle|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=120|snap|state=Idle|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+END|ticks=120|state=Idle|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+=== REG_fall_land_idle [REG] ===
+DAT|char=X|armor={  }|height=60.0|start=Fall|ticks=90
+ACT|t=0|sm.change_state|req=Fall|from=
+ACT|t=0|vl.play_state|name=Fall
+ACT|t=0|sm.done|req=Fall|cur=Fall
+EVT|t=0|state=Fall|prev=|floor=false|px=0.00|py=118.00|vx=0.000|vy=0.000|face=R|anim=fall|playing=true
+EVT|t=10|snap|state=Fall|floor=false|px=0.00|py=144.00|vx=0.000|vy=264.000|face=R|anim=fall|playing=true
+ACT|t=17|sm.change_state|req=Land|from=Fall
+ACT|t=17|player.change_animation_set|action=jump
+ACT|t=17|vl.play_state|name=Land
+ACT|t=17|sm.done|req=Land|cur=Land
+EVT|t=17|state=Land|prev=Fall|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+EVT|t=20|snap|state=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+EVT|t=30|snap|state=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+EVT|t=40|snap|state=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+ACT|t=48|sm.change_state|req=Idle|from=Land
+ACT|t=48|vl.play_state|name=Idle
+ACT|t=48|sm.done|req=Idle|cur=Idle
+EVT|t=48|state=Idle|prev=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=50|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=60|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=70|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=80|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=90|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+END|ticks=90|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+=== REG_fall_land_run [REG] ===
+DAT|char=X|armor={  }|height=60.0|start=Fall|ticks=90
+ACT|t=0|sm.change_state|req=Fall|from=
+ACT|t=0|vl.play_state|name=Fall
+ACT|t=0|sm.done|req=Fall|cur=Fall
+EVT|t=0|state=Fall|prev=|floor=false|px=0.00|py=118.00|vx=0.000|vy=0.000|face=R|anim=fall|playing=true
+EVT|t=10|snap|state=Fall|floor=false|px=7.00|py=144.00|vx=63.000|vy=264.000|face=R|anim=fall|playing=true
+ACT|t=17|sm.change_state|req=Land|from=Fall
+ACT|t=17|player.change_animation_set|action=jump
+ACT|t=17|vl.play_state|name=Land
+ACT|t=17|sm.done|req=Land|cur=Land
+EVT|t=17|state=Land|prev=Fall|floor=true|px=13.00|py=178.00|vx=6.300|vy=0.000|face=R|anim=land|playing=true
+ACT|t=18|sm.change_state|req=Run|from=Land
+ACT|t=18|vl.play_state|name=Run
+ACT|t=18|sm.done|req=Run|cur=Run
+EVT|t=18|state=Run|prev=Land|floor=true|px=13.00|py=178.00|vx=6.300|vy=0.000|face=R|anim=run|playing=true
+EVT|t=20|snap|state=Run|floor=true|px=19.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=30|snap|state=Run|floor=true|px=49.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=40|snap|state=Run|floor=true|px=79.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=50|snap|state=Run|floor=true|px=109.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=60|snap|state=Run|floor=true|px=139.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=70|snap|state=Run|floor=true|px=169.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=80|snap|state=Run|floor=true|px=199.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=90|snap|state=Run|floor=true|px=229.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+END|ticks=90|state=Run|floor=true|px=229.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+=== REG_jump_land [REG] ===
+DAT|char=X|armor={  }|height=0.0|start=Idle|ticks=120
+ACT|t=0|sm.change_state|req=Idle|from=
+ACT|t=0|vl.play_state|name=Idle
+ACT|t=0|sm.done|req=Idle|cur=Idle
+EVT|t=0|state=Idle|prev=|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+ACT|t=6|sm.change_state|req=Jump|from=Idle
+ACT|t=6|vl.play_state|name=Jump
+ACT|t=6|sm.done|req=Jump|cur=Jump
+EVT|t=6|state=Jump|prev=Idle|floor=false|px=0.00|py=174.00|vx=0.000|vy=-260.000|face=R|anim=jump|playing=true
+EVT|t=10|snap|state=Jump|floor=false|px=0.00|py=158.00|vx=0.000|vy=-221.000|face=R|anim=jump|playing=true
+EVT|t=20|snap|state=Jump|floor=false|px=0.00|py=130.00|vx=0.000|vy=-123.500|face=R|anim=jump|playing=true
+EVT|t=30|snap|state=Jump|floor=false|px=0.00|py=118.00|vx=0.000|vy=-26.000|face=R|anim=jump|playing=true
+ACT|t=33|sm.change_state|req=Fall|from=Jump
+ACT|t=33|vl.play_state|name=Fall
+ACT|t=33|sm.done|req=Fall|cur=Fall
+EVT|t=33|state=Fall|prev=Jump|floor=false|px=0.00|py=118.00|vx=0.000|vy=3.250|face=R|anim=fall|playing=true
+EVT|t=40|snap|state=Fall|floor=false|px=0.00|py=129.00|vx=0.000|vy=171.250|face=R|anim=fall|playing=true
+EVT|t=50|snap|state=Fall|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=fall|playing=true
+ACT|t=51|sm.change_state|req=Land|from=Fall
+ACT|t=51|player.change_animation_set|action=jump
+ACT|t=51|vl.play_state|name=Land
+ACT|t=51|sm.done|req=Land|cur=Land
+EVT|t=51|state=Land|prev=Fall|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+EVT|t=60|snap|state=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+EVT|t=70|snap|state=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+EVT|t=80|snap|state=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+ACT|t=82|sm.change_state|req=Idle|from=Land
+ACT|t=82|vl.play_state|name=Idle
+ACT|t=82|sm.done|req=Idle|cur=Idle
+EVT|t=82|state=Idle|prev=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=90|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=100|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=110|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=120|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+END|ticks=120|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+=== REG_dash_ground_no_dir [REG] ===
+DAT|char=X|armor={  }|height=0.0|start=Idle|ticks=90
+ACT|t=0|sm.change_state|req=Idle|from=
+ACT|t=0|vl.play_state|name=Idle
+ACT|t=0|sm.done|req=Idle|cur=Idle
+EVT|t=0|state=Idle|prev=|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+ACT|t=6|sm.change_state|req=Dash|from=Idle
+ACT|t=6|vl.play_state|name=dash
+ACT|t=6|sm.done|req=Dash|cur=Dash
+EVT|t=6|state=Dash|prev=Idle|floor=true|px=6.00|py=178.00|vx=360.000|vy=0.000|face=R|anim=dash|playing=true
+EVT|t=10|snap|state=Dash|floor=true|px=30.00|py=178.00|vx=360.000|vy=0.000|face=R|anim=dash|playing=true
+EVT|t=20|snap|state=Dash|floor=true|px=90.00|py=178.00|vx=360.000|vy=0.000|face=R|anim=dash|playing=true
+EVT|t=30|snap|state=Dash|floor=true|px=150.00|py=178.00|vx=360.000|vy=0.000|face=R|anim=dash|playing=true
+ACT|t=34|sm.change_state|req=Idle|from=Dash
+ACT|t=34|vl.play_state|name=Idle
+ACT|t=34|sm.done|req=Idle|cur=Idle
+EVT|t=34|state=Idle|prev=Dash|floor=true|px=168.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=40|snap|state=Idle|floor=true|px=168.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=50|snap|state=Idle|floor=true|px=168.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=60|snap|state=Idle|floor=true|px=168.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=70|snap|state=Idle|floor=true|px=168.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=80|snap|state=Idle|floor=true|px=168.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=90|snap|state=Idle|floor=true|px=168.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+END|ticks=90|state=Idle|floor=true|px=168.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+=== REG_dash_ground_with_dir [REG] ===
+DAT|char=X|armor={  }|height=0.0|start=Idle|ticks=90
+ACT|t=0|sm.change_state|req=Idle|from=
+ACT|t=0|vl.play_state|name=Idle
+ACT|t=0|sm.done|req=Idle|cur=Idle
+EVT|t=0|state=Idle|prev=|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+ACT|t=3|sm.change_state|req=Run|from=Idle
+ACT|t=3|vl.play_state|name=Run
+ACT|t=3|sm.done|req=Run|cur=Run
+EVT|t=3|state=Run|prev=Idle|floor=true|px=0.00|py=178.00|vx=1.000|vy=0.000|face=R|anim=run|playing=true
+ACT|t=6|sm.change_state|req=Dash|from=Run
+ACT|t=6|vl.play_state|name=dash
+ACT|t=6|sm.done|req=Dash|cur=Dash
+EVT|t=6|state=Dash|prev=Run|floor=true|px=12.00|py=178.00|vx=360.000|vy=0.000|face=R|anim=dash|playing=true
+EVT|t=10|snap|state=Dash|floor=true|px=36.00|py=178.00|vx=360.000|vy=0.000|face=R|anim=dash|playing=true
+EVT|t=20|snap|state=Dash|floor=true|px=96.00|py=178.00|vx=360.000|vy=0.000|face=R|anim=dash|playing=true
+EVT|t=30|snap|state=Dash|floor=true|px=156.00|py=178.00|vx=360.000|vy=0.000|face=R|anim=dash|playing=true
+ACT|t=34|sm.change_state|req=Run|from=Dash
+ACT|t=34|vl.play_state|name=Run
+ACT|t=34|sm.done|req=Run|cur=Run
+EVT|t=34|state=Run|prev=Dash|floor=true|px=174.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=40|snap|state=Run|floor=true|px=192.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=50|snap|state=Run|floor=true|px=222.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=60|snap|state=Run|floor=true|px=252.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=70|snap|state=Run|floor=true|px=282.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=80|snap|state=Run|floor=true|px=312.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=90|snap|state=Run|floor=true|px=342.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+END|ticks=90|state=Run|floor=true|px=342.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+=== REG_dash_to_jump [REG] ===
+DAT|char=X|armor={  }|height=0.0|start=Idle|ticks=90
+ACT|t=0|sm.change_state|req=Idle|from=
+ACT|t=0|vl.play_state|name=Idle
+ACT|t=0|sm.done|req=Idle|cur=Idle
+EVT|t=0|state=Idle|prev=|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+ACT|t=6|sm.change_state|req=Dash|from=Idle
+ACT|t=6|vl.play_state|name=dash
+ACT|t=6|sm.done|req=Dash|cur=Dash
+EVT|t=6|state=Dash|prev=Idle|floor=true|px=6.00|py=178.00|vx=360.000|vy=0.000|face=R|anim=dash|playing=true
+EVT|t=10|snap|state=Dash|floor=true|px=30.00|py=178.00|vx=360.000|vy=0.000|face=R|anim=dash|playing=true
+ACT|t=13|sm.change_state|req=Jump|from=Dash
+ACT|t=13|vl.play_state|name=Jump
+ACT|t=13|sm.done|req=Jump|cur=Jump
+EVT|t=13|state=Jump|prev=Dash|floor=false|px=47.00|py=174.00|vx=270.000|vy=-260.000|face=R|anim=jump|playing=true
+EVT|t=20|snap|state=Jump|floor=false|px=82.00|py=148.00|vx=270.000|vy=-191.750|face=R|anim=jump|playing=true
+EVT|t=30|snap|state=Jump|floor=false|px=132.00|py=124.00|vx=270.000|vy=-94.250|face=R|anim=jump|playing=true
+ACT|t=40|sm.change_state|req=Fall|from=Jump
+ACT|t=40|vl.play_state|name=Fall
+ACT|t=40|sm.done|req=Fall|cur=Fall
+EVT|t=40|state=Fall|prev=Jump|floor=false|px=182.00|py=118.00|vx=270.000|vy=3.250|face=R|anim=fall|playing=true
+EVT|t=50|snap|state=Fall|floor=false|px=222.00|py=140.00|vx=226.667|vy=243.250|face=R|anim=fall|playing=true
+ACT|t=58|sm.change_state|req=Land|from=Fall
+ACT|t=58|player.change_animation_set|action=jump
+ACT|t=58|vl.play_state|name=Land
+ACT|t=58|sm.done|req=Land|cur=Land
+EVT|t=58|state=Land|prev=Fall|floor=true|px=246.00|py=178.00|vx=19.633|vy=0.000|face=R|anim=land|playing=true
+EVT|t=60|snap|state=Land|floor=true|px=246.00|py=178.00|vx=19.633|vy=0.000|face=R|anim=land|playing=true
+EVT|t=70|snap|state=Land|floor=true|px=246.00|py=178.00|vx=19.633|vy=0.000|face=R|anim=land|playing=true
+EVT|t=80|snap|state=Land|floor=true|px=246.00|py=178.00|vx=19.633|vy=0.000|face=R|anim=land|playing=true
+ACT|t=89|sm.change_state|req=Idle|from=Land
+ACT|t=89|vl.play_state|name=Idle
+ACT|t=89|sm.done|req=Idle|cur=Idle
+EVT|t=89|state=Idle|prev=Land|floor=true|px=246.00|py=178.00|vx=19.633|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=90|snap|state=Idle|floor=true|px=246.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+END|ticks=90|state=Idle|floor=true|px=246.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+=== REG_dash_branch_to_airdash_forced [REG] ===
+DAT|char=X|armor={  }|height=0.0|start=Idle|ticks=90
+ACT|t=0|sm.change_state|req=Idle|from=
+ACT|t=0|vl.play_state|name=Idle
+ACT|t=0|sm.done|req=Idle|cur=Idle
+EVT|t=0|state=Idle|prev=|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+ACT|t=6|sm.change_state|req=Dash|from=Idle
+ACT|t=6|vl.play_state|name=dash
+ACT|t=6|sm.done|req=Dash|cur=Dash
+EVT|t=6|state=Dash|prev=Idle|floor=true|px=6.00|py=178.00|vx=360.000|vy=0.000|face=R|anim=dash|playing=true
+EVT|t=10|snap|state=Dash|floor=false|px=30.00|py=138.00|vx=360.000|vy=0.000|face=R|anim=dash|playing=true
+ACT|t=13|sm.change_state|req=AirDash|from=Dash
+ACT|t=13|player.change_animation_set|action=airdash
+ACT|t=13|vl.play_state|name=AirDash
+ACT|t=13|sm.done|req=AirDash|cur=AirDash
+EVT|t=13|state=AirDash|prev=Dash|floor=false|px=48.00|py=138.00|vx=360.000|vy=0.000|face=R|anim=airdash|playing=true
+EVT|t=20|snap|state=AirDash|floor=false|px=90.00|py=138.00|vx=360.000|vy=0.000|face=R|anim=airdash|playing=true
+EVT|t=30|snap|state=AirDash|floor=false|px=150.00|py=138.00|vx=360.000|vy=0.000|face=R|anim=airdash|playing=true
+ACT|t=35|sm.change_state|req=Fall|from=AirDash
+ACT|t=35|vl.play_state|name=Fall
+ACT|t=35|sm.done|req=Fall|cur=Fall
+EVT|t=35|state=Fall|prev=AirDash|floor=false|px=180.00|py=138.00|vx=360.000|vy=0.000|face=R|anim=fall|playing=true
+EVT|t=40|snap|state=Fall|floor=false|px=210.00|py=144.00|vx=338.333|vy=120.000|face=R|anim=fall|playing=true
+ACT|t=50|sm.change_state|req=Land|from=Fall
+ACT|t=50|player.change_animation_set|action=jump
+ACT|t=50|vl.play_state|name=Land
+ACT|t=50|sm.done|req=Land|cur=Land
+EVT|t=50|state=Land|prev=Fall|floor=true|px=256.00|py=178.00|vx=29.933|vy=0.000|face=R|anim=land|playing=true
+EVT|t=60|snap|state=Land|floor=true|px=256.00|py=178.00|vx=29.933|vy=0.000|face=R|anim=land|playing=true
+EVT|t=70|snap|state=Land|floor=true|px=256.00|py=178.00|vx=29.933|vy=0.000|face=R|anim=land|playing=true
+EVT|t=80|snap|state=Land|floor=true|px=256.00|py=178.00|vx=29.933|vy=0.000|face=R|anim=land|playing=true
+ACT|t=81|sm.change_state|req=Idle|from=Land
+ACT|t=81|vl.play_state|name=Idle
+ACT|t=81|sm.done|req=Idle|cur=Idle
+EVT|t=81|state=Idle|prev=Land|floor=true|px=256.00|py=178.00|vx=29.933|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=90|snap|state=Idle|floor=true|px=256.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+END|ticks=90|state=Idle|floor=true|px=256.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+=== REG_dash_branch_airdash_same_frame_timer_end [REG] ===
+DAT|char=X|armor={  }|height=0.0|start=Idle|ticks=60
+ACT|t=0|sm.change_state|req=Idle|from=
+ACT|t=0|vl.play_state|name=Idle
+ACT|t=0|sm.done|req=Idle|cur=Idle
+EVT|t=0|state=Idle|prev=|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+ACT|t=6|sm.change_state|req=Dash|from=Idle
+ACT|t=6|vl.play_state|name=dash
+ACT|t=6|sm.done|req=Dash|cur=Dash
+EVT|t=6|state=Dash|prev=Idle|floor=true|px=6.00|py=178.00|vx=360.000|vy=0.000|face=R|anim=dash|playing=true
+ACT|t=10|sm.change_state|req=AirDash|from=Dash
+ACT|t=10|player.change_animation_set|action=airdash
+ACT|t=10|vl.play_state|name=AirDash
+ACT|t=10|sm.done|req=AirDash|cur=AirDash
+EVT|t=10|state=AirDash|prev=Dash|floor=false|px=30.00|py=138.00|vx=360.000|vy=0.000|face=R|anim=airdash|playing=true
+EVT|t=20|snap|state=AirDash|floor=false|px=90.00|py=138.00|vx=360.000|vy=0.000|face=R|anim=airdash|playing=true
+EVT|t=30|snap|state=AirDash|floor=false|px=150.00|py=138.00|vx=360.000|vy=0.000|face=R|anim=airdash|playing=true
+ACT|t=32|sm.change_state|req=Fall|from=AirDash
+ACT|t=32|vl.play_state|name=Fall
+ACT|t=32|sm.done|req=Fall|cur=Fall
+EVT|t=32|state=Fall|prev=AirDash|floor=false|px=162.00|py=138.00|vx=360.000|vy=0.000|face=R|anim=fall|playing=true
+EVT|t=40|snap|state=Fall|floor=false|px=208.00|py=152.00|vx=325.333|vy=192.000|face=R|anim=fall|playing=true
+ACT|t=47|sm.change_state|req=Land|from=Fall
+ACT|t=47|player.change_animation_set|action=jump
+ACT|t=47|vl.play_state|name=Land
+ACT|t=47|sm.done|req=Land|cur=Land
+EVT|t=47|state=Land|prev=Fall|floor=true|px=238.00|py=178.00|vx=29.933|vy=0.000|face=R|anim=land|playing=true
+EVT|t=50|snap|state=Land|floor=true|px=238.00|py=178.00|vx=29.933|vy=0.000|face=R|anim=land|playing=true
+EVT|t=60|snap|state=Land|floor=true|px=238.00|py=178.00|vx=29.933|vy=0.000|face=R|anim=land|playing=true
+END|ticks=60|state=Land|floor=true|px=238.00|py=178.00|vx=29.933|vy=0.000|face=R|anim=land|playing=true
+=== REG_airdash_from_jump [REG] ===
+DAT|char=X|armor={  }|height=0.0|start=Idle|ticks=100
+ACT|t=0|sm.change_state|req=Idle|from=
+ACT|t=0|vl.play_state|name=Idle
+ACT|t=0|sm.done|req=Idle|cur=Idle
+EVT|t=0|state=Idle|prev=|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+ACT|t=6|sm.change_state|req=Jump|from=Idle
+ACT|t=6|vl.play_state|name=Jump
+ACT|t=6|sm.done|req=Jump|cur=Jump
+EVT|t=6|state=Jump|prev=Idle|floor=false|px=0.00|py=174.00|vx=0.000|vy=-260.000|face=R|anim=jump|playing=true
+EVT|t=10|snap|state=Jump|floor=false|px=0.00|py=158.00|vx=0.000|vy=-221.000|face=R|anim=jump|playing=true
+ACT|t=16|sm.change_state|req=AirDash|from=Jump
+ACT|t=16|player.change_animation_set|action=airdash
+ACT|t=16|vl.play_state|name=AirDash
+ACT|t=16|sm.done|req=AirDash|cur=AirDash
+EVT|t=16|state=AirDash|prev=Jump|floor=false|px=6.00|py=142.00|vx=360.000|vy=0.000|face=R|anim=airdash|playing=true
+EVT|t=20|snap|state=AirDash|floor=false|px=30.00|py=142.00|vx=360.000|vy=0.000|face=R|anim=airdash|playing=true
+EVT|t=30|snap|state=AirDash|floor=false|px=90.00|py=142.00|vx=360.000|vy=0.000|face=R|anim=airdash|playing=true
+ACT|t=38|sm.change_state|req=Fall|from=AirDash
+ACT|t=38|vl.play_state|name=Fall
+ACT|t=38|sm.done|req=Fall|cur=Fall
+EVT|t=38|state=Fall|prev=AirDash|floor=false|px=138.00|py=142.00|vx=360.000|vy=0.000|face=R|anim=fall|playing=true
+EVT|t=40|snap|state=Fall|floor=false|px=150.00|py=143.00|vx=351.333|vy=48.000|face=R|anim=fall|playing=true
+EVT|t=50|snap|state=Fall|floor=false|px=204.00|py=173.00|vx=308.000|vy=288.000|face=R|anim=fall|playing=true
+ACT|t=52|sm.change_state|req=Land|from=Fall
+ACT|t=52|player.change_animation_set|action=jump
+ACT|t=52|vl.play_state|name=Land
+ACT|t=52|sm.done|req=Land|cur=Land
+EVT|t=52|state=Land|prev=Fall|floor=true|px=210.00|py=178.00|vx=30.367|vy=0.000|face=R|anim=land|playing=true
+EVT|t=60|snap|state=Land|floor=true|px=218.00|py=178.00|vx=30.367|vy=0.000|face=R|anim=land|playing=true
+EVT|t=70|snap|state=Land|floor=true|px=228.00|py=178.00|vx=30.367|vy=0.000|face=R|anim=land|playing=true
+EVT|t=80|snap|state=Land|floor=true|px=238.00|py=178.00|vx=30.367|vy=0.000|face=R|anim=land|playing=true
+ACT|t=83|sm.change_state|req=Idle|from=Land
+ACT|t=83|vl.play_state|name=Idle
+ACT|t=83|sm.done|req=Idle|cur=Idle
+EVT|t=83|state=Idle|prev=Land|floor=true|px=241.00|py=178.00|vx=30.367|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=90|snap|state=Idle|floor=true|px=241.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=100|snap|state=Idle|floor=true|px=241.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+END|ticks=100|state=Idle|floor=true|px=241.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+=== REG_airdash_from_fall [REG] ===
+DAT|char=X|armor={  }|height=90.0|start=Fall|ticks=100
+ACT|t=0|sm.change_state|req=Fall|from=
+ACT|t=0|vl.play_state|name=Fall
+ACT|t=0|sm.done|req=Fall|cur=Fall
+EVT|t=0|state=Fall|prev=|floor=false|px=0.00|py=88.00|vx=0.000|vy=0.000|face=R|anim=fall|playing=true
+ACT|t=6|sm.change_state|req=AirDash|from=Fall
+ACT|t=6|player.change_animation_set|action=airdash
+ACT|t=6|vl.play_state|name=AirDash
+ACT|t=6|sm.done|req=AirDash|cur=AirDash
+EVT|t=6|state=AirDash|prev=Fall|floor=false|px=6.00|py=96.00|vx=360.000|vy=0.000|face=R|anim=airdash|playing=true
+EVT|t=10|snap|state=AirDash|floor=false|px=30.00|py=96.00|vx=360.000|vy=0.000|face=R|anim=airdash|playing=true
+EVT|t=20|snap|state=AirDash|floor=false|px=90.00|py=96.00|vx=360.000|vy=0.000|face=R|anim=airdash|playing=true
+ACT|t=28|sm.change_state|req=Fall|from=AirDash
+ACT|t=28|vl.play_state|name=Fall
+ACT|t=28|sm.done|req=Fall|cur=Fall
+EVT|t=28|state=Fall|prev=AirDash|floor=false|px=138.00|py=96.00|vx=360.000|vy=0.000|face=R|anim=fall|playing=true
+EVT|t=30|snap|state=Fall|floor=false|px=150.00|py=97.00|vx=351.333|vy=48.000|face=R|anim=fall|playing=true
+EVT|t=40|snap|state=Fall|floor=false|px=204.00|py=127.00|vx=308.000|vy=288.000|face=R|anim=fall|playing=true
+ACT|t=49|sm.change_state|req=Land|from=Fall
+ACT|t=49|player.change_animation_set|action=jump
+ACT|t=49|vl.play_state|name=Land
+ACT|t=49|sm.done|req=Land|cur=Land
+EVT|t=49|state=Land|prev=Fall|floor=true|px=244.00|py=178.00|vx=27.333|vy=0.000|face=R|anim=land|playing=true
+EVT|t=50|snap|state=Land|floor=true|px=244.00|py=178.00|vx=27.333|vy=0.000|face=R|anim=land|playing=true
+EVT|t=60|snap|state=Land|floor=true|px=244.00|py=178.00|vx=27.333|vy=0.000|face=R|anim=land|playing=true
+EVT|t=70|snap|state=Land|floor=true|px=244.00|py=178.00|vx=27.333|vy=0.000|face=R|anim=land|playing=true
+ACT|t=80|sm.change_state|req=Idle|from=Land
+ACT|t=80|vl.play_state|name=Idle
+ACT|t=80|sm.done|req=Idle|cur=Idle
+EVT|t=80|state=Idle|prev=Land|floor=true|px=244.00|py=178.00|vx=27.333|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=90|snap|state=Idle|floor=true|px=244.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=100|snap|state=Idle|floor=true|px=244.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+END|ticks=100|state=Idle|floor=true|px=244.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+=== REG_airdash_opposite_input [REG] ===
+DAT|char=X|armor={  }|height=0.0|start=Idle|ticks=110
+ACT|t=0|sm.change_state|req=Idle|from=
+ACT|t=0|vl.play_state|name=Idle
+ACT|t=0|sm.done|req=Idle|cur=Idle
+EVT|t=0|state=Idle|prev=|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+ACT|t=6|sm.change_state|req=Jump|from=Idle
+ACT|t=6|vl.play_state|name=Jump
+ACT|t=6|sm.done|req=Jump|cur=Jump
+EVT|t=6|state=Jump|prev=Idle|floor=false|px=0.00|py=174.00|vx=0.000|vy=-260.000|face=R|anim=jump|playing=true
+EVT|t=10|snap|state=Jump|floor=false|px=0.00|py=158.00|vx=0.000|vy=-221.000|face=R|anim=jump|playing=true
+ACT|t=16|sm.change_state|req=AirDash|from=Jump
+ACT|t=16|player.change_animation_set|action=airdash
+ACT|t=16|vl.play_state|name=AirDash
+ACT|t=16|sm.done|req=AirDash|cur=AirDash
+EVT|t=16|state=AirDash|prev=Jump|floor=false|px=6.00|py=142.00|vx=360.000|vy=0.000|face=R|anim=airdash|playing=true
+EVT|t=20|snap|state=AirDash|floor=false|px=30.00|py=142.00|vx=360.000|vy=0.000|face=R|anim=airdash|playing=true
+EVT|t=30|snap|state=AirDash|floor=false|px=90.00|py=142.00|vx=360.000|vy=0.000|face=R|anim=airdash|playing=true
+ACT|t=38|sm.change_state|req=Fall|from=AirDash
+ACT|t=38|vl.play_state|name=Fall
+ACT|t=38|sm.done|req=Fall|cur=Fall
+EVT|t=38|state=Fall|prev=AirDash|floor=false|px=138.00|py=142.00|vx=360.000|vy=0.000|face=R|anim=fall|playing=true
+EVT|t=40|snap|state=Fall|floor=false|px=150.00|py=143.00|vx=343.333|vy=48.000|face=L|anim=fall|playing=true
+EVT|t=50|snap|state=Fall|floor=false|px=199.00|py=173.00|vx=260.000|vy=288.000|face=L|anim=fall|playing=true
+ACT|t=52|sm.change_state|req=Land|from=Fall
+ACT|t=52|player.change_animation_set|action=jump
+ACT|t=52|vl.play_state|name=Land
+ACT|t=52|sm.done|req=Land|cur=Land
+EVT|t=52|state=Land|prev=Fall|floor=true|px=203.00|py=178.00|vx=25.167|vy=0.000|face=L|anim=land|playing=true
+ACT|t=53|sm.change_state|req=Run|from=Land
+ACT|t=53|vl.play_state|name=Run
+ACT|t=53|sm.done|req=Run|cur=Run
+EVT|t=53|state=Run|prev=Land|floor=true|px=203.00|py=178.00|vx=25.167|vy=0.000|face=L|anim=run|playing=true
+EVT|t=60|snap|state=Run|floor=true|px=182.00|py=178.00|vx=-180.000|vy=0.000|face=L|anim=run|playing=true
+EVT|t=70|snap|state=Run|floor=true|px=152.00|py=178.00|vx=-180.000|vy=0.000|face=L|anim=run|playing=true
+EVT|t=80|snap|state=Run|floor=true|px=122.00|py=178.00|vx=-180.000|vy=0.000|face=L|anim=run|playing=true
+ACT|t=90|sm.change_state|req=Idle|from=Run
+ACT|t=90|vl.play_state|name=Idle
+ACT|t=90|sm.done|req=Idle|cur=Idle
+EVT|t=90|state=Idle|prev=Run|floor=true|px=95.00|py=178.00|vx=0.000|vy=0.000|face=L|anim=idle|playing=true
+EVT|t=100|snap|state=Idle|floor=true|px=95.00|py=178.00|vx=0.000|vy=0.000|face=L|anim=idle|playing=true
+EVT|t=110|snap|state=Idle|floor=true|px=95.00|py=178.00|vx=0.000|vy=0.000|face=L|anim=idle|playing=true
+END|ticks=110|state=Idle|floor=true|px=95.00|py=178.00|vx=0.000|vy=0.000|face=L|anim=idle|playing=true
+=== REG_hover_double_jump [REG] ===
+DAT|char=X|armor={ "double_jump": true }|height=0.0|start=Idle|ticks=160
+ACT|t=0|sm.change_state|req=Idle|from=
+ACT|t=0|vl.play_state|name=Idle
+ACT|t=0|sm.done|req=Idle|cur=Idle
+EVT|t=0|state=Idle|prev=|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+ACT|t=6|sm.change_state|req=Jump|from=Idle
+ACT|t=6|vl.play_state|name=Jump
+ACT|t=6|sm.done|req=Jump|cur=Jump
+EVT|t=6|state=Jump|prev=Idle|floor=false|px=0.00|py=174.00|vx=0.000|vy=-260.000|face=R|anim=jump|playing=true
+EVT|t=10|snap|state=Jump|floor=false|px=0.00|py=158.00|vx=0.000|vy=-221.000|face=R|anim=jump|playing=true
+EVT|t=20|snap|state=Jump|floor=false|px=0.00|py=130.00|vx=0.000|vy=-123.500|face=R|anim=jump|playing=true
+ACT|t=21|sm.change_state|req=Hover|from=Jump
+ACT|t=21|vl.play_state|name=Hover
+ACT|t=21|fx.get_stationary|name=hover_effect
+ACT|t=21|fx.start|name=hover_effect
+ACT|t=21|vl.set_anim_level|state=Hover|level=0
+ACT|t=21|sm.done|req=Hover|cur=Hover
+EVT|t=21|state=Hover|prev=Jump|floor=false|px=0.00|py=130.00|vx=0.000|vy=0.000|face=R|anim=hover|playing=true
+ACT|t=22|fx.set_level|name=hover_effect|level=0|right=true
+EVT|t=30|snap|state=Hover|floor=false|px=0.00|py=130.00|vx=0.000|vy=0.000|face=R|anim=hover|playing=true
+ACT|t=35|vl.set_anim_level|state=Hover|level=2
+ACT|t=35|fx.set_level|name=hover_effect|level=2|right=true
+EVT|t=40|snap|state=Hover|floor=false|px=4.00|py=130.00|vx=60.000|vy=0.000|face=R|anim=hover|playing=true
+EVT|t=50|snap|state=Hover|floor=false|px=14.00|py=130.00|vx=85.000|vy=0.000|face=R|anim=hover|playing=true
+ACT|t=55|vl.set_anim_level|state=Hover|level=0
+ACT|t=55|fx.set_level|name=hover_effect|level=0|right=true
+ACT|t=60|vl.set_anim_level|state=Hover|level=1
+ACT|t=60|fx.set_level|name=hover_effect|level=1|right=true
+EVT|t=60|snap|state=Hover|floor=false|px=23.00|py=130.00|vx=25.000|vy=0.000|face=R|anim=hover|playing=true
+ACT|t=68|vl.set_anim_level|state=Hover|level=0
+ACT|t=68|fx.set_level|name=hover_effect|level=0|right=true
+ACT|t=70|sm.change_state|req=Fall|from=Hover
+ACT|t=70|fx.stop|name=hover_effect
+ACT|t=70|vl.play_state|name=Fall
+ACT|t=70|sm.done|req=Fall|cur=Fall
+EVT|t=70|state=Fall|prev=Hover|floor=false|px=20.00|py=130.00|vx=-25.000|vy=0.000|face=R|anim=fall|playing=true
+EVT|t=80|snap|state=Fall|floor=false|px=20.00|py=152.00|vx=0.000|vy=240.000|face=R|anim=fall|playing=true
+ACT|t=86|sm.change_state|req=Land|from=Fall
+ACT|t=86|player.change_animation_set|action=jump
+ACT|t=86|vl.play_state|name=Land
+ACT|t=86|sm.done|req=Land|cur=Land
+EVT|t=86|state=Land|prev=Fall|floor=true|px=20.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+EVT|t=90|snap|state=Land|floor=true|px=20.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+EVT|t=100|snap|state=Land|floor=true|px=20.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+EVT|t=110|snap|state=Land|floor=true|px=20.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+ACT|t=117|sm.change_state|req=Idle|from=Land
+ACT|t=117|vl.play_state|name=Idle
+ACT|t=117|sm.done|req=Idle|cur=Idle
+EVT|t=117|state=Idle|prev=Land|floor=true|px=20.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=120|snap|state=Idle|floor=true|px=20.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=130|snap|state=Idle|floor=true|px=20.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=140|snap|state=Idle|floor=true|px=20.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=150|snap|state=Idle|floor=true|px=20.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=160|snap|state=Idle|floor=true|px=20.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+END|ticks=160|state=Idle|floor=true|px=20.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+=== REG_enter_Idle [REG] ===
+DAT|char=X|armor={ "double_jump": true }|height=0.0|start=Idle|ticks=6
+ACT|t=0|sm.change_state|req=Idle|from=
+ACT|t=0|vl.play_state|name=Idle
+ACT|t=0|sm.done|req=Idle|cur=Idle
+EVT|t=0|state=Idle|prev=|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+END|ticks=6|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+=== REG_enter_Run [REG] ===
+DAT|char=X|armor={ "double_jump": true }|height=0.0|start=Run|ticks=6
+ACT|t=0|sm.change_state|req=Run|from=
+ACT|t=0|vl.play_state|name=Run
+ACT|t=0|sm.done|req=Run|cur=Run
+EVT|t=0|state=Run|prev=|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=run|playing=true
+ACT|t=0|sm.change_state|req=Idle|from=Run
+ACT|t=0|vl.play_state|name=Idle
+ACT|t=0|sm.done|req=Idle|cur=Idle
+EVT|t=0|state=Idle|prev=Run|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+END|ticks=6|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+=== REG_enter_Jump [REG] ===
+DAT|char=X|armor={ "double_jump": true }|height=80.0|start=Jump|ticks=6
+ACT|t=0|sm.change_state|req=Jump|from=
+ACT|t=0|vl.play_state|name=Jump
+ACT|t=0|sm.done|req=Jump|cur=Jump
+EVT|t=0|state=Jump|prev=|floor=false|px=0.00|py=98.00|vx=0.000|vy=-260.000|face=R|anim=jump|playing=true
+END|ticks=6|state=Jump|floor=false|px=0.00|py=72.00|vx=0.000|vy=-191.750|face=R|anim=jump|playing=true
+=== REG_enter_Fall [REG] ===
+DAT|char=X|armor={ "double_jump": true }|height=80.0|start=Fall|ticks=6
+ACT|t=0|sm.change_state|req=Fall|from=
+ACT|t=0|vl.play_state|name=Fall
+ACT|t=0|sm.done|req=Fall|cur=Fall
+EVT|t=0|state=Fall|prev=|floor=false|px=0.00|py=98.00|vx=0.000|vy=0.000|face=R|anim=fall|playing=true
+END|ticks=6|state=Fall|floor=false|px=0.00|py=109.00|vx=0.000|vy=168.000|face=R|anim=fall|playing=true
+=== REG_enter_Land [REG] ===
+DAT|char=X|armor={ "double_jump": true }|height=0.0|start=Land|ticks=6
+ACT|t=0|sm.change_state|req=Land|from=
+ACT|t=0|player.change_animation_set|action=jump
+ACT|t=0|vl.play_state|name=Land
+ACT|t=0|sm.done|req=Land|cur=Land
+EVT|t=0|state=Land|prev=|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+END|ticks=6|state=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+=== REG_enter_Dash [REG] ===
+DAT|char=X|armor={ "double_jump": true }|height=0.0|start=Dash|ticks=6
+ACT|t=0|sm.change_state|req=Dash|from=
+ACT|t=0|vl.play_state|name=dash
+ACT|t=0|sm.done|req=Dash|cur=Dash
+EVT|t=0|state=Dash|prev=|floor=true|px=0.00|py=178.00|vx=360.000|vy=0.000|face=R|anim=dash|playing=true
+END|ticks=6|state=Dash|floor=true|px=42.00|py=178.00|vx=360.000|vy=0.000|face=R|anim=dash|playing=true
+=== REG_enter_AirDash [REG] ===
+DAT|char=X|armor={ "double_jump": true }|height=80.0|start=AirDash|ticks=6
+ACT|t=0|sm.change_state|req=AirDash|from=
+ACT|t=0|player.change_animation_set|action=airdash
+ACT|t=0|vl.play_state|name=AirDash
+ACT|t=0|sm.done|req=AirDash|cur=AirDash
+EVT|t=0|state=AirDash|prev=|floor=false|px=0.00|py=98.00|vx=360.000|vy=0.000|face=R|anim=airdash|playing=true
+END|ticks=6|state=AirDash|floor=false|px=42.00|py=98.00|vx=360.000|vy=0.000|face=R|anim=airdash|playing=true
+=== REG_enter_WallSlide [REG] ===
+DAT|char=X|armor={ "double_jump": true }|height=80.0|start=WallSlide|ticks=6
+ACT|t=0|sm.change_state|req=WallSlide|from=
+ACT|t=0|vl.play_state|name=WallSlide
+ACT|t=0|sm.done|req=WallSlide|cur=WallSlide
+EVT|t=0|state=WallSlide|prev=|floor=false|px=0.00|py=98.00|vx=0.000|vy=0.000|face=R|anim=wallslide|playing=true
+ACT|t=0|sm.change_state|req=Fall|from=WallSlide
+ACT|t=0|vl.play_state|name=Fall
+ACT|t=0|sm.done|req=Fall|cur=Fall
+EVT|t=0|state=Fall|prev=WallSlide|floor=false|px=0.00|py=98.00|vx=0.000|vy=24.000|face=R|anim=fall|playing=true
+END|ticks=6|state=Fall|floor=false|px=0.00|py=109.00|vx=0.000|vy=168.000|face=R|anim=fall|playing=true
+=== REG_enter_WallKick [REG] ===
+DAT|char=X|armor={ "double_jump": true }|height=80.0|start=WallKick|ticks=6
+ACT|t=0|sm.change_state|req=WallKick|from=
+ACT|t=0|vl.play_state|name=WallKick
+ACT|t=0|sm.done|req=WallKick|cur=WallKick
+EVT|t=0|state=WallKick|prev=|floor=false|px=-5.00|py=98.00|vx=-90.000|vy=-172.000|face=R|anim=wallkick|playing=true
+END|ticks=6|state=WallKick|floor=false|px=-12.00|py=77.00|vx=-90.000|vy=-161.763|face=R|anim=wallkick|playing=true
+=== REG_enter_Hover [REG] ===
+DAT|char=X|armor={ "double_jump": true }|height=80.0|start=Hover|ticks=6
+ACT|t=0|sm.change_state|req=Hover|from=
+ACT|t=0|vl.play_state|name=Hover
+ACT|t=0|fx.get_stationary|name=hover_effect
+ACT|t=0|fx.start|name=hover_effect
+ACT|t=0|vl.set_anim_level|state=Hover|level=0
+ACT|t=0|sm.done|req=Hover|cur=Hover
+EVT|t=0|state=Hover|prev=|floor=false|px=0.00|py=98.00|vx=0.000|vy=0.000|face=R|anim=hover|playing=true
+ACT|t=0|sm.change_state|req=Fall|from=Hover
+ACT|t=0|fx.stop|name=hover_effect
+ACT|t=0|vl.play_state|name=Fall
+ACT|t=0|sm.done|req=Fall|cur=Fall
+EVT|t=0|state=Fall|prev=Hover|floor=false|px=0.00|py=98.00|vx=0.000|vy=0.000|face=R|anim=fall|playing=true
+END|ticks=6|state=Fall|floor=false|px=0.00|py=106.00|vx=0.000|vy=144.000|face=R|anim=fall|playing=true
+=== REG_nested_wallslide_to_wallkick [REG] ===
+DAT|char=X|armor={  }|height=80.0|start=WallSlide|ticks=6
+ACT|t=0|sm.change_state|req=WallSlide|from=
+ACT|t=0|sm.change_state|req=WallKick|from=WallSlide
+ACT|t=0|vl.play_state|name=WallKick
+ACT|t=0|sm.done|req=WallKick|cur=WallKick
+ACT|t=0|sm.done|req=WallSlide|cur=WallKick
+EVT|t=0|state=WallKick|prev=|floor=false|px=5.00|py=98.00|vx=90.000|vy=-172.000|face=L|anim=wallkick|playing=true
+END|ticks=6|state=WallKick|floor=false|px=19.00|py=77.00|vx=90.000|vy=-161.763|face=L|anim=wallkick|playing=true
+=== REG_zero_saber_ground [REG] ===
+DAT|char=Zero|armor={  }|height=0.0|start=Idle|ticks=120
+ACT|t=0|sm.change_state|req=Idle|from=
+ACT|t=0|vl.play_state|name=Idle
+ACT|t=0|sm.done|req=Idle|cur=Idle
+EVT|t=0|state=Idle|prev=|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+ACT|t=6|sm.change_state|req=SaberAttack|from=Idle
+ACT|t=6|player.change_animation_set|action=attack
+ACT|t=6|vl.play_state|name=SaberAttack
+ACT|t=6|sm.done|req=SaberAttack|cur=SaberAttack
+EVT|t=6|state=SaberAttack|prev=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=attack1|playing=true
+EVT|t=10|snap|state=SaberAttack|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=attack1|playing=true
+EVT|t=20|snap|state=SaberAttack|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=attack1|playing=true
+EVT|t=30|snap|state=SaberAttack|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=attack1|playing=true
+ACT|t=37|sm.change_state|req=SaberUnequip|from=SaberAttack
+ACT|t=37|player.change_animation_set|action=attack
+ACT|t=37|vl.play_state|name=SaberUnequip
+ACT|t=37|sm.done|req=SaberUnequip|cur=SaberUnequip
+EVT|t=37|state=SaberUnequip|prev=SaberAttack|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=unequip|playing=true
+EVT|t=40|snap|state=SaberUnequip|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=unequip|playing=true
+EVT|t=50|snap|state=SaberUnequip|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=unequip|playing=true
+EVT|t=60|snap|state=SaberUnequip|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=unequip|playing=true
+ACT|t=68|sm.change_state|req=Idle|from=SaberUnequip
+ACT|t=68|vl.play_state|name=Idle
+ACT|t=68|sm.done|req=Idle|cur=Idle
+EVT|t=68|state=Idle|prev=SaberUnequip|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=70|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=80|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=90|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=100|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=110|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=120|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+END|ticks=120|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+=== REG_zero_air_attack_dead_branch [REG] ===
+DAT|char=Zero|armor={  }|height=0.0|start=Idle|ticks=60
+ACT|t=0|sm.change_state|req=Idle|from=
+ACT|t=0|vl.play_state|name=Idle
+ACT|t=0|sm.done|req=Idle|cur=Idle
+EVT|t=0|state=Idle|prev=|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+ACT|t=6|sm.change_state|req=Jump|from=Idle
+ACT|t=6|vl.play_state|name=Jump
+ACT|t=6|sm.done|req=Jump|cur=Jump
+EVT|t=6|state=Jump|prev=Idle|floor=false|px=0.00|py=174.00|vx=0.000|vy=-260.000|face=R|anim=jump|playing=true
+EVT|t=10|snap|state=Jump|floor=false|px=0.00|py=158.00|vx=0.000|vy=-221.000|face=R|anim=jump|playing=true
+EVT|t=20|snap|state=Jump|floor=false|px=0.00|py=130.00|vx=0.000|vy=-123.500|face=R|anim=jump|playing=true
+ACT|t=21|sm.change_state|req=SaberAttackAir|from=Jump
+ACT|t=21|sm.done|req=SaberAttackAir|cur=Jump
+EVT|t=30|snap|state=Jump|floor=false|px=0.00|py=118.00|vx=0.000|vy=-26.000|face=R|anim=jump|playing=true
+ACT|t=33|sm.change_state|req=Fall|from=Jump
+ACT|t=33|vl.play_state|name=Fall
+ACT|t=33|sm.done|req=Fall|cur=Fall
+EVT|t=33|state=Fall|prev=Jump|floor=false|px=0.00|py=118.00|vx=0.000|vy=3.250|face=R|anim=fall|playing=true
+EVT|t=40|snap|state=Fall|floor=false|px=0.00|py=129.00|vx=0.000|vy=171.250|face=R|anim=fall|playing=true
+EVT|t=50|snap|state=Fall|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=fall|playing=true
+ACT|t=51|sm.change_state|req=Land|from=Fall
+ACT|t=51|player.change_animation_set|action=jump
+ACT|t=51|vl.play_state|name=Land
+ACT|t=51|sm.done|req=Land|cur=Land
+EVT|t=51|state=Land|prev=Fall|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+EVT|t=60|snap|state=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+END|ticks=60|state=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+=== NEW_resolver_ground_no_direction [NEW] ===
+DAT|char=X|armor={  }|height=0.0|start=Land|ticks=3
+ACT|t=0|sm.change_state|req=Land|from=
+ACT|t=0|player.change_animation_set|action=jump
+ACT|t=0|vl.play_state|name=Land
+ACT|t=0|sm.done|req=Land|cur=Land
+EVT|t=0|state=Land|prev=|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+ACT|t=1|sm.change_state|req=Idle|from=Land
+ACT|t=1|vl.play_state|name=Idle
+ACT|t=1|sm.done|req=Idle|cur=Idle
+EVT|t=1|state=Idle|prev=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+END|ticks=3|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+ASSERT|NEW_resolver/ground_no_direction/who_answers|PASS|obtido=["Idle"] esperado=["Idle"]
+ASSERT|NEW_resolver/ground_no_direction/never_jump|PASS|
+ASSERT|NEW_resolver/ground_no_direction/resolved_to|PASS|ret=true estado=Idle esperado=Idle
+=== NEW_resolver_ground_with_direction [NEW] ===
+DAT|char=X|armor={  }|height=0.0|start=Land|ticks=3
+ACT|t=0|sm.change_state|req=Land|from=
+ACT|t=0|player.change_animation_set|action=jump
+ACT|t=0|vl.play_state|name=Land
+ACT|t=0|sm.done|req=Land|cur=Land
+EVT|t=0|state=Land|prev=|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+ACT|t=1|sm.change_state|req=Run|from=Land
+ACT|t=1|vl.play_state|name=Run
+ACT|t=1|sm.done|req=Run|cur=Run
+EVT|t=1|state=Run|prev=Land|floor=true|px=3.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+END|ticks=3|state=Run|floor=true|px=9.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+ASSERT|NEW_resolver/ground_with_direction/who_answers|PASS|obtido=["Run"] esperado=["Run"]
+ASSERT|NEW_resolver/ground_with_direction/never_jump|PASS|
+ASSERT|NEW_resolver/ground_with_direction/resolved_to|PASS|ret=true estado=Run esperado=Run
+=== NEW_resolver_air_falling [NEW] ===
+DAT|char=X|armor={  }|height=40.0|start=Land|ticks=3
+ACT|t=0|sm.change_state|req=Land|from=
+ACT|t=0|player.change_animation_set|action=jump
+ACT|t=0|vl.play_state|name=Land
+ACT|t=0|sm.done|req=Land|cur=Land
+EVT|t=0|state=Land|prev=|floor=false|px=0.00|py=138.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+ACT|t=1|sm.change_state|req=Fall|from=Land
+ACT|t=1|vl.play_state|name=Fall
+ACT|t=1|sm.done|req=Fall|cur=Fall
+EVT|t=1|state=Fall|prev=Land|floor=false|px=0.00|py=139.00|vx=0.000|vy=74.000|face=R|anim=fall|playing=true
+END|ticks=3|state=Fall|floor=false|px=0.00|py=143.00|vx=0.000|vy=122.000|face=R|anim=fall|playing=true
+ASSERT|NEW_resolver/air_falling/who_answers|PASS|obtido=["Fall"] esperado=["Fall"]
+ASSERT|NEW_resolver/air_falling/never_jump|PASS|
+ASSERT|NEW_resolver/air_falling/resolved_to|PASS|ret=true estado=Fall esperado=Fall
+=== NEW_resolver_air_rising [NEW] ===
+DAT|char=X|armor={  }|height=40.0|start=Land|ticks=3
+ACT|t=0|sm.change_state|req=Land|from=
+ACT|t=0|player.change_animation_set|action=jump
+ACT|t=0|vl.play_state|name=Land
+ACT|t=0|sm.done|req=Land|cur=Land
+EVT|t=0|state=Land|prev=|floor=false|px=0.00|py=138.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+ACT|t=1|sm.change_state|req=Fall|from=Land
+ACT|t=1|vl.play_state|name=Fall
+ACT|t=1|sm.done|req=Fall|cur=Fall
+EVT|t=1|state=Fall|prev=Land|floor=false|px=0.00|py=136.00|vx=0.000|vy=-110.250|face=R|anim=fall|playing=true
+END|ticks=3|state=Fall|floor=false|px=0.00|py=132.00|vx=0.000|vy=-90.750|face=R|anim=fall|playing=true
+ASSERT|NEW_resolver/air_rising/who_answers|PASS|obtido=["Fall"] esperado=["Fall"]
+ASSERT|NEW_resolver/air_rising/never_jump|PASS|
+ASSERT|NEW_resolver/air_rising/resolved_to|PASS|ret=true estado=Fall esperado=Fall
+=== NEW_resolver_air_with_direction [NEW] ===
+DAT|char=X|armor={  }|height=40.0|start=Land|ticks=3
+ACT|t=0|sm.change_state|req=Land|from=
+ACT|t=0|player.change_animation_set|action=jump
+ACT|t=0|vl.play_state|name=Land
+ACT|t=0|sm.done|req=Land|cur=Land
+EVT|t=0|state=Land|prev=|floor=false|px=0.00|py=138.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+ACT|t=1|sm.change_state|req=Fall|from=Land
+ACT|t=1|vl.play_state|name=Fall
+ACT|t=1|sm.done|req=Fall|cur=Fall
+EVT|t=1|state=Fall|prev=Land|floor=false|px=0.00|py=139.00|vx=8.333|vy=74.000|face=R|anim=fall|playing=true
+END|ticks=3|state=Fall|floor=false|px=0.00|py=143.00|vx=25.000|vy=122.000|face=R|anim=fall|playing=true
+ASSERT|NEW_resolver/air_with_direction/who_answers|PASS|obtido=["Fall"] esperado=["Fall"]
+ASSERT|NEW_resolver/air_with_direction/never_jump|PASS|
+ASSERT|NEW_resolver/air_with_direction/resolved_to|PASS|ret=true estado=Fall esperado=Fall
+=== NEW_resolver_unknown_intent [NEW] ===
+DAT|char=X|armor={  }|height=0.0|start=Land|ticks=3
+ACT|t=0|sm.change_state|req=Land|from=
+ACT|t=0|player.change_animation_set|action=jump
+ACT|t=0|vl.play_state|name=Land
+ACT|t=0|sm.done|req=Land|cur=Land
+EVT|t=0|state=Land|prev=|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+END|ticks=3|state=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+ASSERT|NEW_resolver/unknown_intent/returns_false|PASS|
+ASSERT|NEW_resolver/unknown_intent/state_unchanged|PASS|antes=Land depois=Land
+=== NEW_land_no_intention_completes_then_idle [NEW] ===
+DAT|char=X|armor={  }|height=60.0|start=Fall|ticks=120
+ACT|t=0|sm.change_state|req=Fall|from=
+ACT|t=0|vl.play_state|name=Fall
+ACT|t=0|sm.done|req=Fall|cur=Fall
+EVT|t=0|state=Fall|prev=|floor=false|px=0.00|py=118.00|vx=0.000|vy=0.000|face=R|anim=fall|playing=true
+EVT|t=10|snap|state=Fall|floor=false|px=0.00|py=144.00|vx=0.000|vy=264.000|face=R|anim=fall|playing=true
+ACT|t=17|sm.change_state|req=Land|from=Fall
+ACT|t=17|player.change_animation_set|action=jump
+ACT|t=17|vl.play_state|name=Land
+ACT|t=17|sm.done|req=Land|cur=Land
+EVT|t=17|state=Land|prev=Fall|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+EVT|t=20|snap|state=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+EVT|t=30|snap|state=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+EVT|t=40|snap|state=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+ACT|t=48|sm.change_state|req=Idle|from=Land
+ACT|t=48|vl.play_state|name=Idle
+ACT|t=48|sm.done|req=Idle|cur=Idle
+EVT|t=48|state=Idle|prev=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=50|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=60|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=70|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=80|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=90|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=100|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=110|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=120|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+END|ticks=120|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+ASSERT|NEW_land/no_intention/animation_plays_fully|PASS|Land durou 31 ticks (animação=30)
+ASSERT|NEW_land/no_intention/exits_by_itself_to_idle|PASS|estado final=Idle
+=== NEW_land_residual_speed_does_not_stick [NEW] ===
+DAT|char=X|armor={  }|height=0.0|start=Land|ticks=120
+ACT|t=0|sm.change_state|req=Land|from=
+ACT|t=0|player.change_animation_set|action=jump
+ACT|t=0|vl.play_state|name=Land
+ACT|t=0|sm.done|req=Land|cur=Land
+EVT|t=0|state=Land|prev=|floor=true|px=0.00|py=178.00|vx=4.000|vy=0.000|face=R|anim=land|playing=true
+EVT|t=10|snap|state=Land|floor=true|px=0.00|py=178.00|vx=4.000|vy=0.000|face=R|anim=land|playing=true
+EVT|t=20|snap|state=Land|floor=true|px=0.00|py=178.00|vx=4.000|vy=0.000|face=R|anim=land|playing=true
+EVT|t=30|snap|state=Land|floor=true|px=0.00|py=178.00|vx=4.000|vy=0.000|face=R|anim=land|playing=true
+ACT|t=31|sm.change_state|req=Idle|from=Land
+ACT|t=31|vl.play_state|name=Idle
+ACT|t=31|sm.done|req=Idle|cur=Idle
+EVT|t=31|state=Idle|prev=Land|floor=true|px=0.00|py=178.00|vx=4.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=40|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=50|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=60|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=70|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=80|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=90|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=100|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=110|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=120|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+END|ticks=120|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+ASSERT|NEW_land/residual_speed/does_not_stick|PASS|estado final=Idle
+ASSERT|NEW_land/residual_speed/leaves_after_animation|PASS|Land durou 31 ticks
+=== NEW_land_move_intention_at_landing [NEW] ===
+DAT|char=X|armor={  }|height=60.0|start=Fall|ticks=60
+ACT|t=0|sm.change_state|req=Fall|from=
+ACT|t=0|vl.play_state|name=Fall
+ACT|t=0|sm.done|req=Fall|cur=Fall
+EVT|t=0|state=Fall|prev=|floor=false|px=0.00|py=118.00|vx=0.000|vy=0.000|face=R|anim=fall|playing=true
+EVT|t=10|snap|state=Fall|floor=false|px=7.00|py=144.00|vx=63.000|vy=264.000|face=R|anim=fall|playing=true
+ACT|t=17|sm.change_state|req=Land|from=Fall
+ACT|t=17|player.change_animation_set|action=jump
+ACT|t=17|vl.play_state|name=Land
+ACT|t=17|sm.done|req=Land|cur=Land
+EVT|t=17|state=Land|prev=Fall|floor=true|px=13.00|py=178.00|vx=6.300|vy=0.000|face=R|anim=land|playing=true
+ACT|t=18|sm.change_state|req=Run|from=Land
+ACT|t=18|vl.play_state|name=Run
+ACT|t=18|sm.done|req=Run|cur=Run
+EVT|t=18|state=Run|prev=Land|floor=true|px=13.00|py=178.00|vx=6.300|vy=0.000|face=R|anim=run|playing=true
+EVT|t=20|snap|state=Run|floor=true|px=19.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=30|snap|state=Run|floor=true|px=49.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=40|snap|state=Run|floor=true|px=79.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=50|snap|state=Run|floor=true|px=109.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=60|snap|state=Run|floor=true|px=139.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+END|ticks=60|state=Run|floor=true|px=139.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+ASSERT|NEW_land/intention_at_landing/reaches_run|PASS|
+ASSERT|NEW_land/intention_at_landing/land_is_ignored|PASS|Land durou 1 ticks
+=== NEW_land_move_intention_mid_land [NEW] ===
+DAT|char=X|armor={  }|height=0.0|start=Land|ticks=60
+ACT|t=0|sm.change_state|req=Land|from=
+ACT|t=0|player.change_animation_set|action=jump
+ACT|t=0|vl.play_state|name=Land
+ACT|t=0|sm.done|req=Land|cur=Land
+EVT|t=0|state=Land|prev=|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+EVT|t=10|snap|state=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+ACT|t=15|sm.change_state|req=Run|from=Land
+ACT|t=15|vl.play_state|name=Run
+ACT|t=15|sm.done|req=Run|cur=Run
+EVT|t=15|state=Run|prev=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=20|snap|state=Run|floor=true|px=15.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=30|snap|state=Run|floor=true|px=45.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=40|snap|state=Run|floor=true|px=75.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=50|snap|state=Run|floor=true|px=105.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=60|snap|state=Run|floor=true|px=135.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+END|ticks=60|state=Run|floor=true|px=135.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+ASSERT|NEW_land/move_intention/reaches_Run|PASS|estados vistos=[[0, "Land"], [15, "Run"]]
+ASSERT|NEW_land/move_intention/land_is_interrupted|PASS|Land durou 15 ticks (a intenção veio no tick 15)
+=== NEW_land_jump_intention_mid_land [NEW] ===
+DAT|char=X|armor={  }|height=0.0|start=Land|ticks=60
+ACT|t=0|sm.change_state|req=Land|from=
+ACT|t=0|player.change_animation_set|action=jump
+ACT|t=0|vl.play_state|name=Land
+ACT|t=0|sm.done|req=Land|cur=Land
+EVT|t=0|state=Land|prev=|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+EVT|t=10|snap|state=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+ACT|t=16|sm.change_state|req=Idle|from=Land
+ACT|t=16|vl.play_state|name=Idle
+ACT|t=16|sm.done|req=Idle|cur=Idle
+EVT|t=16|state=Idle|prev=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=20|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=30|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=40|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=50|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=60|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+END|ticks=60|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+ASSERT|NEW_land/jump_intention/reaches_Jump|FAIL|estados vistos=[[0, "Land"], [16, "Idle"]]
+ASSERT|NEW_land/jump_intention/land_is_interrupted|PASS|Land durou 16 ticks (a intenção veio no tick 15)
+=== NEW_land_dash_intention_mid_land [NEW] ===
+DAT|char=X|armor={  }|height=0.0|start=Land|ticks=60
+ACT|t=0|sm.change_state|req=Land|from=
+ACT|t=0|player.change_animation_set|action=jump
+ACT|t=0|vl.play_state|name=Land
+ACT|t=0|sm.done|req=Land|cur=Land
+EVT|t=0|state=Land|prev=|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+EVT|t=10|snap|state=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+ACT|t=16|sm.change_state|req=Idle|from=Land
+ACT|t=16|vl.play_state|name=Idle
+ACT|t=16|sm.done|req=Idle|cur=Idle
+EVT|t=16|state=Idle|prev=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=20|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=30|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=40|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=50|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=60|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+END|ticks=60|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+ASSERT|NEW_land/dash_intention/reaches_Dash|FAIL|estados vistos=[[0, "Land"], [16, "Idle"]]
+ASSERT|NEW_land/dash_intention/land_is_interrupted|PASS|Land durou 16 ticks (a intenção veio no tick 15)
+=== NEW_land_attack_intention_mid_land [NEW] ===
+DAT|char=Zero|armor={  }|height=0.0|start=Land|ticks=60
+ACT|t=0|sm.change_state|req=Land|from=
+ACT|t=0|player.change_animation_set|action=jump
+ACT|t=0|vl.play_state|name=Land
+ACT|t=0|sm.done|req=Land|cur=Land
+EVT|t=0|state=Land|prev=|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+EVT|t=10|snap|state=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+ACT|t=16|sm.change_state|req=Idle|from=Land
+ACT|t=16|vl.play_state|name=Idle
+ACT|t=16|sm.done|req=Idle|cur=Idle
+EVT|t=16|state=Idle|prev=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=20|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=30|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=40|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=50|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=60|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+END|ticks=60|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+ASSERT|NEW_land/attack_intention/reaches_SaberAttack|FAIL|estados vistos=[[0, "Land"], [16, "Idle"]]
+ASSERT|NEW_land/attack_intention/land_is_interrupted|PASS|Land durou 16 ticks (a intenção veio no tick 15)
+=== NEW_land_safety_timeout_when_animation_never_ends [NEW] ===
+DAT|char=X|armor={  }|height=0.0|start=Land|ticks=150
+ACT|t=0|sm.change_state|req=Land|from=
+ACT|t=0|player.change_animation_set|action=jump
+ACT|t=0|vl.play_state|name=Land
+ACT|t=0|sm.done|req=Land|cur=Land
+EVT|t=0|state=Land|prev=|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+EVT|t=10|snap|state=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+EVT|t=20|snap|state=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+EVT|t=30|snap|state=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+EVT|t=40|snap|state=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+EVT|t=50|snap|state=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=land|playing=true
+ACT|t=59|sm.change_state|req=Idle|from=Land
+ACT|t=59|vl.play_state|name=Idle
+ACT|t=59|sm.done|req=Idle|cur=Idle
+EVT|t=59|state=Idle|prev=Land|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=60|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=70|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=80|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=90|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=100|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=110|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=120|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=130|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=140|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=150|snap|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+END|ticks=150|state=Idle|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+ASSERT|NEW_land/safety_timeout/leaves_at_limit|PASS|Land durou 59 ticks (limite=60)
+ASSERT|NEW_land/safety_timeout/ends_in_idle|PASS|estado final=Idle
+=== CHK_determinism_a [CHK] ===
+DAT|char=X|armor={  }|height=0.0|start=Idle|ticks=120
+ACT|t=0|sm.change_state|req=Idle|from=
+ACT|t=0|vl.play_state|name=Idle
+ACT|t=0|sm.done|req=Idle|cur=Idle
+EVT|t=0|state=Idle|prev=|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+ACT|t=5|sm.change_state|req=Run|from=Idle
+ACT|t=5|vl.play_state|name=Run
+ACT|t=5|sm.done|req=Run|cur=Run
+EVT|t=5|state=Run|prev=Idle|floor=true|px=0.00|py=178.00|vx=1.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=10|snap|state=Run|floor=true|px=15.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=20|snap|state=Run|floor=true|px=45.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=30|snap|state=Run|floor=true|px=75.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=40|snap|state=Run|floor=true|px=105.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+ACT|t=45|sm.change_state|req=Idle|from=Run
+ACT|t=45|vl.play_state|name=Idle
+ACT|t=45|sm.done|req=Idle|cur=Idle
+EVT|t=45|state=Idle|prev=Run|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=50|snap|state=Idle|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=60|snap|state=Idle|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=70|snap|state=Idle|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=80|snap|state=Idle|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=90|snap|state=Idle|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=100|snap|state=Idle|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=110|snap|state=Idle|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=120|snap|state=Idle|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+END|ticks=120|state=Idle|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+=== CHK_determinism_b [CHK] ===
+DAT|char=X|armor={  }|height=0.0|start=Idle|ticks=120
+ACT|t=0|sm.change_state|req=Idle|from=
+ACT|t=0|vl.play_state|name=Idle
+ACT|t=0|sm.done|req=Idle|cur=Idle
+EVT|t=0|state=Idle|prev=|floor=true|px=0.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+ACT|t=5|sm.change_state|req=Run|from=Idle
+ACT|t=5|vl.play_state|name=Run
+ACT|t=5|sm.done|req=Run|cur=Run
+EVT|t=5|state=Run|prev=Idle|floor=true|px=0.00|py=178.00|vx=1.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=10|snap|state=Run|floor=true|px=15.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=20|snap|state=Run|floor=true|px=45.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=30|snap|state=Run|floor=true|px=75.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+EVT|t=40|snap|state=Run|floor=true|px=105.00|py=178.00|vx=180.000|vy=0.000|face=R|anim=run|playing=true
+ACT|t=45|sm.change_state|req=Idle|from=Run
+ACT|t=45|vl.play_state|name=Idle
+ACT|t=45|sm.done|req=Idle|cur=Idle
+EVT|t=45|state=Idle|prev=Run|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=50|snap|state=Idle|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=60|snap|state=Idle|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=70|snap|state=Idle|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=80|snap|state=Idle|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=90|snap|state=Idle|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=100|snap|state=Idle|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=110|snap|state=Idle|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+EVT|t=120|snap|state=Idle|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+END|ticks=120|state=Idle|floor=true|px=117.00|py=178.00|vx=0.000|vy=0.000|face=R|anim=idle|playing=true
+=== CHK_harness [CHK] ===
+ASSERT|CHK/transition_observed/Idle>Run|PASS|
+ASSERT|CHK/transition_observed/Run>Idle|PASS|
+ASSERT|CHK/transition_observed/Fall>Land|PASS|
+ASSERT|CHK/transition_observed/Land>Idle|PASS|
+ASSERT|CHK/transition_observed/Land>Run|PASS|
+ASSERT|CHK/transition_observed/Idle>Jump|PASS|
+ASSERT|CHK/transition_observed/Jump>Fall|PASS|
+ASSERT|CHK/transition_observed/Idle>Dash|PASS|
+ASSERT|CHK/transition_observed/Dash>Idle|PASS|
+ASSERT|CHK/transition_observed/Dash>Run|PASS|
+ASSERT|CHK/transition_observed/Dash>Jump|PASS|
+ASSERT|CHK/transition_observed/Jump>AirDash|PASS|
+ASSERT|CHK/transition_observed/Fall>AirDash|PASS|
+ASSERT|CHK/transition_observed/AirDash>Fall|PASS|
+ASSERT|CHK/transition_observed/Dash>AirDash|PASS|
+ASSERT|CHK/transition_observed/Jump>Hover|PASS|
+ASSERT|CHK/transition_observed/Idle>SaberAttack|PASS|
+ASSERT|CHK/determinism_same_scenario_twice|PASS|linhas=26/26
+ASSERT|CHK/every_reg_group_has_trace_lines|PASS|grupos=44
+ASSERT|CHK/parse_roundtrip_matches_memory|PASS|ok

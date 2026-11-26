@@ -7,6 +7,10 @@ const AIR_FRICTION_ACCEL := 260.0
 func enter() -> void:
 	print("falling")
 
+## Atende "retomar a movimentação" quando está no ar.
+func can_resolve(intent: StringName) -> bool:
+	return intent == Intents.RESUME_MOVEMENT and not player.is_on_floor()
+
 func update(delta: float) -> void:
 	# A aterrissagem tem prioridade sobre qualquer input.
 	if player.is_on_floor():

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="StateArmorVisualData" format=3 uid="uid://bqisnf0rwnm6v"]
+
+[ext_resource type="Script" uid="uid://b1711obvqqdr8" path="res://player/states/data/StateArmorVisualData.gd" id="1_dl8mu"]
+
+[resource]
+script = ExtResource("1_dl8mu")
+main_action = "land"
+main_file = "fourth"
+main_anim = "land"
+is_loop = false
+metadata/_custom_type_script = "uid://b1711obvqqdr8"

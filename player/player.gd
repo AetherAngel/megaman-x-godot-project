@@ -1,6 +1,10 @@
 extends Character
 class_name Player
 
+## O que o jogador quer fazer agora (ver PlayerIntent). Troque por uma subclasse para
+## controlar o Player sem Input real (cutscene, IA, testes).
+var intent: PlayerIntent = PlayerIntent.new()
+
 var pressed_shoot_designedbutton: bool = false
 var combo_count: int = 0
 var max_combo: int = 3

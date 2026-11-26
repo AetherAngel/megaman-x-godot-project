@@ -1,6 +1,9 @@
 # player/states/Hover.gd
 extends State
 
+## Este State chama visual_library.play_state() no próprio enter(): o StateMachine não repete.
+var manages_own_visuals: bool = true
+
 const H_ACCEL:    float = 600.0
 const ENERGY_MAX: float = 100.0
 const IDLE_DRAIN: float = 50.0

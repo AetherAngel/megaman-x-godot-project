@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bvb7kmks2lcis"]
+
+[ext_resource type="Script" uid="uid://l2xfljufxk0q" path="res://_states_validation/StatesBaseline.gd" id="1_sb0"]
+
+[node name="StatesBaseline" type="Node2D" unique_id=1060141473]
+script = ExtResource("1_sb0")
+label = "b11"

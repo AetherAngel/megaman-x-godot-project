@@ -1,12 +1,19 @@
 # player/states/Run.gd
 extends State
 
+## Este State chama visual_library.play_state() no próprio enter(): o StateMachine não repete.
+var manages_own_visuals: bool = true
+
 func enter() -> void:
 	player.dash_jump_eligible    = false
 	player.is_transitioning_walk = true
 	player.last_state_was_dash   = false
 	player.visual_library.play_state("Run")
 
+
+## Atende "retomar a movimentação" quando está no chão e com direção.
+func can_resolve(intent: StringName) -> bool:
+	return intent == Intents.RESUME_MOVEMENT and player.is_on_floor() and player.intent.move_direction() != 0.0
 
 func update(_delta: float) -> void:
 	var dir := InputManager.get_move_axis()
